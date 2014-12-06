@@ -53,3 +53,7 @@ export TERMCAP=~/.termcap
 test -s ~/.alias && . ~/.alias
 
 #xset b off
+
+# Source command-not-found hook
+cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
+[ -f "$cnfhook" ] && . "$cnfhook" && unset cnfhook
