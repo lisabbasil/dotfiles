@@ -1,0 +1,7 @@
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+
+set mark-symlinked-directories on
+set bell-style none

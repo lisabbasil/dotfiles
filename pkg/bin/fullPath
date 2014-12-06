@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+### Show full path instead of relative
+
+### If no positional parameter is set, use the current directory (it's the same as pwd)
+if [ -z "$1" ]; then
+    ls -1d "${PWD}"/
+fi
+
+### Otherwise loop over all positional parameters
+while [ -n "$1" ]; do
+    ls -1d "${PWD}"/${1}
+    shift
+done
+
+test

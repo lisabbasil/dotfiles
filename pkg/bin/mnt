@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Mount server. Use identity file for login without password
+
+# Set variables according to argument $1
+if [ "$1" == "lxplus" ]; then
+    dir=~/mnt/lxplus
+    user=bschneid
+    server=lxplus.cern.ch
+else
+    dir=~/mnt/triumf
+    user=basil
+    server=atlast3.triumf.ca
+fi
+
+# Remove empty directory if it exists, can happen when not properly unmounted
+rmdir "$dir" &> /dev/null
+
+if [ -d "$dir" ]; then    # unmount it
+    fusermount -quz "$dir" &&\
+        rmdir "$dir" &&\
+        echo "Unmount successful: ${server} at ${dir}"
+else                            # mount it
+    mkdir -p "$dir" &&\
+        sshfs -o nonempty -o IdentityFile=~/.ssh/id_rsa "$user"@"$server": -o idmap=user "$dir" &&\
+        echo "Mount successful: ${server} at ${dir}"
+fi
+
+#sshfs -o nonempty -o IdentityFile=~/.ssh/id_rsa "$user"@"$server": "$dir" -o reconnect -o ServerAliveInterval=120;
