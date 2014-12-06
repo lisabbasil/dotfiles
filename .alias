@@ -39,4 +39,4 @@ setupHistFitter(){
 alias setupRF='. /terabig/atlsoft/LocalSoft/glite/glite-UI-current/external/etc/profile.d/grid-env.sh && unset GT_PROXY_MODE && export DPM_HOST=dpm.lhep.unibe.ch && export DPNS_HOST=dpm.lhep.unibe.ch && voms-proxy-init -voms atlas:/atlas/ch || echo "Failed to set up RFIO."'
 
 # Always exec startx, so if the GUI crashes, the terminal exits
-alias startx='exec startx'
+alias sx='exec startx'
