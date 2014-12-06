@@ -14,9 +14,12 @@ fi
 # Are you working on a server, i.e. not locally?
 # TRIUMF servers start with atlas-tier3
 # LXPLUS servers start with lxplus
-if [[ $(/bin/hostname) == atlas-tier3* ]] || [[ $(/bin/hostname) == lxplus* ]]; then
-    server=true
-fi
+case "$HOSTNAME" in
+    atlas-tier3*) export PS1="\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;31m\]\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \$ ";;
+    lxplus*) export PS1="\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;33m\]\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \$ ";;
+    basil) export PS1="\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;34m\]\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \$ ";;
+    *) export PS1="\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;37m\]\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \$ ";;
+esac
 
 #if [ "$server" = true ]; then
 #    export LD_LIBRARY_PATH=~/pkg/lib:$LD_LIBRARY_PATH
@@ -34,16 +37,6 @@ export EDITOR=vim
 ### Set uniform history file among all servers to be able to access it from all servers
 HISTFILE=~/.bash_history
 
-## Taken from /etc/bash.bashrc (on Debian Jessie)
-## set variable identifying the chroot you work in (used in the prompt below)
-#if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-#    debian_chroot=$(cat /etc/debian_chroot)
-#fi
-## set a fancy prompt (non-color, overwrite the one in /etc/profile)
-#PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-
-PS1='\u@\h:\w\$ '
-
 ### Set keyboard for proper use of backspace
 #stty erase ^?
 
@@ -57,5 +50,3 @@ test -s ~/.alias && . ~/.alias
 # Source command-not-found hook
 cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 [ -f "$cnfhook" ] && . "$cnfhook" && unset cnfhook
-
-
