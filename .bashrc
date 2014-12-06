@@ -57,3 +57,5 @@ test -s ~/.alias && . ~/.alias
 # Source command-not-found hook
 cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 [ -f "$cnfhook" ] && . "$cnfhook" && unset cnfhook
+
+
