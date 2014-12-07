@@ -12,15 +12,15 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Set PS1 according to server you are working on
-colorUser=34
-colorPath=27
+colorUser='0;32'
+colorPath='1;34'
 case "$HOSTNAME" in
-    basil) colorServer=9;;
-    atlas-tier3*) colorServer=214;;
-    lxplus*) colorServer=148;;
-    *) colorServer=213;;
+    basil) colorServer='1;31';;
+    atlas-tier3*) colorServer='1;36';;
+    lxplus*) colorServer='1;33';;
+    *) colorServer='1;35';;
 esac
-export PS1="\e[38;5;${colorUser}m\u\e[m@\e[38;5;${colorServer}m\]\h\e[m: \e[38;5;${colorPath}m\]\w\e[m \$ "
+export PS1="\[\033[${colorUser}m\]\u\[\033[00m\]@\[\033[${colorServer}m\]\h\[\033[00m\]: \[\033[${colorPath}m\]\w\[\033[00m\] \$ "
 
 #if [ "$server" = true ]; then
 #    export LD_LIBRARY_PATH=~/pkg/lib:$LD_LIBRARY_PATH
