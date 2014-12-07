@@ -77,3 +77,12 @@ elif [[ "$1" == "" || "$1" == "-" ||  "$1" == "-f" ||  "$1" == "-q" ||  "$1" == 
 else
   useage
 fi
+
+echo 'Using above colors breaks the terminal (try to type in a long command, the terminal will wrap at the wrong place. These colors are safe to use:'
+
+for i in 0 1; do
+    for j in {29..37}; do
+        k="${i};${j}"
+        printf "\033[${k}m%s\033[00m\n" "${k}"
+    done
+done
