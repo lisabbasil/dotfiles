@@ -11,15 +11,16 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# Are you working on a server, i.e. not locally?
-# TRIUMF servers start with atlas-tier3
-# LXPLUS servers start with lxplus
+# Set PS1 according to server you are working on
+colorUser=34
+colorPath=27
 case "$HOSTNAME" in
-    atlas-tier3*) export PS1="\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;31m\]\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \$ ";;
-    lxplus*) export PS1="\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;33m\]\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \$ ";;
-    basil) export PS1="\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;34m\]\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \$ ";;
-    *) export PS1="\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;37m\]\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\] \$ ";;
+    basil) colorServer=9;;
+    atlas-tier3*) colorServer=214;;
+    lxplus*) colorServer=148;;
+    *) colorServer=213;;
 esac
+export PS1="\e[38;5;${colorUser}m\u\e[m@\e[38;5;${colorServer}m\]\h\e[m: \e[38;5;${colorPath}m\]\w\e[m \$ "
 
 #if [ "$server" = true ]; then
 #    export LD_LIBRARY_PATH=~/pkg/lib:$LD_LIBRARY_PATH
