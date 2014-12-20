@@ -224,6 +224,9 @@ set tw=140
 set ai "Auto indent
 "set si "Smart indent
 set cindent
+" Don't treat # as special (otherwise it ignores indenting)
+set cinkeys-=0#
+
 set wrap "Wrap lines
 
 map <leader>tn :tabnew<CR>
