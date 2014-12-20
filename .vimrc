@@ -219,7 +219,7 @@ autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 
 " Linebreak on 140 characters
 set lbr
-set tw=140
+set tw=80
 
 set ai "Auto indent
 "set si "Smart indent
