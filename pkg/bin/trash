@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Moves file to a folder (recycle bin), instead of deleting them
+
+bin=~/trash/trash
+
+for file; do
+    # Get variables
+    file=${file%/}
+    full=$(fullPath "$file")
+    folder=${full%/*}
+    # Create parent directories in bin folder
+    mkdir -p "${bin}${folder}"
+    # Move files/folders to bin folder
+    mv -i "${full}" "${bin}${folder}"
+    echo "Moved ${full} to ${bin}${full}."
+done
