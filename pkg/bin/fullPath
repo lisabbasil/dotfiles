@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
-### Show full path instead of relative
+# Show full path instead of relative
 
-### If no positional parameter is set, use the current directory (it's the same as pwd)
+# If no positional parameter is set, use the current directory (it's the same as pwd)
 if [ -z "$1" ]; then
     ls -1d "${PWD}"/
 fi
 
-### Otherwise loop over all positional parameters
-while [ -n "$1" ]; do
-    ls -1d "${PWD}"/${1}
-    shift
+# Otherwise loop over all positional parameters
+for i; do
+    if [ "${i:0:1}" = "/" ]; then
+        # Absolute path
+        ls -1d "${i}"
+    else
+        # Relative path
+        ls -1d "${PWD}"/${i}
+    fi
 done
 
 test
