@@ -51,8 +51,3 @@ test -s ~/.alias && . ~/.alias
 # Source command-not-found hook
 cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 [ -f "$cnfhook" ] && . "$cnfhook" && unset cnfhook
-
-## For the HP Elitebook laptop, set the brightness at start to max
-#if [ "$HOSTNAME" = "basil" ]; then
-#    sudo bash -c "cat /sys/class/backlight/intel_backlight/max_brightness > /sys/class/backlight/intel_backlight/brightness"
-#fi

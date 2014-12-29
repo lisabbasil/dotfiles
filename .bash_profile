@@ -23,3 +23,8 @@ export RUCIO_ACCOUNT=bschneid
 
 ### If in tmux, unset DISPLAY
 [[ -n $TMUX ]] && DISPLAY2="$DISPLAY" && unset DISPLAY
+
+# For the HP Elitebook laptop, set the brightness at start to max
+if [ "$HOSTNAME" = "basil" ]; then
+    sudo bash -c "cat /sys/class/backlight/intel_backlight/max_brightness > /sys/class/backlight/intel_backlight/brightness"
+fi
