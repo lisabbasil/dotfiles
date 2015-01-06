@@ -362,13 +362,18 @@ let g:alternateNoDefaultAlternate = 1
 
 set makeprg=./vim-make
 """ make and jump to warning/error if any
-map <leader>m :make<cr>
+"map <leader>m :make<cr>
+map <leader>m :make!<cr>
 """ make without jump to warning/error
-map <leader>n :make!<cr>
+"map <leader>n :make!<cr>
 
 """ Omni completion
 set omnifunc=syntaxcomplete#Complete
 imap <leader>cp <C-X><C-O>
+
+""" Quickfix window
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
