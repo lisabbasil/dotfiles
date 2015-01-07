@@ -51,3 +51,8 @@ test -s ~/.alias && . ~/.alias
 # Source command-not-found hook
 cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 [ -f "$cnfhook" ] && . "$cnfhook" && unset cnfhook
+
+# Set workspace variable on lxplus
+if [[ "$HOSTNAME" == lxplus* ]]; then
+    workspace=/afs/cern.ch/work/b/bschneid/
+fi
