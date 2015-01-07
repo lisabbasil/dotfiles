@@ -134,19 +134,23 @@ set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
 """ Use a makefile; define target in .vimrcPrivat
 let g:Tex_UseMakefile=1
-""" Jump to error
+""" Don't jump to error
 let g:Tex_GotoError=0
-""" Output all warnings
-let g:Tex_IgnoreLevel=0
+""" Output all warnings (This doesn't seem to work, so we use TCLevel,
+""" this doesn't work either, so make a function (see below))
+"let g:Tex_IgnoreLevel=0
+"autocmd FileType tex TCLevel 1
 """ For pdflatex
 let g:Tex_DefaultTargetFormat='pdf'
 """ Define what to fold (.= for appending!)
 let g:Tex_FoldedEnvironments=',itemize,sideways'
 """ Turn off <++> placeholder
-let g:Imap_UsePlaceHolders = 0
+let g:Imap_UsePlaceHolders=0
 
 """ Compiling LaTeXSuite with <leader>ll does change the directory (only for pdflatex) and can't find the log file afterwards, so we cd back to vimHomeDir
 function! CompileLaTeXSuite()
+    " Set TCLevel here, otherwise it won't work (it's a bug, I guess)
+    TCLevel 0
 	call Tex_RunLaTeX()
     cd `=g:vimHomeDir`
 endfunction
@@ -362,13 +366,18 @@ let g:alternateNoDefaultAlternate = 1
 
 set makeprg=./vim-make
 """ make and jump to warning/error if any
-map <leader>m :make<cr>
+"map <leader>m :make<cr>
+map <leader>m :make!<cr>
 """ make without jump to warning/error
-map <leader>n :make!<cr>
+"map <leader>n :make!<cr>
 
 """ Omni completion
 set omnifunc=syntaxcomplete#Complete
 imap <leader>cp <C-X><C-O>
+
+""" Quickfix window
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
