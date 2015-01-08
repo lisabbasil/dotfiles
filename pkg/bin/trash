@@ -13,5 +13,4 @@ for file; do
     mkdir -p "${bin}${folder}"
     # Move files/folders to bin folder
     mv -i "${full}" "${bin}${folder}"
-    echo "Moved ${full} to ${bin}${full}."
 done
