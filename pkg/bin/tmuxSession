@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# Sets up a predefined tmux session
+
+# If no positional parameter is given, set default value
+session=${1:-tracking}
+
+# Check if session exists, if not create it
+tmux has-session -t "$session" 2>/dev/null
+if [ $? != 0 ]; then
+    case "$session" in
+        tracking)
+            echo "Creating new session ${session}."
+            ## If ~/mnt/triumf is empty, delete it
+            #rmdir ~/mnt/triumf 2>/dev/null
+            ## If ~/mnt/triumf does not exist, it is not mounted
+            #if [ ! -d ~/mnt/triumf ]; then
+            #    mnt triumf 1>/dev/null
+            #fi
+            # Start session
+            tmux new-session -s "$session" -n runtime -d
+            # Navigate to directory
+            tmux send-keys -t "$session" \
+                'cd ~/tracking/InDetUpgradePerformanceAnalysis' enter
+            # Source setup script
+            tmux send-keys -t "$session" '. setupEnvironment' enter
+            # Open new window for vim
+            tmux new-window -n vim -t "$session"
+            # Navigate to directory
+            tmux send-keys -t "$session" \
+                'cd ~/tracking/InDetUpgradePerformanceAnalysis' enter
+            # Source setup script
+            tmux send-keys -t "$session" '. setupEnvironment' enter
+            #tmux new-session -s "$session" -n editor -d
+            #tmux send-keys -t "$session" 'cd /var/www/htdocs/' C-m
+            #tmux send-keys -t "$session" 'vim' C-m
+            #tmux split-window -v -t "$session"
+            #tmux split-window -v -t "$session"
+            #tmux select-layout -t "$session" main-horizontal
+            #tmux send-keys -t "$session":0.1 'cd /var/www/htdocs/' C-m
+            #tmux new-window -n console -t "$session"
+            #tmux send-keys -t "$session":1 'cd /var/www/htdocs/' C-m
+            #tmux select-window -t "$session":0
+            ;;
+        analysis)
+            echo "Creating new session ${session}."
+            # Start session
+            tmux new-session -s "$session" -n runtime -d
+            # Open new window for vim
+            tmux new-window -n vim -t "$session"
+            ;;
+        *)
+            echo "Session $session not recognized." 1>&2
+            echo "Exit." 1>&2
+            exit 1
+            ;;
+    esac
+fi
+tmux attach -t "$session"
+
