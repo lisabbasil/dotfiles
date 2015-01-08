@@ -54,5 +54,5 @@ cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 
 # Set workspace variable on lxplus
 if [[ "$HOSTNAME" == lxplus* ]]; then
-    workspace=/afs/cern.ch/work/b/bschneid/
+    export workspace=/afs/cern.ch/work/b/bschneid/
 fi
