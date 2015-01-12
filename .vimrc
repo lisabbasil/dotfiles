@@ -220,6 +220,8 @@ set shiftwidth=4
 set tabstop=4
 " only 2 spaces for tex files!
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
+" only 2 spaces for todo file!
+autocmd BufRead /home/basil/todo setlocal shiftwidth=2 tabstop=2
 
 " Linebreak on 140 characters
 set lbr
