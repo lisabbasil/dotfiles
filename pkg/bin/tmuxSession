@@ -38,7 +38,7 @@ if [ $? != 0 ]; then
             # Source set up script
             tmux send-keys -t "$session" ". setupEnvironment" enter
             # Set up display
-            export DISPLAY="$DISPLAY2"
+            tmux send-keys -t "$session" 'export DISPLAY="$DISPLAY2"' enter
             #tmux new-session -s "$session" -n editor -d
             #tmux send-keys -t "$session" 'cd /var/www/htdocs/' C-m
             #tmux send-keys -t "$session" 'vim' C-m
