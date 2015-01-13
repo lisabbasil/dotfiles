@@ -2,7 +2,7 @@
 
 # Moves file to a folder (recycle bin), instead of deleting them
 
-bin=~/trash/trash
+bin=~/scratch/trash
 
 for file; do
     # Get variables
