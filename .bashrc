@@ -13,10 +13,10 @@ fi
 
 # Set PS1 according to server you are working on
 colorUser='0;32'
-colorPath='1;34'
+colorPath='0;36'
 case "$HOSTNAME" in
     basil) colorServer='1;31';;
-    atlas-tier3*) colorServer='1;36';;
+    atlas-tier3*) colorServer='0;33';;
     lxplus*) colorServer='1;33';;
     *) colorServer='1;35';;
 esac
