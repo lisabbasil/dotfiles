@@ -56,3 +56,6 @@ cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 if [[ "$HOSTNAME" == lxplus* ]]; then
     export workspace=/afs/cern.ch/work/b/bschneid/
 fi
+
+# Set vi mode! Woohoo!
+set -o vi
