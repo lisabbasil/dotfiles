@@ -46,3 +46,6 @@ alias asetupStd="asetup 19.0.3.1,slc6,gcc47,64,here"
 
 # Start keepass with my kdb file
 alias mykeepass="keepass ~/Documents/keepass/all.kdbx"
+
+# My favourite format for date (used for the logs)
+alias mydate='date +"%F_%k-%M-%S"'
