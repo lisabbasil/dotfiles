@@ -20,6 +20,7 @@ case "$HOSTNAME" in
     lxplus*) colorServer='1;33';;
     *) colorServer='1;35';;
 esac
+export PROMPT_DIRTRIM=3
 export PS1="\[\033[${colorUser}m\]\u\[\033[00m\]@\[\033[${colorServer}m\]\h\[\033[00m\]: \[\033[${colorPath}m\]\w\[\033[00m\] \$ "
 
 #if [ "$server" = true ]; then
