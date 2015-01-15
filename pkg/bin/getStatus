@@ -13,6 +13,6 @@ upDs=$(awk '{printf "%.2f\n", $1/(60*60*24)}' < /proc/uptime)
 usNo=$(who | wc -l)
 
 # Averageload
-loadAvg=$(awk '{print $1", "$2", "$3}' /proc/loadavg)
+loadAvg=$(awk '{print $1" "$2" "$3}' /proc/loadavg)
 
-echo "$psNo ps, $upDs d, $usNo u, $loadAvg"
+echo "${psNo}ps ${upDs}d ${usNo}u $loadAvg"
