@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Prints uptime in days, number of users and loadavg for the last 1, 5, 15
+# minutes (similar to uptime, but more concise)
+
+# Number of processes
+psNo=$(ps ax | wc -l | awk '{print $1}')
+
+# Uptime in days
+upDs=$(awk '{printf "%.2f\n", $1/(60*60*24)}' < /proc/uptime)
+
+# Number of users
+usNo=$(who | wc -l)
+
+# Averageload
+loadAvg=$(awk '{print $1", "$2", "$3}' /proc/loadavg)
+
+echo "$psNo ps, $upDs d, $usNo u, $loadAvg"
