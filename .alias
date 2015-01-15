@@ -5,26 +5,11 @@ alias lla='ls -al'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias less='less -N'
-#alias diff='diff -u' #in conflict with syncConfigFiles
+alias diff='diff -u'
 
-alias 'gitall'='git ls-tree -r master | cut -f2'
-
-### smartgrep() is a function to grep over all files except the ones in .svn/, bin/ and obj/ folders.
-### From grep 2.5.2 on it can be achieved in an easier way with the --exclude-dir option.
-### The function has 2 optional arguments, 1st on is the search pattern, 2nd the folder
-#smartgrep(){
-#    find "${2:-.}" \( -name .svn -prune \) -o \( -name bin -prune \) -o \( -name obj -prune \) -o -name "*" -exec grep --color -iHn "${1:-pattern}" {} 2>/dev/null \;
-#}
-# smartgrep superseded by rgrep
 rgrep(){
     grep -Ir --exclude-dir=.svn "${1:-pattern}" "${2:-.}"
 }
-
-alias dq2="localSetupDQ2Client && voms-proxy-init --voms=atlas || echo failed to set up dq2"
-
-alias astyle="/terabig/atlsoft/astyle/build/gcc/bin/astyle"
-
-alias pyroot='export LD_LIBRARY_PATH=$ROOTSYS/lib:$PYTHONDIR/lib:$LD_LIBRARY_PATH;export PYTHONPATH=$ROOTSYS/lib:$PYTHONPATH'
 
 alias arcsetup='mywd=`pwd` && cd /terabig/atlsoft/LocalSoft/nordugrid-arc/nordugrid-arc-ui-current && source setup.sh && cd $mywd && arcproxy --voms atlas:/atlas/ch -c validityPeriod=96h || echo "failed to set up arcsub"'
 
@@ -45,4 +30,7 @@ alias sx='exec startx'
 alias mykeepass="keepass ~/Documents/keepass/all.kdbx"
 
 # My favourite format for date (used for the logs)
-alias mydate='date +"%F_%k-%M-%S"'
+mydate(){
+    date +"%F_%k-%M-%S"
+}
+export -f mydate
