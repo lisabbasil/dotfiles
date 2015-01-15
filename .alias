@@ -41,9 +41,6 @@ alias setupRF='. /terabig/atlsoft/LocalSoft/glite/glite-UI-current/external/etc/
 # Always exec startx, so if the GUI crashes, the terminal exits
 alias sx='exec startx'
 
-# Standard ATLAS setup
-alias asetupStd="asetup 19.0.3.1,slc6,gcc47,64,here"
-
 # Start keepass with my kdb file
 alias mykeepass="keepass ~/Documents/keepass/all.kdbx"
 
