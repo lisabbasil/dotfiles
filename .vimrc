@@ -358,7 +358,7 @@ noremap <leader>al :A<cr>
 "let Tlist_Use_Right_Window = 1
 
 """ Define paths for alternate to look for its partner files (sfr means the path is relative)
-let g:alternateSearchPath = 'sfr:.,sfr:../source,sfr:../src,sfr:../include,sfr:../Root,sfr:../inc,sfr:../xAODNtupleMaker,sfr:../xAODNtupleAnalysis'
+let g:alternateSearchPath = 'sfr:.,sfr:../source,sfr:../src,sfr:../include,sfr:../Root,sfr:../inc,sfr:../xAODNtupleMaker,sfr:../xAODNtupleAnalysis,sfr:../InDetPhysValMonitoring'
 
 """ If there is no partner file, do nothing
 let g:alternateNoDefaultAlternate = 1 
