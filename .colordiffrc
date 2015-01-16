@@ -1,0 +1,8 @@
+# Make svn diff look like git diff using colordiff
+banner=no
+color_patches=no
+plain=off
+newtext=darkgreen
+oldtext=darkred
+diffstuff=white
+cvsstuff=darkyellow
