@@ -31,10 +31,10 @@ if [ $? != 0 ]; then
                 "cd ${workspace}/tracking/datasets" enter
             # List contents of directory
             tmux send-keys -t "$session" "ls -1" enter
-            # Open new window for TBrowser
-            tmux new-window -n tbrowser -t "$session"
+            # Open new window for output
+            tmux new-window -n output -t "$session"
             # Navigate to directory
-            tmux send-keys -t "$session" "cd $wd" enter
+            tmux send-keys -t "$session" "cd ${wd}/output" enter
             # Source set up script
             tmux send-keys -t "$session" ". setupEnvironment" enter
             # Set up display
