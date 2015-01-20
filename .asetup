@@ -3,4 +3,4 @@ testarea = <pwd>
 verbose = True
 
 [aliases]
-tracking = 20.0.0.3,gcc48
+tracking = 20.0.0.3,gcc48,testarea=~/tracking/
