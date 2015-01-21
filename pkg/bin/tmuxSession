@@ -34,17 +34,13 @@ if [ $? != 0 ]; then
             # Open new window for output
             tmux new-window -n output -t "$session"
             # Navigate to directory
-            tmux send-keys -t "$session" "cd ${wd}/output" enter
+            tmux send-keys -t "$session" "cd ${wd}" enter
             # Source set up script
             tmux send-keys -t "$session" ". setupEnvironment" enter
+            # Navigate to directory
+            tmux send-keys -t "$session" "cd output" enter
             # Set up display
             tmux send-keys -t "$session" 'export DISPLAY="$DISPLAY2"' enter
-            # Open new window for scratch
-            tmux new-window -n scratch -t "$session"
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd ~/scratch/athenaTest/" enter
-            # Source set up script
-            tmux send-keys -t "$session" ". setupEnvironment" enter
             #tmux new-session -s "$session" -n editor -d
             #tmux send-keys -t "$session" 'cd /var/www/htdocs/' C-m
             #tmux send-keys -t "$session" 'vim' C-m
