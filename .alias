@@ -31,7 +31,7 @@ alias mykeepass="keepass ~/Documents/keepass/all.kdbx"
 
 # My favourite format for date (used for the logs)
 mydate(){
-    date +"%F_%k-%M-%S"
+    date +"%F_%H-%M-%S"
 }
 export -f mydate
 
