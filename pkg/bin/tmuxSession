@@ -10,7 +10,7 @@ tmux has-session -t "$session" 2>/dev/null
 if [ $? != 0 ]; then
     case "$session" in
         tracking)
-            wd=~/tracking/
+            wd=~/tracking/InDetPhysValMonitoring-00-00-22
             echo "Creating new session ${session}."
             # Start session
             tmux new-session -s "$session" -n runtime -d
