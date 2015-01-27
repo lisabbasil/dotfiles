@@ -32,7 +32,7 @@ export PS1="\[\033[${colorUser}m\]\u\[\033[00m\]@\[\033[${colorServer}m\]\h\[\03
 #fi
 export LD_LIBRARY_PATH=~/pkg/lib:$LD_LIBRARY_PATH
 export MANPATH=~/pkg/share/man:$MANPATH
-export PATH=~/pkg/bin:$PATH
+export PATH=~/pkg/bin:~/.gem/ruby/2.2.0/bin:$PATH
 
 export EDITOR=vim
 
