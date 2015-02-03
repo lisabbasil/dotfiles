@@ -53,11 +53,26 @@ if [ $? != 0 ]; then
             #tmux select-window -t "$session":0
             ;;
         analysis)
+            wd=~/analysis/
             echo "Creating new session ${session}."
             # Start session
             tmux new-session -s "$session" -n runtime -d
+            # Navigate to directory
+            tmux send-keys -t "$session" "cd $wd" enter
+            # Source setup script
+            tmux send-keys -t "$session" ". setupEnvironment" enter
             # Open new window for vim
             tmux new-window -n vim -t "$session"
+            # Navigate to directory
+            tmux send-keys -t "$session" "cd $wd" enter
+            # Source setup script
+            tmux send-keys -t "$session" ". setupEnvironment" enter
+            # Open new window for datasets
+            tmux new-window -n datasets -t "$session"
+            # Navigate to directory
+            tmux send-keys -t "$session" \
+                "cd ${workspace}/analysis/datasets" enter
+            tmux send-keys -t "$session" "ls -1" enter
             ;;
         *)
             echo "Session $session not recognized." 1>&2
