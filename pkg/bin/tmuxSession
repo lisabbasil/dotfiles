@@ -41,6 +41,10 @@ if [ $? != 0 ]; then
             tmux send-keys -t "$session" "cd output" enter
             # Set up display
             tmux send-keys -t "$session" 'export DISPLAY="$DISPLAY2"' enter
+            # Open new window for scratch
+            tmux new-window -n scratch -t "$session"
+            # Navigate to directory
+            tmux send-keys -t "$session" "cd scratch" enter
             #tmux new-session -s "$session" -n editor -d
             #tmux send-keys -t "$session" 'cd /var/www/htdocs/' C-m
             #tmux send-keys -t "$session" 'vim' C-m
@@ -73,6 +77,10 @@ if [ $? != 0 ]; then
             tmux send-keys -t "$session" \
                 "cd ${workspace}/analysis/datasets" enter
             tmux send-keys -t "$session" "ls -1" enter
+            # Open new window for scratch
+            tmux new-window -n scratch -t "$session"
+            # Navigate to directory
+            tmux send-keys -t "$session" "cd scratch" enter
             ;;
         *)
             echo "Session $session not recognized." 1>&2
