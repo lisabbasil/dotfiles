@@ -5,92 +5,86 @@
 # If no positional parameter is given, set default value
 session=${1:-tracking}
 
+# runtime must always be the first window in a tmux session, since it creates
+# the whole session, not just a new window, as opposed to all other functions
+windowRuntime(){
+    echo "Creating new session ${session}."
+    # Start session
+    tmux new-session -s "$session" -n runtime -d
+    # Navigate to directory
+    tmux send-keys -t "$session" "cd $wd" enter
+    # Source setup script
+    tmux send-keys -t "$session" ". setupEnvironment" enter
+    return 0
+}
+
+windowVim(){
+    # Open new window for vim
+    tmux new-window -n vim -t "$session"
+    # Navigate to directory
+    tmux send-keys -t "$session" "cd $wd" enter
+    # Source setup script
+    tmux send-keys -t "$session" ". setupEnvironment" enter
+    return 0
+}
+
+windowDatasets(){
+    # Open new window for datasets
+    tmux new-window -n datasets -t "$session"
+    # Navigate to directory
+    tmux send-keys -t "$session" "cd $dd" enter
+    # List contents of directory
+    tmux send-keys -t "$session" "ls -1" enter
+    return 0
+}
+
+windowOutput(){
+    # Open new window for output
+    tmux new-window -n output -t "$session"
+    # Navigate to directory
+    tmux send-keys -t "$session" "cd ${wd}" enter
+    # Source set up script
+    tmux send-keys -t "$session" ". setupEnvironment" enter
+    # Navigate to directory
+    tmux send-keys -t "$session" "cd output" enter
+    # Set up display
+    tmux send-keys -t "$session" 'export DISPLAY="$DISPLAY2"' enter
+    return 0
+}
+
+windowScratch(){
+    # Open new window for scratch
+    tmux new-window -n scratch -t "$session"
+    # Navigate to directory
+    tmux send-keys -t "$session" "cd scratch" enter
+    return 0
+}
+
 # Check if session exists, if not create it
 tmux has-session -t "$session" 2>/dev/null
 if [ $? != 0 ]; then
     case "$session" in
         tracking)
+            # Define working and data directory
             wd=~/tracking/
-            echo "Creating new session ${session}."
-            # Start session
-            tmux new-session -s "$session" -n runtime -d
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd $wd" enter
-            # Source setup script
-            tmux send-keys -t "$session" ". setupEnvironment" enter
-            # Open new window for vim
-            tmux new-window -n vim -t "$session"
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd $wd" enter
-            # Source setup script
-            tmux send-keys -t "$session" ". setupEnvironment" enter
-            # Open new window for datasets
-            tmux new-window -n datasets -t "$session"
-            # Navigate to directory
-            tmux send-keys -t "$session" \
-                "cd ${workspace}/tracking/datasets" enter
-            # List contents of directory
-            tmux send-keys -t "$session" "ls -1" enter
-            # Open new window for output
-            tmux new-window -n output -t "$session"
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd ${wd}" enter
-            # Source set up script
-            tmux send-keys -t "$session" ". setupEnvironment" enter
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd output" enter
-            # Set up display
-            tmux send-keys -t "$session" 'export DISPLAY="$DISPLAY2"' enter
-            # Open new window for scratch
-            tmux new-window -n scratch -t "$session"
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd scratch" enter
-            #tmux new-session -s "$session" -n editor -d
-            #tmux send-keys -t "$session" 'cd /var/www/htdocs/' C-m
-            #tmux send-keys -t "$session" 'vim' C-m
-            #tmux split-window -v -t "$session"
-            #tmux split-window -v -t "$session"
-            #tmux select-layout -t "$session" main-horizontal
-            #tmux send-keys -t "$session":0.1 'cd /var/www/htdocs/' C-m
-            #tmux new-window -n console -t "$session"
-            #tmux send-keys -t "$session":1 'cd /var/www/htdocs/' C-m
-            #tmux select-window -t "$session":0
+            dd="${workspace}"/tracking/datasets
+            # Call functions to open windows
+            windowRuntime
+            windowVim
+            windowDatasets
+            windowOutput
+            windowScratch
             ;;
         analysis)
+            # Define working and data directory
             wd=~/analysis/
-            echo "Creating new session ${session}."
-            # Start session
-            tmux new-session -s "$session" -n runtime -d
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd $wd" enter
-            # Source setup script
-            tmux send-keys -t "$session" ". setupEnvironment" enter
-            # Open new window for vim
-            tmux new-window -n vim -t "$session"
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd $wd" enter
-            # Source setup script
-            tmux send-keys -t "$session" ". setupEnvironment" enter
-            # Open new window for datasets
-            tmux new-window -n datasets -t "$session"
-            # Navigate to directory
-            tmux send-keys -t "$session" \
-                "cd ${workspace}/analysis/datasets" enter
-            tmux send-keys -t "$session" "ls -1" enter
-            # Open new window for output
-            tmux new-window -n output -t "$session"
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd ${wd}" enter
-            # Source set up script
-            tmux send-keys -t "$session" ". setupEnvironment" enter
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd output" enter
-            # Set up display
-            tmux send-keys -t "$session" 'export DISPLAY="$DISPLAY2"' enter
-            # Open new window for scratch
-            tmux new-window -n scratch -t "$session"
-            # Navigate to directory
-            tmux send-keys -t "$session" "cd scratch" enter
+            dd="${workspace}"/analysis/datasets
+            # Call functions to open windows
+            windowRuntime
+            windowVim
+            windowDatasets
+            windowOutput
+            windowScratch
             ;;
         *)
             echo "Session $session not recognized." 1>&2
@@ -100,4 +94,3 @@ if [ $? != 0 ]; then
     esac
 fi
 tmux attach -t "$session"
-
