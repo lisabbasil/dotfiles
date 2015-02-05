@@ -36,13 +36,17 @@ export PATH=~/pkg/bin:~/.gem/ruby/2.2.0/bin:$PATH
 
 export EDITOR=vim
 
-### Set uniform history file among all servers to be able to access it from all servers
+# Set uniform history file among all servers to be able to access it from all servers
 HISTFILE=~/.bash_history
 
-### Set keyboard for proper use of backspace
+# Increase size of history
+HISTSIZE=20000
+HISTFILESIZE=20000
+
+# Set keyboard for proper use of backspace
 #stty erase ^?
 
-### Set termcap locally, needed for proper running of rxvt-unicode-256color and screen-256color-s
+# Set termcap locally, needed for proper running of rxvt-unicode-256color and screen-256color-s
 export TERMCAP=~/.termcap
 
 test -s ~/.alias && . ~/.alias
