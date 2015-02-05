@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
@@ -8,7 +10,9 @@ alias less='less -N'
 alias diff='diff -u'
 
 rgrep(){
-    grep -Ir --exclude-dir=.svn --exclude=*.make --exclude=*.d "${1:-pattern}" "${2:-.}"
+    local pattern="${1:-pattern}"
+    shift 1
+    grep -Ir --exclude-dir=.svn --exclude=*.make --exclude=*.d "${pattern}" "$@"
 }
 
 alias arcsetup='mywd=`pwd` && cd /terabig/atlsoft/LocalSoft/nordugrid-arc/nordugrid-arc-ui-current && source setup.sh && cd $mywd && arcproxy --voms atlas:/atlas/ch -c validityPeriod=96h || echo "failed to set up arcsub"'
