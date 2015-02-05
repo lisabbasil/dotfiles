@@ -77,6 +77,16 @@ if [ $? != 0 ]; then
             tmux send-keys -t "$session" \
                 "cd ${workspace}/analysis/datasets" enter
             tmux send-keys -t "$session" "ls -1" enter
+            # Open new window for output
+            tmux new-window -n output -t "$session"
+            # Navigate to directory
+            tmux send-keys -t "$session" "cd ${wd}" enter
+            # Source set up script
+            tmux send-keys -t "$session" ". setupEnvironment" enter
+            # Navigate to directory
+            tmux send-keys -t "$session" "cd output" enter
+            # Set up display
+            tmux send-keys -t "$session" 'export DISPLAY="$DISPLAY2"' enter
             # Open new window for scratch
             tmux new-window -n scratch -t "$session"
             # Navigate to directory
