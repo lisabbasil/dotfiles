@@ -36,13 +36,6 @@ export PATH=~/pkg/bin:~/.gem/ruby/2.2.0/bin:$PATH
 
 export EDITOR=vim
 
-# Set uniform history file among all servers to be able to access it from all servers
-HISTFILE=~/.bash_history
-
-# Increase size of history
-HISTSIZE=20000
-HISTFILESIZE=20000
-
 # Set keyboard for proper use of backspace
 #stty erase ^?
 
@@ -64,3 +57,19 @@ fi
 
 # Set vi mode! Woohoo!
 set -o vi
+
+# https://stackoverflow.com/questions/9457233/unlimited-bash-history
+# Eternal bash history.
+# ---------------------
+# Undocumented feature which sets the size to "unlimited".
+# http://stackoverflow.com/questions/9457233/unlimited-bash-history
+export HISTFILESIZE=50000
+export HISTSIZE=50000
+export HISTTIMEFORMAT="[%F_%H-%M-%S] "
+# Change the file location because certain bash sessions truncate .bash_history
+# file upon close.
+# http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
+export HISTFILE=~/.history
+# Force prompt to write history after every command.
+# http://superuser.com/questions/20900/bash-history-loss
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
