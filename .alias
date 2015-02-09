@@ -60,3 +60,6 @@ function contains(){
     echo "false"
     return 1
 }
+
+# Always start library in ncmpcpp
+alias mp="ncmpcpp -s media_library"
