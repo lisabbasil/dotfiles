@@ -1,4 +1,8 @@
 [defaults]
+briefprint = True
+save = True
+autorestore = True
+64bit = True
 testarea = <pwd>
 verbose = True
 
