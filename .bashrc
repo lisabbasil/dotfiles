@@ -16,7 +16,7 @@ colorUser='0;32'
 colorPath='0;36'
 case "$HOSTNAME" in
     basil) colorServer='1;31';;
-    atlas-tier3*) colorServer='0;33';;
+    *triumf*) colorServer='0;33';;
     lxplus*) colorServer='1;33';;
     *) colorServer='1;35';;
 esac
