@@ -66,7 +66,7 @@ if [ $? != 0 ]; then
     case "$session" in
         tracking)
             # Define working and data directory
-            wd=~/tracking/
+            wd=~/tracking/InDetPhysValMonitoring/
             dd="${workspace}"/tracking/datasets
             # Call functions to open windows
             windowRuntime
