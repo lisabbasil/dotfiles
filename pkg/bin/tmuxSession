@@ -77,7 +77,7 @@ if [ $? != 0 ]; then
             ;;
         analysis)
             # Define working and data directory
-            wd=~/analysis/
+            wd=~/analysis/development/
             dd="${workspace}"/analysis/datasets
             # Call functions to open windows
             windowRuntime
