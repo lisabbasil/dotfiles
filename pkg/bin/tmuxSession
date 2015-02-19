@@ -3,7 +3,19 @@
 # Sets up a predefined tmux session
 
 # If no positional parameter is given, set default value
-session=${1:-tracking}
+session="${1:-tracking}"
+# Define working and data directory
+if [ "$session" = tracking ]; then
+    wd="${2:-~/tracking/InDetPhysValMonitoring-trunk/}"
+    dd="${3:-${workspace}/analysis/datasets/}"
+elif [ "$session" = analysis ]; then
+    wd="${2:-~/analysis/development/}"
+    dd="${3:-${workspace}/analysis/datasets/}"
+fi
+
+echo Session: "$session"
+echo Working directory: "$wd"
+echo Dataset directory: "$dd"
 
 # runtime must always be the first window in a tmux session, since it creates
 # the whole session, not just a new window, as opposed to all other functions
@@ -65,9 +77,6 @@ tmux has-session -t "$session" 2>/dev/null
 if [ $? != 0 ]; then
     case "$session" in
         tracking)
-            # Define working and data directory
-            wd=~/tracking/InDetPhysValMonitoring-trunk/
-            dd="${workspace}"/tracking/datasets
             # Call functions to open windows
             windowRuntime
             windowVim
@@ -76,9 +85,6 @@ if [ $? != 0 ]; then
             windowScratch
             ;;
         analysis)
-            # Define working and data directory
-            wd=~/analysis/
-            dd="${workspace}"/analysis/datasets
             # Call functions to open windows
             windowRuntime
             windowVim
