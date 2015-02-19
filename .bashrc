@@ -76,6 +76,6 @@ export HISTFILE=~/.history
 
 # Start mpdscribble, but only when it is not yet running
 pidof mpdscribble &>/dev/null
-if [ "$?" ]; then
+if [ $? -ne 0 ]; then
     mpdscribble 2>/dev/null
 fi
