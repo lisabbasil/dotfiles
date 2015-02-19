@@ -74,5 +74,8 @@ export HISTFILE=~/.history
 # http://superuser.com/questions/20900/bash-history-loss
 #PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
-# Start mpdscribble
-mpdscribble 2>/dev/null
+# Start mpdscribble, but only when it is not yet running
+pidof mpdscribble &>/dev/null
+if [ "$?" ]; then
+    mpdscribble 2>/dev/null
+fi
