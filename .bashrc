@@ -79,6 +79,3 @@ pidof mpdscribble &>/dev/null
 if [ $? -ne 0 ]; then
     mpdscribble 2>/dev/null
 fi
-
-# Set ulimit to unlimited in order to dump cores for C++ segfault's
-ulimit -c unlimited
