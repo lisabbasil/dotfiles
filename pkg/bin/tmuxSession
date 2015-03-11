@@ -7,8 +7,12 @@ session="${1:-tracking}"
 # Define working and data directory
 if [ "$session" = tracking ]; then
     wd="${2:-~/tracking/InDetPhysValMonitoring-trunk/}"
-    od="${3:-~/tracking/InDetPhysValMonitoring-trunk/output}"
-    dd="${4:-${workspace}/analysis/datasets/}"
+    od="${3:-~/tracking/InDetPhysValMonitoring-trunk/output/}"
+    dd="${4:-${workspace}/tracking/datasets/}"
+elif [ "$session" = simulation ]; then
+    wd="${2:-~/simulation/fatras/}"
+    od="${3:-~/simulation/fatras/output/}"
+    dd="${4:-${workspace}/tracking/datasets/}"
 elif [ "$session" = analysis ]; then
     wd="${2:-~/analysis/development/}"
     od="${3:-~/analysis/output/development/}"
@@ -79,6 +83,14 @@ tmux has-session -t "$session" 2>/dev/null
 if [ $? != 0 ]; then
     case "$session" in
         tracking)
+            # Call functions to open windows
+            windowRuntime
+            windowVim
+            windowDatasets
+            windowOutput
+            windowScratch
+            ;;
+        simulation)
             # Call functions to open windows
             windowRuntime
             windowVim
