@@ -222,7 +222,7 @@ set tabstop=4
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 " only 2 spaces for some specific files
 autocmd BufRead /home/basil/todo setlocal shiftwidth=2 tabstop=2
-autocmd BufRead /home/basil/notes/shifts/notes.txt setlocal shiftwidth=2 tabstop=2
+autocmd BufRead /home/basil/notes/shifts/notes setlocal shiftwidth=2 tabstop=2
 
 " Linebreak on 80 characters
 set lbr
