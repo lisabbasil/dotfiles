@@ -8,3 +8,4 @@ verbose = True
 
 [aliases]
 tracking = 20.0.0.3,gcc48
+simulation = mig5,rel_6,slc6,gcc48,opt,here,runtime
