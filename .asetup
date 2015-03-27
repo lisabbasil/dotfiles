@@ -6,6 +6,8 @@ autorestore = True
 testarea = <pwd>
 verbose = True
 
+# For some obscure reason, the aliases cannot have uppercase letters
 [aliases]
 tracking = 20.0.0.3,gcc48
-simulation = mig5,rel_6,slc6,gcc48,opt,here,runtime
+fatras = mig5,latest_copied_release,slc6,gcc48,opt,runtime
+fullsim = 20.0.0,slc6,gcc48,opt,runtime
