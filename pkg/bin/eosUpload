@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+samples=()
+outDir=eos/atlas/user/b/bschneid/
+
+# Show usage to the user (-h option)
+usage(){
+cat << EOF
+Use this script to download a batch of samples onto eos. It will first
+download the samples locally and then upload it to eos.
+
+Usage: ./eosUpload [option]
+where [option] is
+ -s                 name of sample
+ -l                 list of sample (in a textfile)
+ -o                 output dir on eos
+ -h                 show this help
+EOF
+exit 0
+}
+
+setup(){
+    # Aliases are not expanded by default by non-interactive shells but eos is
+    # an alias, hence we need aliases to be expanded
+    shopt -s expand_aliases
+    eosSetup
+    # UGLY HACK: eos does not expand, but type eos does (once you've fixed that,
+    # replace all occurences of evil eval
+    eos=$(type eos | sed "s/.*\`\(.*\)'/\1/")
+    return 0
+}
+
+setSingleSample(){
+    samples+=("${OPTARG}") || return 1
+    return 0
+}
+
+setMultipleSamples(){
+    readarray -t arr < "${OPTARG}" \
+        && samples+=("${arr[@]}") \
+        && unset arr \
+        || return 1
+    return 0
+}
+
+run(){
+    eval $eos mkdir -p "${outDir}" || return 1
+    for sample in "${samples[@]}"; do
+        # sample2 is sample name without user space
+        sample2="${sample#*:}" \
+            && dq2-get "${sample}" \
+            && eval $eos mkdir "${outDir}/${sample2}" \
+            && xrdcp -r "${sample2}" root://eosatlas//"${outDir}/${sample2}" \
+            && rm -rf "${sample2}" \
+            && echo Uploaded file $((++i)) of "${#samples[@]}" to eos. \
+            || return 1
+    done
+    unset i
+    echo Bye.
+    return 0
+}
+
+# Parse user options
+parseOptions(){
+    OPTIND=1
+    while getopts ":s:l:o:h" opt; do
+        case "$opt" in
+            s) setSingleSample;;
+            l) setMultipleSamples;;
+            o) outDir="${outDir}${OPTARG}";;
+            h) usage
+               return 0;;
+            *) echo "Invalid option: -${OPTARG}" >&2
+               usage
+               return 1;;
+        esac
+    done
+    #shift "$((OPTIND-1))"
+}
+
+parseOptions "$@" \
+    && setup \
+    && run \
+    || exit 1
