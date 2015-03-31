@@ -6,6 +6,8 @@ outDir=eos/atlas/user/b/bschneid/
 # Show usage to the user (-h option)
 usage(){
 cat << EOF
+This script is deprecated. Mount eos instead and download directly on eos.
+
 Use this script to download a batch of samples onto eos. It will first
 download the samples locally and then upload it to eos.
 
@@ -48,7 +50,7 @@ run(){
     for sample in "${samples[@]}"; do
         # sample2 is sample name without user space
         sample2="${sample#*:}" \
-            && dq2-get "${sample}" \
+            && rucio download "${sample}" \
             && eval $eos mkdir "${outDir}/${sample2}" \
             && xrdcp -r "${sample2}" root://eosatlas//"${outDir}/${sample2}" \
             && rm -rf "${sample2}" \
