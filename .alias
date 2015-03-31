@@ -68,3 +68,8 @@ eosSetup(){
     . /afs/cern.ch/project/eos/installation/atlas/etc/setup.sh
 }
 export -f eosSetup
+
+# Voms alias with long validity
+voms(){
+    voms-proxy-init -voms atlas --valid 96:00
+}
