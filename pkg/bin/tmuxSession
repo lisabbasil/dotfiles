@@ -7,7 +7,7 @@ session="${1:-tracking}"
 # Define working and data directory
 if [ "$session" = tracking ]; then
     wd="${2:-~/tracking/InDetPhysValMonitoring-trunk/}"
-    od="${3:-~/tracking/InDetPhysValMonitoring-trunk/output/}"
+    od="${3:-~/tracking/output/InDetPhysValMonitoring-trunk/}"
     dd="${4:-${workspace}/tracking/datasets/}"
 elif [ "$session" = simulation ]; then
     wd="${2:-~/simulation/fatras/}"
@@ -60,11 +60,11 @@ windowOutput(){
     # Open new window for output
     tmux new-window -n output -t "$session"
     # Navigate to directory
-    tmux send-keys -t "$session" "cd ${od}" enter
+    tmux send-keys -t "$session" "cd ${wd}" enter
     # Source set up script
     tmux send-keys -t "$session" ". setupEnvironment" enter
     # Navigate to directory
-    tmux send-keys -t "$session" "cd output" enter
+    tmux send-keys -t "$session" "cd ${od}" enter
     # Set up display
     tmux send-keys -t "$session" 'export DISPLAY="$DISPLAY2"' enter
     return 0

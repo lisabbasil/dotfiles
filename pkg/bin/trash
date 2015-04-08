@@ -2,7 +2,7 @@
 
 # Moves file to a folder (recycle bin), instead of deleting them
 
-bin=/home/basil/scratch/trash
+bin=~/scratch/trash
 
 for file; do
     # Get variables
