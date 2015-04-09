@@ -20,6 +20,7 @@ rgrep(){
         --exclude-dir=WorkArea \
         --exclude=*.make \
         --exclude=*.d \
+        --exclude=*.asetup* \
         --exclude=.Session.vim \
         "${pattern}" "$@"
 }
