@@ -16,6 +16,8 @@ rgrep(){
         -Ir \
         --exclude-dir=.svn \
         --exclude-dir=.git \
+        --exclude-dir=InstallArea \
+        --exclude-dir=WorkArea \
         --exclude=*.make \
         --exclude=*.d \
         --exclude=.Session.vim \
