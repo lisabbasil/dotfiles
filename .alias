@@ -61,9 +61,6 @@ function contains(){
     return 1
 }
 
-# Always start library in ncmpcpp
-alias mp="ncmpcpp -s media_library"
-
 eosSetup(){
     . /afs/cern.ch/project/eos/installation/atlas/etc/setup.sh
 }
