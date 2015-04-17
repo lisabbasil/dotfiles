@@ -90,6 +90,9 @@ set hid
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
+" Mark tabs and trailing whitespaces
+set list listchars=tab:>-,trail:·
+
 " Ignore case when searching
 set ignorecase
 
