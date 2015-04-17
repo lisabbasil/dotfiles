@@ -20,3 +20,13 @@
 	tool = vimdiff
 [alias]
 	vimdiff = difftool
+    st = status
+    df = diff
+    ds = diff --staged
+    co = checkout
+    ci = commit
+    br = branch
+    pr = pull --rebase
+    rb = rebase
+    gr = grep
+    toplevel = rev-parse --show-toplevel
