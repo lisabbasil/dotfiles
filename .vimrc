@@ -367,7 +367,14 @@ let g:alternateNoDefaultAlternate = 1
 """ Taglist gets updated when saving
 "autocmd BufWritePost * :TlistUpdate
 
-set makeprg=./vim-make
+if getcwd() =~ '/analysis/xAODNtuple$'
+    set makeprg=cat\ build.out
+elseif getcwd() =~ '/tracking/InDetPhysValMonitoring$'
+    set makeprg=cat\ build.out
+else
+    set makeprg=./vim-make
+endif
+
 """ make and jump to warning/error if any
 "map <leader>m :make<cr>
 map <leader>m :make!<cr>
