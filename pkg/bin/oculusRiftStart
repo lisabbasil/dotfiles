@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# Configure and start Oculus Rift Daemon
+
+log=./oculusRiftVR.log
+
+#sudo rmmod uvcvideo
+#sudo modprobe uvcvideo quirks=0
+
+echo Firing up Oculus Rift DK2. All output is redirected to the log file at
+echo "$log"
+
+echo -n "Start daemon... "
+ovrd &>> "$log" &
+echo Done.
+
+echo -n "Set udev rule... "
+sudo chmod 666 /dev/hidraw* &>> "$log"
+echo Done.
+
+echo -n "Start Oculus displays... "
+setDisplay Oculus &>> "$log"
+echo Done.
+
+echo Start config. Leave it running.
+echo If Oculus is recognized in config, you are good to go. Have fun!
+OculusConfigUtil &>> "$log"
+
+echo -n "Kill daemon... "
+killall ovrd &>> "$log"
+echo "Done."
+
+echo -n "Set standard display... "
+setDisplay 1 &>> "$log"
+echo "Done."
+
+echo "Bye."
+

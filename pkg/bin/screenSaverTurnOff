@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Turn off screensaver and locker
+
+xset s off
+xset -dpms
+xautolock -disable

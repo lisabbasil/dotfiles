@@ -1,0 +1,1 @@
+acpi -t | sed 's/Thermal 0:[^0-9]*//; s/ degrees / °/'

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Run command on every lxplus machine to retrieve its status
+
+start=${1:-0000}
+end=${2:-0400}
+red='\033[0;31m'
+noColor='\033[0m'
+
+kinit bschneid@CERN.CH
+
+for i in $(seq -w ${start} ${end}); do
+    echo -n "lxplus${i}: "
+    output=$(timeout 10 ssh lxplus"${i}" uptime 2>/dev/null)
+    if [ -z "$output" ]; then
+        echo
+    else
+        # Get number of users, if it is below a certain threshold, print output
+        # in red
+        if [ $(awk '{ for (i=1; i<=NF; ++i){ if ($i ~ /user/){print $(i-1)} }}' \
+            <<< "$output") -le 10 ] \
+            && [ $(awk -F'[ ,.]' '{ print $(NF-1) }' <<< "$output") -le 2 ] \
+            && [ $(awk -F'[ ,.]' '{ print $(NF-4) }' <<< "$output") -le 2 ] \
+            && [ $(awk -F'[ ,.]' '{ print $(NF-7) }' <<< "$output") -le 2 ]; then
+            echo -e "${red}${output}${noColor}"
+        else
+            echo "$output"
+        fi
+    fi
+done

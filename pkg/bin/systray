@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+trayer \
+    --SetDockType true \
+    --transparent true \
+    --align right \
+    --widthtype request \
+    --height 30 \
+    --margin 145 \
+    --padding 0 \
+    --distance 0

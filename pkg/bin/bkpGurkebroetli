@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+bkpFrom=~/mnt/Gurkebroetli/
+bkpTo=~/mnt/Chabissalat/bkp/
+errorFile=~/bkp_error.txt
+
+### Check if Gurkebroetli is mounted
+if ! [[ -d "$bkpFrom" ]] || ! [[ "$(ls -A $bkpFrom)" ]] ; then
+    echo "Gurkebroetli is not mounted."
+    echo "Exit."
+    exit
+fi
+
+### Check if Chabissalat is mounted
+if ! [[ -d "$bkpTo" ]] || ! [[ "$(ls -A $bkpTo)" ]] ; then
+    echo "Chabissalat is not mounted."
+    echo "Exit."
+    exit
+fi
+
+### Make backup
+cp "${bkpTo}bkp.txt" "$bkpFrom" 2>> "$errorFile" &&
+    echo "Last backup invoked at $(date)." >> "${bkpFrom}"bkp.txt &&
+    rsync -avz --delete "$bkpFrom" "$bkpTo" 2>> "$errorFile" &&
+    rm "${bkpFrom}"bkp.txt 2>> "$errorFile"
+
+### Check if there were errors
+if [[ -s "$errorFile" ]]; then
+    echo "There were errors." 1>&2
+else
+    rm "$errorFile"
+fi
+
+echo "Bye."
+exit

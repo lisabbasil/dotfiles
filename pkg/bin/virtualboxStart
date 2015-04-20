@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Startup script for virtualbox
+
+# Modules:
+# vboxdrv: necessary
+# vboxnetadp, vboxnetflt: Host-only networking (also install net-tools)
+# vboxpci: pass through PCI
+echo -n "Loading modules... "
+sudo modprobe vboxdrv
+#sudo modprobe vboxnetadp
+#sudo modprobe vboxnetflt
+sudo modprobe vboxpci
+echo Done.
+echo -n "Starting Virtualbox... "
+VirtualBox
+echo Done.

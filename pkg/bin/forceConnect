@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Restarts network-manager as long as it is not connected to a WLAN
+
+sleepTime=15
+retrials=9
+
+# First restart the service anyway (otherwise, don't call that script!)
+sudo service network-manager restart
+
+i=0
+until [[ $(sudo iwconfig 2>&1 | grep 'ESSID' | grep -v 'off/any') ]]; do
+    ((i++))
+    echo "Connection trial ${i}."
+    sudo service network-manager restart
+    sleep "$sleepTime"
+    if [[ $i > $retrials ]]; then
+        echo "Maximum number of retrials reached. Giving up."
+        break
+    fi
+done
+
+echo "Bye."

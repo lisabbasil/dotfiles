@@ -1,0 +1,242 @@
+#!/usr/bin/env bash
+
+debug=
+
+gui=i3
+
+#int=$(xrandr | awk '/^eDP1/ {print $1}')
+#ext=$(xrandr | awk '/^DP2/ {print $1}')
+#hdmi=$(xrandr | awk '/^HDMI/ {print $1}')
+int='eDP1'
+ext='DP1'
+hdmi='HDMI1'
+
+# If "${ext}" is connected, set option to 2,
+# otherwise use option 1
+if [ -z "${1}" ]; then
+    if [[ $(xrandr | awk -v ext="$ext" '$0 ~ ext { print $2 }') \
+        == 'disconnected' ]]; then
+    option=1
+else
+    option=2
+fi
+else
+    option="${1}"
+fi
+
+registerNewMode(){
+    local newMode
+    newMode=$(cvt "${modeInt/x/ }" 75 \
+        | sed -n 's/Modeline //p' \
+        | sed 's/"//g') \
+        || return 1
+    local addMode=${newMode%% *}
+    if ! (xrandr | grep "$addMode" &>/dev/null); then
+        echo Adding mode "$addMode".
+        xrandr \
+            --newmode "${newMode}" \
+            || return 1
+        xrandr \
+            --addmode "$int" "${addMode}" \
+            || return 1
+    fi
+    return 0
+}
+
+# Grab the highest possible resolution
+#modeInt=$(xrandr | sed -n "/^$int/{n; s/ *\([^ ]*\).*/\1/p}")
+#modeExt=$(xrandr | sed -n "/^$ext/{n; s/ *\([^ ]*\).*/\1/p}")
+
+# If external display is connected (option 2), make the resolution of the laptop
+# smaller
+#if [ "$option" = "2" ]; then
+#    modeInt="1920x1080"
+#else
+#    modeInt="1920x1080"
+#fi
+modeInt=1920x1080
+#modeExt=1280x1024
+modeExt=1920x1200
+modeHdmi=1920x1080
+modeB52=1024x768
+modeIntOcl="1920x1080_75.00"
+modeOcl=1080x1920
+
+if [ "$debug" = true ]; then
+    echo "Debug mode."
+    echo "\$int = $int"
+    echo "\$ext = $ext"
+    echo "\$hdmi = $hdmi"
+    echo "\$option = $option"
+    echo "\$modeInt = $modeInt"
+    echo "\$modeExt = $modeExt"
+    echo "\$modeHdmi = $modeHdmi"
+fi
+
+case "${option}" in
+    [oO]culus|[oO]cl) printf "%b" "Firing up Oculus Rift DK2. Yay!\n"
+        # Register new mode with frequency 75 Hz
+        registerNewMode || exit 3
+        xrandr \
+            --addmode "${hdmi}" "${modeOcl}" || exit 1
+        xrandr \
+            --output "${hdmi}" \
+            --mode "${modeOcl}" \
+            --rotate left \
+            --rate 75 \
+            --auto \
+            --primary \
+            --output "${int}" \
+            --mode "$modeIntOcl" \
+            --rate 75 \
+            --auto \
+            --same-as "${hdmi}" || exit 2
+        if [ "$gui" = "xfce" ]; then
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-0/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-1/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfce4-panel -r
+        fi
+        exit
+        ;;
+    B52) printf "%b" "Using two displays set up for B52\n"
+        xrandr \
+            --addmode "${ext}" "${modeB52}" || exit 1
+        xrandr \
+            --output "${int}" \
+            --mode "$modeInt" \
+            --primary \
+            --output "${ext}" \
+            --mode "${modeB52}" \
+            --right-of "${int}" || exit 2
+        if [ "$gui" = "xfce" ]; then
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-0/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-1/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfce4-panel -r
+        fi
+        ;;
+    2) printf "%b" "Using two displays\n"
+        xrandr \
+            --addmode "${ext}" "${modeExt}" || exit 1
+        xrandr \
+            --output "${int}" \
+            --mode "$modeInt" \
+            --output "${ext}" \
+            --mode "$modeExt" \
+            --primary \
+            --right-of "${int}" || exit 2
+        if [ "$gui" = "xfce" ]; then
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-0/output-name \
+                -s "${ext}" \
+                -n \
+                -t string
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-1/output-name \
+                -s "${ext}" \
+                -n \
+                -t string
+            xfce4-panel -r
+        fi
+        ;;
+    mirror) printf "%b" "Using mirror displays\n"
+        xrandr \
+            --addmode "${ext}" "${modeInt}" || exit 1
+        xrandr \
+            --output "${int}" \
+            --mode "$modeInt" \
+            --primary \
+            --output "${ext}" \
+            --mode "$modeInt" \
+            --same-as "${int}" || exit 2
+        if [ "$gui" = "xfce" ]; then
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-0/output-name \
+                -s "${ext}" \
+                -n \
+                -t string
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-1/output-name \
+                -s "${ext}" \
+                -n \
+                -t string
+            xfce4-panel -r
+        fi
+        ;;
+    TV) printf "%b" "Using two displays set up for TV\n"
+        xrandr \
+            --addmode "${hdmi}" "${modeHdmi}" || exit 1
+        xrandr \
+            --output "${int}" \
+            --mode "$modeInt" \
+            --primary \
+            --output "${hdmi}" \
+            --mode "$modeHdmi" \
+            --right-of "${int}" || exit 2
+        if [ "$gui" = "xfce" ]; then
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-0/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-1/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfce4-panel -r
+        fi
+        ;;
+    *) printf "%b" "Using one display\n"
+        xrandr \
+            --output "${int}" \
+            --mode "$modeInt" \
+            --primary \
+            --output "${ext}" \
+            --off \
+            --output "${hdmi}" \
+            --off || exit 2
+        if [ "$gui" = "xfce" ]; then
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-0/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-1/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfce4-panel -r
+        fi
+        ;;
+esac
+
+exit

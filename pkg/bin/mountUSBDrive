@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Toggle mounting of external usb harddrive. If it is not mounted, mount it, if it is mounted, unmount it
+# You may need ntfs-3g to be installed, for this to work
+
+driveName=${1-Gurkebroetli}
+
+directory=~/mnt/"${driveName}"
+
+# Remove empty directory if it exists, can happen when not properly unmounted
+rmdir "$directory" &> /dev/null
+
+if [ -d "$directory" ]; then    # unmount it
+    sudo umount "$directory" && rmdir "$directory" && echo "Unmount successful: $directory"
+else                            # mount it
+    mkdir -p "$directory" && sudo mount -t ntfs -o rw,users LABEL="${driveName}" "$directory" && echo "Mount successful: $directory"
+fi

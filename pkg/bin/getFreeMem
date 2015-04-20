@@ -1,0 +1,1 @@
+ top -bn1 | grep 'KiB Mem' | awk '{printf "Mem: %.1f %s", 100*$5/$3, "%" ;}'

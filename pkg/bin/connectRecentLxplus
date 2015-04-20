@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# ssh's to the last lxplus machine (in order to resume tmux session)
+
+i3LogDir=~/.i3/logs/
+
+# Loop over log files til you found a match
+while [ -z "$recentLxplus" ]; do
+    ((i++))
+    recentLog=$(ls -1t "$i3LogDir" | head -"${i}" | tail -1)
+    recentLxplus=$(grep 'lxplus' "${i3LogDir}${recentLog}" | \
+        tail -1 | sed 's/[^@]*@\([^:]*\):.*$/\1/')
+    #echo "$i"
+    #echo "$recentLog"
+    #echo "$recentLxplus"
+done
+
+echo "Connecting to ${recentLxplus}."
+ssh "$recentLxplus"
