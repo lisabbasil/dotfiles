@@ -15,7 +15,7 @@ elif [ "$session" = simulation ]; then
     dd="${4:-${workspace}/tracking/datasets/}"
 elif [ "$session" = analysis ]; then
     wd="${2:-~/analysis/xAODNtuple/}"
-    od="${3:-~/analysis/output/xAODNtuple/}"
+    od="${3:-~/analysis/output/}"
     dd="${4:-${workspace}/analysis/datasets/}"
 fi
 
