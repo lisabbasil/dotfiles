@@ -28,6 +28,9 @@ setup(){
     eosSetup
     # UGLY HACK: eos does not expand, but type eos does (once you've fixed that,
     # replace all occurences of evil eval
+    # Aliases are expanded when the function is read not when it is executed,
+    # hence eos alias won't work here. Instead run eosSetup before the function
+    # setup() beginning and it should work
     eos=$(type eos | sed "s/.*\`\(.*\)'/\1/")
     return 0
 }
