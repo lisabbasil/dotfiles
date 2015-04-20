@@ -25,7 +25,7 @@
     ds = diff --staged
     co = checkout
     ci = commit
-    br = branch
+    br = branch -vv
     pr = pull --rebase
     rb = rebase
     gr = grep
