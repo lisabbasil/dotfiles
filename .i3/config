@@ -46,13 +46,14 @@ bindsym $win+F10 exec --no-startup-id xbacklight -inc 5
 bindsym XF86Switch_VT_2 exec terminology
 
 # Lock screen
-bindsym $win+g exec --no-startup-id i3lock -c 222222
+#bindsym $win+g exec --no-startup-id i3lock -c 222222
+bindsym $win+g exec --no-startup-id screenlock
 
 # Suspend
 bindsym $win+$alt+g exec --no-startup-id i3lock -c 222222; exec --no-startup-id systemctl suspend
 
-# Screen turns dark after 10 minutes
-exec --no-startup-id xset dpms 600
+# Screen turns dark after 30 minutes
+exec --no-startup-id xset dpms 1800
 
 # Screen locks after 12 minutes
 #exec --no-startup-id xautolock -time 12 -locker 'i3lock -c 222222'
