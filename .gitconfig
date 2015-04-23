@@ -30,3 +30,4 @@
     rb = rebase
     gr = grep
     toplevel = rev-parse --show-toplevel
+    stashpop = stash pop stash@{0}
