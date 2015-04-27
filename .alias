@@ -22,6 +22,7 @@ rgrep(){
         --exclude=*.d \
         --exclude=*.asetup* \
         --exclude=.Session.vim \
+        --exclude=build.out \
         "${pattern}" "$@"
 }
 
