@@ -163,6 +163,15 @@ map <leader>gq mz{gq}`z
 """ Quickly indent complete document
 map <leader>= mzgg=G`z
 
+""" Compile with XeLaTeX
+function CompileXeTex()
+    let oldCompileRule=g:Tex_CompileRule_pdf
+    let g:Tex_CompileRule_pdf = 'xelatex -aux-directory=F:/Vim/my_latex_doc/temp --synctex=-1 -src-specials -interaction=nonstopmode $*'
+    call Tex_RunLaTeX()
+    let g:Tex_CompileRule_pdf=oldCompileRule
+endfunction
+map <Leader>xl :<C-U>call CompileXeTex()<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
