@@ -83,3 +83,9 @@ voms(){
 }
 
 alias mocp='/usr/bin/mocp-scrobbler.py -d; mocp'
+
+nowrap(){
+    (tput rmam;
+     "${@}";
+     tput smam)
+}
