@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 
+# Cannot make ls a function, otherwise it would call itself (or rename the
+# function)
 alias ls='ls --color=auto'
-alias ll='ls -l'
-alias la='ls -a'
-alias lla='ls -al'
+ll(){
+    ls -l "${@}"
+}
+la(){
+    ls -a "${@}"
+}
+lla(){
+    ls -la "${@}"
+}
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias less='less -N'
