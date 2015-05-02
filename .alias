@@ -34,17 +34,9 @@ rgrep(){
         "${pattern}" "$@"
 }
 
-alias arcsetup='mywd=`pwd` && cd /terabig/atlsoft/LocalSoft/nordugrid-arc/nordugrid-arc-ui-current && source setup.sh && cd $mywd && arcproxy --voms atlas:/atlas/ch -c validityPeriod=96h || echo "failed to set up arcsub"'
-
 mkcd(){
     mkdir "${1}" && cd "${1}"
 }
-
-setupHistFitter(){
-    pwd=$PWD && cd /terabig/schneider/SusyFitter/HistFitter/HistFitter-00-00-33_SLC6 && . setup.sh && cd $pwd && echo "done." || echo "it didn't work"
-}
-
-alias setupRF='. /terabig/atlsoft/LocalSoft/glite/glite-UI-current/external/etc/profile.d/grid-env.sh && unset GT_PROXY_MODE && export DPM_HOST=dpm.lhep.unibe.ch && export DPNS_HOST=dpm.lhep.unibe.ch && voms-proxy-init -voms atlas:/atlas/ch || echo "Failed to set up RFIO."'
 
 # Always exec startx, so if the GUI crashes, the terminal exits
 alias sx='exec startx'
