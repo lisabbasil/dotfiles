@@ -84,6 +84,7 @@ voms(){
 
 alias mocp='/usr/bin/mocp-scrobbler.py -d; mocp'
 
+# not working on lxplus, probably due to old version of tput
 nowrap(){
     (tput rmam;
      "${@}";
