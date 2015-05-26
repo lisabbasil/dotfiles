@@ -56,7 +56,7 @@ alias cal="cal -m"
 # Function that checkes if an element is in an array
 # Usage: contains "${arr1[@]}" "${arr2[@]}" element
 # Returns true when element is in arr1 or arr2, otherwise returns false
-function contains(){
+contains(){
     # Number of arguments
     local n=$#
     # Value of element to be searched
