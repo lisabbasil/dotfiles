@@ -3,6 +3,7 @@
 # Cannot make ls a function, otherwise it would call itself (or rename the
 # function)
 alias ls='ls --color=auto'
+unalias ll
 ll(){
     ls -l "${@}"
 }
