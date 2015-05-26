@@ -90,3 +90,8 @@ nowrap(){
      "${@}";
      tput smam)
 }
+
+# Setup latest LaTeX distribution on lxplus
+lxplusLatex(){
+    export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
+}
