@@ -2,7 +2,7 @@
 
 # Cannot make ls a function, otherwise it would call itself
 alias ls='ls --color=auto'
-unalias ll
+unalias ll 2>/dev/null
 ll(){
     ls -l "${@}"
 }
