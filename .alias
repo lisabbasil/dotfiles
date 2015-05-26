@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Cannot make ls a function, otherwise it would call itself (or rename the
-# function)
+# Cannot make ls a function, otherwise it would call itself
 alias ls='ls --color=auto'
 unalias ll
 ll(){
