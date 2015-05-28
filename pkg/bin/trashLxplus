@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Moves file to a folder on a different server (recycle bin), instead of deleting them
+
+set -euf -o pipefail
+
+server=atlast3
+bin=/global/basil/trashFromLxplus
+i=0
+
+for file; do
+    # Get variables
+    file=${file%/}
+    full=$(fullPath "$file")
+    folder=${full%/*}
+    # Create parent directories in bin folder
+    ssh "${server}" mkdir -p "${bin}${folder}"
+    # Move files/folders to bin folder
+    rsync -avz "${full}" "${server}:${bin}${folder}" > /dev/null
+    rm -rf "${full}"
+    echo Object $(( ++i )) of $# moved.
+done
+
+echo Bye.
