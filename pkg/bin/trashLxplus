@@ -4,8 +4,9 @@
 
 set -euf -o pipefail
 
-server=atlast3
-bin=/global/basil/trashFromLxplus
+user=basil
+server=atlast3.triumf.ca
+bin=/global/basil/trash
 i=0
 
 for file; do
@@ -14,9 +15,9 @@ for file; do
     full=$(fullPath "$file")
     folder=${full%/*}
     # Create parent directories in bin folder
-    ssh "${server}" mkdir -p "${bin}${folder}"
+    ssh "${user}@${server}" mkdir -p "${bin}${folder}"
     # Move files/folders to bin folder
-    rsync -avz "${full}" "${server}:${bin}${folder}" > /dev/null
+    rsync -avz "${full}" "${user}@${server}:${bin}${folder}" > /dev/null
     rm -rf "${full}"
     echo Object $(( ++i )) of $# moved.
 done
