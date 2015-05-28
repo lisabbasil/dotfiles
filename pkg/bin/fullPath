@@ -17,5 +17,3 @@ for i; do
         ls -1d "${PWD}"/${i}
     fi
 done
-
-test
