@@ -31,6 +31,8 @@ rgrep(){
         --exclude=*.asetup* \
         --exclude=.Session.vim \
         --exclude=build.out \
+        --exclude=tags \
+        --exclude=cscope.out \
         "${pattern}" "$@"
 }
 
