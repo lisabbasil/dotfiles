@@ -7,23 +7,35 @@ if [ "$1" == "lxplus" ]; then
     dir=~/mnt/lxplus
     user=bschneid
     server=lxplus.cern.ch
+    serverDir=/afs/cern.ch/user/b/bschneid/
+elif [ "$1" == "global" ]; then
+    dir=~/mnt/triumfGlobal
+    user=basil
+    server=atlast3.triumf.ca
+    serverDir=/
 else
     dir=~/mnt/triumf
     user=basil
     server=atlast3.triumf.ca
+    serverDir=/home/basil/
 fi
 
 # Remove empty directory if it exists, can happen when not properly unmounted
 rmdir "$dir" &> /dev/null
 
-if [ -d "$dir" ]; then    # unmount it
-    fusermount -quz "$dir" &&\
-        rmdir "$dir" &&\
-        echo "Unmount successful: ${server} at ${dir}"
-else                            # mount it
-    mkdir -p "$dir" &&\
-        sshfs -o nonempty -o IdentityFile=~/.ssh/id_rsa "$user"@"$server": -o idmap=user "$dir" &&\
-        echo "Mount successful: ${server} at ${dir}"
+if [ -d "$dir" ]; then
+    # Unmount
+    fusermount -quz "$dir" \
+        && rmdir "$dir" \
+        && echo "Unmount successful: ${server} at ${dir}"
+else
+    # Mount
+    mkdir -p "$dir" \
+        && sshfs \
+            -o nonempty \
+            -o IdentityFile=~/.ssh/id_rsa "$user"@"$server":"$serverDir" \
+            -o idmap=user "$dir" \
+        && echo "Mount successful: ${server} at ${dir}"
 fi
 
 #sshfs -o nonempty -o IdentityFile=~/.ssh/id_rsa "$user"@"$server": "$dir" -o reconnect -o ServerAliveInterval=120;
