@@ -7,7 +7,7 @@ session="${1:-tracking}"
 # Define working and data directory
 if [ "$session" = tracking ]; then
     wd="${2:-~/tracking/InDetPhysValMonitoring/}"
-    od="${3:-~/tracking/output/InDetPhysValMonitoring/}"
+    od="${3:-~/tracking/output/}"
     dd="${4:-${workspace}/tracking/datasets/}"
 elif [ "$session" = simulation ]; then
     wd="${2:-~/simulation/fatras/}"
