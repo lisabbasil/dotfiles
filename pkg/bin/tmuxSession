@@ -5,19 +5,23 @@
 # If no positional parameter is given, set default value
 session="${1:-tracking}"
 # Define working and data directory
-if [ "$session" = tracking ]; then
-    wd="${2:-~/tracking/InDetPhysValMonitoring/}"
-    od="${3:-~/tracking/output/}"
-    dd="${4:-${workspace}/tracking/datasets/}"
-elif [ "$session" = simulation ]; then
-    wd="${2:-~/simulation/fatras/}"
-    od="${3:-~/simulation/fatras/output/}"
-    dd="${4:-${workspace}/tracking/datasets/}"
-elif [ "$session" = analysis ]; then
-    wd="${2:-~/analysis/xAODNtuple/}"
-    od="${3:-~/analysis/output/}"
-    dd="${4:-${workspace}/analysis/datasets/}"
-fi
+case "${session}" in
+    tracking)
+        wd="${2:-~/tracking/InDetPhysValMonitoring/}"
+        od="${3:-~/tracking/output/}"
+        dd="${4:-${workspace}/tracking/datasets/}"
+        ;;
+    simulation)
+        wd="${2:-~/simulation/fatras/}"
+        od="${3:-~/simulation/fatras/output/}"
+        dd="${4:-${workspace}/tracking/datasets/}"
+        ;;
+    analysis)
+        wd="${2:-~/analysis/xAODNtuple/}"
+        od="${3:-~/analysis/output/}"
+        dd="${4:-${workspace}/analysis/datasets/}"
+        ;;
+esac
 
 echo Session: "$session"
 echo Working directory: "$wd"
