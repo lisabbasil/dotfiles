@@ -11,6 +11,11 @@ case "${session}" in
         od="${3:-~/tracking/output/InDetPhysValMonitoring/}"
         dd="${4:-${workspace}/tracking/datasets/}"
         ;;
+    [tT][iI][dD][eE])
+        wd="${2:-~/tracking/TIDE/}"
+        od="${3:-~/tracking/output/TIDE/}"
+        dd="${4:-${workspace}/tracking/datasets/}"
+        ;;
     simulation)
         wd="${2:-~/simulation/fatras/}"
         od="${3:-~/simulation/fatras/output/}"
@@ -87,6 +92,14 @@ tmux has-session -t "$session" 2>/dev/null
 if [ $? != 0 ]; then
     case "$session" in
         tracking)
+            # Call functions to open windows
+            windowRuntime
+            windowVim
+            windowDatasets
+            windowOutput
+            windowScratch
+            ;;
+        [tT][iI][dD][eE])
             # Call functions to open windows
             windowRuntime
             windowVim
