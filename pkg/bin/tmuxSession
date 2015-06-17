@@ -8,7 +8,7 @@ session="${1:-tracking}"
 case "${session}" in
     tracking)
         wd="${2:-~/tracking/InDetPhysValMonitoring/}"
-        od="${3:-~/tracking/output/}"
+        od="${3:-~/tracking/output/InDetPhysValMonitoring/}"
         dd="${4:-${workspace}/tracking/datasets/}"
         ;;
     simulation)
