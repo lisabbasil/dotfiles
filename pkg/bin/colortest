@@ -1,6 +1,6 @@
 #!/bin/bash
 
-useage() {
+usage() {
   printf "\n\e[1;4mAscii Escape Code Helper Utility\e[m\n\n"
   printf "  \e[1mUseage:\e[m colors.sh [-|-b|-f|-bq|-fq|-?|?] [start] [end] [step]\n\n"
   printf "The values for the first parameter may be one of the following:\n\n"

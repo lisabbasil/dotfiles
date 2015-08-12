@@ -93,7 +93,7 @@ echo
 
 # Read selection til it makes sense
 re=''
-until [[ "$sel" =~ ^[0-9]+$ && "$sel" -ge 0 && "$sel" -le "${#essid[@]}"-1 ]]; do
+until [[ "$sel" =~ ^[0-9]+$ && "$sel" -ge 0 && "$sel" -le "${#essid[@]}"-1 ]];do
     if [[ -n "$sel" ]]; then
         echo "Not a valid selection: $sel"
     fi

@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
 
-### Monitors the most active process (in terms of CPU usage) and pauses it for some time if system overheats
+# Monitors the most active process (in terms of CPU usage) and pauses it for
+# some time if system overheats
 
 temperatureOverheat=85
 timeSleep=5
 
-### When the user hits Ctrl+c, continue the last process (nothing happens if this process wasn't stopped before)
+# When the user hits Ctrl+c, continue the last process (nothing happens if this
+# process wasn't stopped before)
 trap 'kill -CONT "$pid"; echo "Bye."; exit' SIGINT
 
-### Defining colors
+# Defining colors
 red=$(tput setaf 1)
 normal=$(tput sgr0)
 
-printf "%s\n" "Starting dontOverheat script. Temperature threshold is set to ${temperatureOverheat} °C and sleep timer is set to ${timeSleep} seconds."
+echo "Starting dontOverheat script."
+echo "Temperature threshold is set to ${temperatureOverheat} °C"
+echo "and sleep timer is set to ${timeSleep} seconds."
 
-### Loop forever, user must hit Ctrl+c to quit
+# Loop forever, user must hit Ctrl+c to quit
 while true; do
     top=$(top -bn1 | awk 'NR==8 { print }')
     process=$(awk '{ print $12 }' <<< "$top")
