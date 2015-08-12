@@ -14,6 +14,6 @@ for i; do
         ls -1d "${i}"
     else
         # Relative path
-        ls -1d "${PWD}"/${i}
+        ls -1d "${PWD}"/"${i}"
     fi
 done
