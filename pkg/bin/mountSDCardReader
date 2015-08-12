@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Toggle mounting of Hama SD card reader
+# Find the UUID of the device with $(sudo blkid)
+
+directory=~/mnt/sdcard
+
+# Remove empty directory if it exists, can happen when not properly unmounted
+rmdir "$directory" &> /dev/null
+
+if [ -d "$directory" ]; then
+    # unmount it
+    sudo umount "$directory" && \
+        rmdir "$directory" && \
+        echo "Unmount successful: $directory"
+else
+    # mount it
+    mkdir -p "$directory" && \
+        sudo mount -o rw,users UUID="79ED-EB4F" "$directory" && \
+        echo "Mount successful: $directory"
+fi
