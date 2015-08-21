@@ -16,6 +16,6 @@ if [ -d "$directory" ]; then
 else
     # mount it
     mkdir -p "$directory" && \
-        sudo mount -o rw,users UUID="79ED-EB4F" "$directory" && \
+        sudo mount -o rw,users /dev/sdc1 "$directory" && \
         echo "Mount successful: $directory"
 fi
