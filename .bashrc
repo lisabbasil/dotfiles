@@ -45,6 +45,7 @@ export TERMCAP=~/.termcap
 test -s ~/.alias && . ~/.alias
 
 xset b off &> /dev/null
+#setxkbmap -layout us -variant altgr-intl &> /dev/null
 
 # Source command-not-found hook
 cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
