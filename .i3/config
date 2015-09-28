@@ -29,13 +29,13 @@ font pango:Terminus 9
 # Turn off title bar
 for_window [class="^.*"] border pixel 2
 
-# Sound (Manipulating sink 1, not sure if that's foolproof)
+# Sound (Manipulating sink 0, not sure if that's foolproof)
 #bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 +1%
 #bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -- -1%
 #bindsym XF86AudioMicMute exec pactl set-sink-mute 1 toggle
-bindsym $win+F7 exec pactl set-sink-volume 1 +1%
-bindsym $win+F6 exec pactl set-sink-volume 1 -1%
-bindsym $win+F5 exec pactl set-sink-mute 1 toggle
+bindsym $win+F7 exec pactl set-sink-volume 0 +1%
+bindsym $win+F6 exec pactl set-sink-volume 0 -1%
+bindsym $win+F5 exec pactl set-sink-mute 0 toggle
 
 # Backlight
 #bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
