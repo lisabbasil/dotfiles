@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 # Cannot make ls a function, otherwise it would call itself
-alias ls='ls --color=auto'
+ls(){
+    /bin/ls --color=auto "${@}"
+}
 unalias ll 2>/dev/null
 ll(){
     ls -l "${@}"
@@ -12,10 +14,18 @@ la(){
 lla(){
     ls -la "${@}"
 }
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias less='less -N'
-alias diff='diff -u'
+grep(){
+    /bin/grep --color=auto "${@}"
+}
+egrep(){
+    /bin/egrep --color=auto "${@}"
+}
+less(){
+    /bin/less -N "${@}"
+}
+diff(){
+    /bin/diff -u "${@}"
+}
 
 rgrep(){
     local pattern="${1:-pattern}"
@@ -41,10 +51,14 @@ mkcd(){
 }
 
 # Always exec startx, so if the GUI crashes, the terminal exits
-alias sx='exec startx'
+sx(){
+    exec startx "${@}"
+}
 
 # Start keepass with my kdb file
-alias mykeepass="keepass ~/Documents/keepass/all.kdbx"
+mykeepass(){
+    keepass ~/Documents/keepass/all.kdbx "${@}"
+}
 
 # My favourite format for date (used for the logs)
 mydate(){
@@ -53,7 +67,9 @@ mydate(){
 export -f mydate
 
 # Always show Monday as first day of the week in cal
-alias cal="cal -m"
+cal(){
+    /bin/cal -m "${@}"
+}
 
 # Function that checkes if an element is in an array
 # Usage: contains "${arr1[@]}" "${arr2[@]}" element
@@ -84,7 +100,9 @@ voms(){
     voms-proxy-init -voms atlas --valid 96:00
 }
 
-alias mocp='/usr/bin/mocp-scrobbler.py -d; mocp'
+mocp(){
+    mocp-scrobbler.py -d; /bin/mocp "${@}"
+}
 
 # not working on lxplus, probably due to old version of tput
 nowrap(){
