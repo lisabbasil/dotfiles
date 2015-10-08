@@ -31,3 +31,4 @@
     gr = grep
     toplevel = rev-parse --show-toplevel
     stashpop = stash pop stash@{0}
+    fr = !git svn fetch && git svn rebase
