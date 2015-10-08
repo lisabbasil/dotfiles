@@ -411,6 +411,10 @@ autocmd QuickFixCmdPost    l* nested lwindow
 autocmd! BufNewFile,BufRead *.pde setlocal ft=arduino
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 
+""" Syntastic
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = ' -std=c++11'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Sessions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
