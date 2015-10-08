@@ -5,8 +5,6 @@
 	editor = vim
 [merge]
 	tool = vimdiff
-[credential]
-	helper = cache --timeout=3600
 [push]
     default = current
 [color]
