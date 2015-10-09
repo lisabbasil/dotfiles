@@ -512,7 +512,7 @@ elseif &background=='dark'
     hi Question		ctermfg=16	ctermbg=186	cterm=NONE
     hi ModeMsg		ctermfg=fg	ctermbg=18	cterm=NONE
     hi VisualNOS	ctermfg=fg	ctermbg=18	cterm=NONE
-    hi SpecialKey	ctermfg=153	ctermbg=NONE	cterm=NONE
+    hi SpecialKey	ctermfg=59	ctermbg=NONE	cterm=NONE
     hi NonText		ctermfg=69	ctermbg=233	cterm=NONE
     " Comment/Uncomment the following line to disable/enable transparency
     "hi NonText		ctermfg=69	ctermbg=NONE	cterm=NONE

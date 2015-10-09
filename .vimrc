@@ -415,6 +415,7 @@ autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
+set list listchars=tab:>-,trail:·
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Sessions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
