@@ -1,0 +1,30 @@
+# keymap /usr/share/doc/moc/keymap.example
+
+quit_client =				q
+go =						ENTER       l
+menu_down =					DOWN		j
+menu_up =					UP			k
+menu_page_down =			PAGE_DOWN   ^F
+menu_page_up =				PAGE_UP     ^B
+menu_first_item =			HOME        g
+menu_last_item =			END         G
+quit = 						Q
+stop = 						s
+next =						n
+previous =					b
+pause =						p SPACE
+toggle_read_tags =			f
+toggle_repeat =				r
+toggle_menu =				TAB
+add_file =					a
+clear_playlist =			c
+seek_forward =				RIGHT
+seek_backward =				LEFT
+seek_forward_fast =			]
+seek_backward_fast =		[
+help =						?
+refresh =					u
+go_to_music_directory =		m
+delete_from_playlist =		d
+search_menu =				/
+go_up =						h

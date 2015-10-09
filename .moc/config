@@ -1,0 +1,5 @@
+MusicDir = /home/basil/Music/
+#Theme = transparent-background
+Theme = myown
+Keymap = keymap
+AutoLoadLyrics = yes
