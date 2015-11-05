@@ -18,6 +18,7 @@ case "$HOSTNAME" in
     basil) colorServer='1;31';;
     *triumf*) colorServer='0;33';;
     lxplus*) colorServer='1;33';;
+    cmslpc*) colorServer='0;33';;
     *) colorServer='1;35';;
 esac
 export PROMPT_DIRTRIM=3
