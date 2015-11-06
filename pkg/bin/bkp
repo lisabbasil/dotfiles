@@ -28,7 +28,7 @@ fi
 
 # Check size of backup
 echo -n "Back up size on server: "
-echo "$(ssh "${server}" du -sh "${dir}"basil | awk '{ print $1 }')"
+ssh "${server}" du -sh "${dir}"basil | awk '{ print $1 }'
 
 # Check if there were errors
 if [[ -s "$errorFile" ]]; then
