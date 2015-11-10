@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Cuts video without reencoding it
+
+# ./usage:
+# videoCut filename from to
+
+ffmpeg \
+    -i "${1}" \
+    -b:v 2572k \
+    -strict -2 \
+    -ss "${2}".000 \
+    -to "${3}".000 \
+    "${1%.*}_${2}_${3}.${1##*.}"
+
+#http://superuser.com/questions/358155/how-can-i-avoid-a-few-seconds-of-blank-video-when-using-vcodec-copy
