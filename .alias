@@ -2,7 +2,7 @@
 
 # Cannot make ls a function, otherwise it would call itself
 ls(){
-    /bin/ls --color=auto "${@}"
+    /usr/bin/ls --color=auto "${@}"
 }
 unalias ll 2>/dev/null
 ll(){
@@ -15,16 +15,16 @@ lla(){
     ls -la "${@}"
 }
 grep(){
-    /bin/grep --color=auto "${@}"
+    /usr/bin/grep --color=auto "${@}"
 }
 egrep(){
-    /bin/egrep --color=auto "${@}"
+    /usr/bin/egrep --color=auto "${@}"
 }
 less(){
-    /bin/less -N "${@}"
+    /usr/bin/less -N "${@}"
 }
 diff(){
-    /bin/diff -u "${@}"
+    /usr/bin/diff -u "${@}"
 }
 
 rgrep(){
@@ -68,7 +68,7 @@ export -f mydate
 
 # Always show Monday as first day of the week in cal
 cal(){
-    /bin/cal -m "${@}"
+    /usr/bin/cal -m "${@}"
 }
 
 # Function that checkes if an element is in an array
@@ -101,7 +101,7 @@ voms(){
 }
 
 mocp(){
-    mocp-scrobbler.py -d; /bin/mocp "${@}"
+    mocp-scrobbler.py -d; /usr/bin/mocp "${@}"
 }
 
 # not working on lxplus, probably due to old version of tput
