@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Cannot make ls a function, otherwise it would call itself
 ls(){
     /usr/bin/ls --color=auto "${@}"
 }
+# Sometimes, ll is predefined as alias
 unalias ll 2>/dev/null
 ll(){
     ls -l "${@}"
