@@ -4,7 +4,7 @@
 unalias ls 2>/dev/null
 unalias ll 2>/dev/null
 ls(){
-    /usr/bin/ls --color=auto "${@}"
+    /bin/ls --color=auto "${@}"
 }
 ll(){
     ls -l "${@}"
@@ -16,10 +16,10 @@ lla(){
     ls -la "${@}"
 }
 grep(){
-    /usr/bin/grep --color=auto "${@}"
+    /bin/grep --color=auto "${@}"
 }
 egrep(){
-    /usr/bin/egrep --color=auto "${@}"
+    /bin/egrep --color=auto "${@}"
 }
 less(){
     /usr/bin/less -N "${@}"
