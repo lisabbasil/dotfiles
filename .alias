@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
+# Sometimes, ls or ll are predefined as alias
+unalias ls 2>/dev/null
+unalias ll 2>/dev/null
 ls(){
     /usr/bin/ls --color=auto "${@}"
 }
-# Sometimes, ll is predefined as alias
-unalias ll 2>/dev/null
 ll(){
     ls -l "${@}"
 }
