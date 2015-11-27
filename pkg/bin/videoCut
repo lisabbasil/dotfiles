@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Cuts video without reencoding it
+# Cuts video with reencoding it
 
 # ./usage:
 # videoCut filename from to
