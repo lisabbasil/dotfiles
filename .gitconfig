@@ -31,3 +31,5 @@
     toplevel = rev-parse --show-toplevel
     stashpop = stash pop stash@{0}
     fr = !git svn fetch && git svn rebase
+[init]
+	templatedir = ~/.git_template
