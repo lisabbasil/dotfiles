@@ -1,0 +1,6 @@
+This file is useless. But I keep it in my dotfiles for the following reason: Git
+cannot add folders, but only files. I don't want any files in the folder
+~/.vim/temp/undo to be added. But if I don't add any files, ~/.vim/temp/undo is
+not created on a system where I clone my dotfiles. That means that the undo
+function does not work, until I create ~/.vim/temp/undo. Since I don't like
+doing things by hand, I add this file.
