@@ -33,7 +33,7 @@ noremap <leader>gr :!bash -c ". ~/.alias; smartgrep "
 noremap <leader>nt :NERDTreeToggle<cr>
 
 """ Open the python interpreter
-noremap <leader>py :!python<cr>
+noremap <leader>py :!ipython<cr>
 
 """ Check for differences between file in buffer and on disk
 command Wdiff :w !diff -u % -
