@@ -60,6 +60,9 @@ set history=100
 " Set this, so the background color will not change inside tmux (http://snk.tuxfamily.org/log/vim-256color-bce.html)
 set t_ut=
 
+" Use Pathogen to install vim plugins
+execute pathogen#infect()
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -126,6 +129,7 @@ set tm=500
 " Add a bit extra margin to the left
 set foldcolumn=1
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => LaTeX suite
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -172,6 +176,7 @@ function CompileXeTex()
 endfunction
 map <Leader>xl :<C-U>call CompileXeTex()<CR>
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -205,6 +210,7 @@ hi TabLineSel ctermbg=58
 
 " Make warnings more visible
 hi WarningMsg ctermfg=white ctermbg=red
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -267,6 +273,7 @@ map <leader>7 7gt
 map <leader>8 8gt
 map <leader>9 9gt
 map <leader>0 10gt
+
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -417,6 +424,8 @@ let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 set list listchars=tab:>-,trail:·
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Sessions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
