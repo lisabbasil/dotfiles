@@ -16,7 +16,7 @@ rsync \
     --exclude '.cache/' \
     --exclude 'Videos/' \
     --exclude 'Music/' \
-    --exclude 'Documents/virtualbox' \
+    --exclude 'Documents/vmware' \
     /home/basil "$server":"${dir}" 2>> "$errorFile"
 #rm ~/bkp.txt 2>> "$errorFile"
 
