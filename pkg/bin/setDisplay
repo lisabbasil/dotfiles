@@ -8,7 +8,7 @@ gui=i3
 #ext=$(xrandr | awk '/^DP2/ {print $1}')
 #hdmi=$(xrandr | awk '/^HDMI/ {print $1}')
 int='eDP1'
-ext='DP1'
+ext='HDMI1'
 hdmi='HDMI1'
 
 # If "${ext}" is connected, set option to 2,
@@ -56,7 +56,7 @@ registerNewMode(){
 #fi
 modeInt=1920x1080
 #modeExt=1280x1024
-modeExt=1920x1200
+modeExt=1920x1080
 modeHdmi=1920x1080
 modeB52=1024x768
 modeIntOcl="1920x1080_75.00"
