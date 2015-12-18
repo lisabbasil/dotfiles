@@ -129,6 +129,8 @@ set tm=500
 " Add a bit extra margin to the left
 set foldcolumn=1
 
+" Show partial command in commandline
+set showcmd
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => LaTeX suite
