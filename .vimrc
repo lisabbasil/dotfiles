@@ -21,26 +21,26 @@ cmap w!! w !sudo tee > /dev/null %
 inoremap jj <ESC>
 noremap <leader>q :qa<cr>
 
-""" Bash shortcut
+" Bash shortcut
 set shell=bash\ --rcfile\ ~/.vimbashrc
 noremap <leader>bh :shell<cr>
 
 noremap <leader><cr> @:
 nmap <leader>bc <Plug>Kwbd
-""" Replace grep command with user function smartgrep as old grep doesn't support --exclude-dir option
+" Replace grep command with user function smartgrep as old grep doesn't support --exclude-dir option
 noremap <leader>gr :!bash -c ". ~/.alias; smartgrep "
 "noremap <leader>gr :!grep -ir --color --exclude="*\.svn/*" --exclude="*obj/"
 noremap <leader>nt :NERDTreeToggle<cr>
 
-""" Open the python interpreter
+" Open the python interpreter
 noremap <leader>py :!ipython<cr>
 
-""" Check for differences between file in buffer and on disk
+" Check for differences between file in buffer and on disk
 command Wdiff :w !diff -u % -
 
 let MRU_File=expand('$HOME/.vim/temp/mru.txt')
 
-""" yankstack key mappings
+" yankstack key mappings
 let g:yankstack_map_keys = 0
 nmap <C-p> <Plug>yankstack_substitute_older_paste
 xmap <C-p> <Plug>yankstack_substitute_older_paste
@@ -136,22 +136,22 @@ set foldcolumn=1
 
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
-""" Use a makefile; define target in .vimrcPrivat
+" Use a makefile; define target in .vimrcPrivat
 let g:Tex_UseMakefile=1
-""" Don't jump to error
+" Don't jump to error
 let g:Tex_GotoError=0
-""" Output all warnings (This doesn't seem to work, so we use TCLevel,
-""" this doesn't work either, so make a function (see below))
+" Output all warnings (This doesn't seem to work, so we use TCLevel,
+" this doesn't work either, so make a function (see below))
 "let g:Tex_IgnoreLevel=0
 "autocmd FileType tex TCLevel 1
-""" For pdflatex
+" For pdflatex
 let g:Tex_DefaultTargetFormat='pdf'
-""" Define what to fold (.= for appending!)
+" Define what to fold (.= for appending!)
 let g:Tex_FoldedEnvironments=',itemize,sideways'
-""" Turn off <++> placeholder
+" Turn off <++> placeholder
 let g:Imap_UsePlaceHolders=0
 
-""" Compiling LaTeXSuite with <leader>ll does change the directory (only for pdflatex) and can't find the log file afterwards, so we cd back to vimHomeDir
+" Compiling LaTeXSuite with <leader>ll does change the directory (only for pdflatex) and can't find the log file afterwards, so we cd back to vimHomeDir
 function! CompileLaTeXSuite()
     " Set TCLevel here, otherwise it won't work (it's a bug, I guess)
     TCLevel 0
@@ -159,15 +159,15 @@ function! CompileLaTeXSuite()
     cd `=g:vimHomeDir`
 endfunction
 
-""" For tex files, overwrite compile shortcut <leader>m with the one from LaTeX suite
+" For tex files, overwrite compile shortcut <leader>m with the one from LaTeX suite
 autocmd FileType tex noremap <buffer> <leader>m :call CompileLaTeXSuite()<CR>
 
-""" Quickly reformat paragraph
+" Quickly reformat paragraph
 map <leader>gq mz{gq}`z
-""" Quickly indent complete document
+" Quickly indent complete document
 map <leader>= mzgg=G`z
 
-""" Compile with XeLaTeX
+" Compile with XeLaTeX
 function CompileXeTex()
     let oldCompileRule=g:Tex_CompileRule_pdf
     let g:Tex_CompileRule_pdf = 'xelatex -aux-directory=F:/Vim/my_latex_doc/temp --synctex=-1 -src-specials -interaction=nonstopmode $*'
@@ -183,18 +183,18 @@ map <Leader>xl :<C-U>call CompileXeTex()<CR>
 " Enable syntax highlighting
 syntax enable 
 
-""" Use peaksea as graphical highlighting
-""" When activating 256 colors, no bold fonts are shown
+" Use peaksea as graphical highlighting
+" When activating 256 colors, no bold fonts are shown
 set t_Co=256 
 
 " feel free to choose :set background=light for a different style 
 set background=dark 
 colors peaksea
 
-""" Show line numbers
+" Show line numbers
 set number
 
-""" Use mouse for all (a)
+" Use mouse for all (a)
 set mouse=a
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -373,24 +373,24 @@ map <leader>pr :!evince 201*.pdf<cr>
 "noremap <leader>tl :TlistToggle<cr>:wincmd j<cr>:wincmd l<cr> 
 noremap <leader>al :A<cr>
 
-""" Path (command) to ctags
+" Path (command) to ctags
 "let Tlist_Ctags_Cmd = "ctags"
 "let Tlist_WinWidth = 50
 
-""" This command builds (updates) the ctags file for the SusyNt project, it can be enhanced (or split) later to account for other projects
+" This command builds (updates) the ctags file for the SusyNt project, it can be enhanced (or split) later to account for other projects
 "map <leader>tu :!ctags -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ --exclude=.svn -f ~/.vim/ctags/SusyNt ~/SusyNt/SusyNtuple/Root/ ~/SusyNt/SusyNtuple/SusyNtuple/<cr><cr>
 "set tags=~/.vim/ctags/SusyNt
 
-""" Taglist should be on the right to not interfere with NERDTree
+" Taglist should be on the right to not interfere with NERDTree
 "let Tlist_Use_Right_Window = 1
 
-""" Define paths for alternate to look for its partner files (sfr means the path is relative)
+" Define paths for alternate to look for its partner files (sfr means the path is relative)
 let g:alternateSearchPath = 'sfr:.,sfr:../source,sfr:../src,sfr:../include,sfr:../Root,sfr:../inc,sfr:../xAODNtupleMaker,sfr:../xAODNtupleAnalysis,sfr:../InDetPhysValMonitoring'
 
-""" If there is no partner file, do nothing
+" If there is no partner file, do nothing
 let g:alternateNoDefaultAlternate = 1 
 
-""" Taglist gets updated when saving
+" Taglist gets updated when saving
 "autocmd BufWritePost * :TlistUpdate
 
 if getcwd() =~ '/analysis/xAODNtuple$'
@@ -401,25 +401,25 @@ else
     set makeprg=./vim-make
 endif
 
-""" make and jump to warning/error if any
+" make and jump to warning/error if any
 "map <leader>m :make<cr>
 map <leader>m :make!<cr>
-""" make without jump to warning/error
+" make without jump to warning/error
 "map <leader>n :make!<cr>
 
-""" Omni completion
+" Omni completion
 set omnifunc=syntaxcomplete#Complete
 imap <leader>cp <C-X><C-O>
 
-""" Quickfix window
+" Quickfix window
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
-""" Arduino
+" Arduino
 autocmd! BufNewFile,BufRead *.pde setlocal ft=arduino
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 
-""" Syntastic
+" Syntastic
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
@@ -437,7 +437,7 @@ let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 nmap <leader>sy :SyntasticToggleMode<CR>
 
-""" Show tabs and trailing spaces
+" Show tabs and trailing spaces
 set list listchars=tab:>-,trail:·
 
 
@@ -445,17 +445,17 @@ set list listchars=tab:>-,trail:·
 " => Sessions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""" Check if file exists
+" Check if file exists
 function! FileExists(file)
    if filereadable(a:file)
        return 1
    endif
 endfunction
 
-""" Some plugins change directory. Store directory where vim was opened in a variable
+" Some plugins change directory. Store directory where vim was opened in a variable
 let g:vimHomeDir=getcwd()
 
-""" Restore session
+" Restore session
 function! RestoreSession()
     if argc() == 0 "vim called without arguments
         if FileExists('.Session.vim')
@@ -464,18 +464,18 @@ function! RestoreSession()
    endif
 endfunction
 
-""" Before writing .Session.vim, change to directory where vim was opened (to not mix up different sessions)
+" Before writing .Session.vim, change to directory where vim was opened (to not mix up different sessions)
 function! MakeSession()
     cd `=g:vimHomeDir`
     mksession! .Session.vim
 endfunction
 
-""" If available, source .vimrcPrivate with some directory specific settings
+" If available, source .vimrcPrivate with some directory specific settings
 if FileExists('.vimrcPrivate')
     execute 'source .vimrcPrivate'
 endif
 
-""" Restore session at startup (if available), write session at end
+" Restore session at startup (if available), write session at end
 autocmd VimEnter * call RestoreSession()
 "autocmd VimLeave * call MakeSession()
 nmap <leader>sn :call MakeSession()<CR>
