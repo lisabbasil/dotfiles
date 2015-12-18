@@ -222,6 +222,13 @@ set nobackup
 set nowb
 set noswapfile
 
+" Shortcut for gundo
+nnoremap <leader>u :GundoToggle<CR>
+
+" Set width of gundo window
+let g:gundo_width = 80
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
