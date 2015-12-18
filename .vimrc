@@ -435,6 +435,8 @@ let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
+nmap <leader>sy :SyntasticToggleMode<CR>
+
 """ Show tabs and trailing spaces
 set list listchars=tab:>-,trail:·
 
