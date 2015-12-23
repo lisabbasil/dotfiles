@@ -251,14 +251,6 @@ autocmd FileType text setlocal shiftwidth=2 tabstop=2
 " only 2 spaces for some specific files
 autocmd BufRead /home/basil/todo setlocal shiftwidth=2 tabstop=2
 autocmd BufRead /home/basil/notes/* setlocal shiftwidth=2 tabstop=2
-autocmd BufRead /afs/cern.ch/user/b/bschneid/analysis/* setlocal shiftwidth=2 tabstop=8
-autocmd BufRead /afs/cern.ch/user/b/bschneid/tracking/* setlocal shiftwidth=2 tabstop=8
-autocmd BufRead /afs/cern.ch/user/b/bschneid/tracking/InDetPhysValMonitoring/runTracking setlocal shiftwidth=4 tabstop=4
-autocmd BufRead /afs/cern.ch/user/b/bschneid/tracking/InDetPhysValMonitoring/runSamples setlocal shiftwidth=4 tabstop=4
-autocmd BufRead /afs/cern.ch/user/b/bschneid/tracking/InDetPhysValMonitoring/runPlots setlocal shiftwidth=4 tabstop=4
-autocmd BufRead /afs/cern.ch/user/b/bschneid/tracking/InDetPhysValMonitoring/jobBatch setlocal shiftwidth=4 tabstop=4
-autocmd BufRead /afs/cern.ch/user/b/bschneid/tracking/runCommon_inc setlocal shiftwidth=4 tabstop=4
-autocmd BufRead /afs/cern.ch/user/b/bschneid/tracking/TIDE/runTIDE setlocal shiftwidth=4 tabstop=4 nowrap
 
 " Linebreak on 80 characters
 set lbr
