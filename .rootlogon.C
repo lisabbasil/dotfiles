@@ -15,5 +15,8 @@
     AutoLibraryLoader::enable();
     gSystem->Load("libDataFormatsFWLite.so");
     gSystem->Load("libDataFormatsPatCandidates.so");
+    gROOT->SetStyle("Plain");
+    gSystem->Load("libRooFit");
+    using namespace RooFit;
    }
 }
