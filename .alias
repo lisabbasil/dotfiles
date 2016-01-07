@@ -122,3 +122,8 @@ cmssw(){
     . /cvmfs/cms.cern.ch/cmsset_default.sh
     export SCRAM_ARCH=slc6_amd64_gcc491
 }
+
+# Setup CRAB3
+crab3(){
+    . /cvmfs/cms.cern.ch/crab3/crab.sh
+}
