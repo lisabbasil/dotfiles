@@ -13,6 +13,11 @@ elif [ "$1" == "global" ]; then
     user=basil
     server=atlast3.triumf.ca
     serverDir=/
+elif [ "$1" == "fnal" ]; then
+    dir=~/mnt/fnal
+    user=bschneid
+    server=cmslpc-sl6.fnal.gov
+    serverDir=/uscms/home/bschneid/
 else
     dir=~/mnt/triumf
     user=basil
