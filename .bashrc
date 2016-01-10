@@ -24,16 +24,10 @@ esac
 export PROMPT_DIRTRIM=3
 export PS1="\[\033[${colorUser}m\]\u\[\033[00m\]@\[\033[${colorServer}m\]\h\[\033[00m\]: \[\033[${colorPath}m\]\w\[\033[00m\] \$ "
 
-#if [ "$server" = true ]; then
-#    export LD_LIBRARY_PATH=~/pkg/lib:$LD_LIBRARY_PATH
-#    export MANPATH=~/pkg/share/man:$MANPATH
-#    export PATH=~/pkg/bin:$PATH
-#else
-#    export PATH=~/bin/:~/bin/texbin/:$PATH
-#fi
-export LD_LIBRARY_PATH=~/pkg/lib:$LD_LIBRARY_PATH
-export MANPATH=~/pkg/share/man:$MANPATH
-export PATH=~/pkg/bin:~/.gem/ruby/2.2.0/bin:$PATH
+export LD_LIBRARY_PATH=~/pkg/lib:/uscms_data/d1/bschneid/pkg/lib:"${LD_LIBRARY_PATH}"
+export MANPATH=~/pkg/share/man:uscms_data/d1/bschneid/pkg/share/man:"${MANPATH}"
+export PATH=~/pkg/bin:/uscms_data/d1/bschneid/pkg/bin:~/.gem/ruby/2.2.0/bin:"${PATH}"
+export PYTHONPATH=~/analysis/toolbox/:"${PYTHONPATH}"
 
 export EDITOR=vim
 
