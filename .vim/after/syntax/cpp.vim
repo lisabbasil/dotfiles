@@ -1357,8 +1357,8 @@ if !exists("c_no_cern_root")
    syn keyword	cType           TObjArrayIter TMapIter TClass TEnv TGlobal TCint TROOT TDictionary TTime TTimer
    syn keyword	cType           Double_t Int_t Float_t Long_t Bool_t Byte_t
    syn keyword	cType      	char_t Marker_t Double32_t Float16_t Long64_t
-   syn keyword	cType           Short_t Stat_t Style_t Text_t UShort_t  
-   syn keyword	cConstant       kRed kPink kBlue kMagenta kViolet kAzure kCyan kTeal kGreen kSpring kYellow
+   syn keyword	cType           Short_t Stat_t Style_t Text_t UShort_t
+   syn keyword	cConstant       kRed kPink kBlue kMagenta kViolet kAzure kCyan kTeal kGreen kSpring kYellow kBlack kOrange kWhite kGray
    syn keyword	cConstant       kSolid kDashed kDotted kDashDotted kDot kPlus kStar kCircle kMultiply kFullDotSmall
    syn keyword	cConstant       kFullDotMedium kFullDotLarge kOpenTriangleDown kFullCross kFullCircle kFullSquare
    syn keyword	cConstant       kFullTriangleUp kFullTriangleDown kOpenCircle kOpenSquare kOpenTriangleUp 
