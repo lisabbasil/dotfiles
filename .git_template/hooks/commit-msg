@@ -7,7 +7,7 @@ while read line; do
     if [ "${line:0:1}" == "#" ]; then
         continue
     fi
-    if [ ${#line} -ge 72 ]; then
+    if [ ${#line} -ge 73 ]; then
         echo "Commit messages are limited to 72 characters."
         echo "The following commit message has ${#line} characters."
         echo "${line}"
