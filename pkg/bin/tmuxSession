@@ -3,33 +3,35 @@
 # Sets up a predefined tmux session
 
 # If no positional parameter is given, set default value
-session="${1:-tracking}"
+session="${1:-analysis}"
 # Define working and data directory
 case "${session}" in
     tracking)
-        wd="${2:-~/tracking/InDetPhysValMonitoring/}"
-        od="${3:-~/tracking/output/InDetPhysValMonitoring/}"
-        dd="${4:-${workspace}/tracking/datasets/}"
+        #wd="${2:-~/tracking/InDetPhysValMonitoring/}"
+        #od="${3:-~/tracking/output/InDetPhysValMonitoring/}"
+        #dd="${4:-${workspace}/tracking/datasets/}"
         ;;
     [tT][iI][dD][eE])
-        wd="${2:-~/tracking/TIDE/}"
-        od="${3:-~/tracking/output/TIDE/}"
-        dd="${4:-${workspace}/tracking/datasets/}"
+        #wd="${2:-~/tracking/TIDE/}"
+        #od="${3:-~/tracking/output/TIDE/}"
+        #dd="${4:-${workspace}/tracking/datasets/}"
         ;;
     simulation)
-        wd="${2:-~/simulation/fatras/}"
-        od="${3:-~/simulation/fatras/output/}"
-        dd="${4:-${workspace}/tracking/datasets/}"
+        #wd="${2:-~/simulation/fatras/}"
+        #od="${3:-~/simulation/fatras/output/}"
+        #dd="${4:-${workspace}/tracking/datasets/}"
         ;;
     analysis)
-        wd="${2:-~/analysis/xAODNtuple/}"
-        od="${3:-~/analysis/output/}"
+        wd="${2:-~/analysis/}"
+        wd2="${2:-~/analysis/RA4_7_4_14/src/}"
+        #od="${3:-~/analysis/output/}"
         dd="${4:-${workspace}/analysis/datasets/}"
         ;;
 esac
 
 echo Session: "$session"
 echo Working directory: "$wd"
+echo Output directory: "$od"
 echo Dataset directory: "$dd"
 
 # runtime must always be the first window in a tmux session, since it creates
@@ -41,7 +43,9 @@ windowRuntime(){
     # Navigate to directory
     tmux send-keys -t "$session" "cd $wd" enter
     # Source setup script
-    tmux send-keys -t "$session" ". setupEnvironment" enter
+    tmux send-keys -t "$session" ". setupEnvironment_inc" enter
+    # Navigate to directory
+    tmux send-keys -t "$session" "cd $wd2" enter
     return 0
 }
 
@@ -52,6 +56,8 @@ windowVim(){
     tmux send-keys -t "$session" "cd $wd" enter
     # Source setup script
     tmux send-keys -t "$session" ". setupEnvironment" enter
+    # Navigate to directory
+    tmux send-keys -t "$session" "cd $wd2" enter
     return 0
 }
 
@@ -119,8 +125,8 @@ if [ $? != 0 ]; then
             # Call functions to open windows
             windowRuntime
             windowVim
-            windowDatasets
-            windowOutput
+            #windowDatasets
+            #windowOutput
             windowScratch
             ;;
         *)
