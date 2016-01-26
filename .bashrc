@@ -64,7 +64,6 @@ fi
 # Set vi mode! Woohoo!
 set -o vi
 
-# https://stackoverflow.com/questions/9457233/unlimited-bash-history
 # Eternal bash history.
 # ---------------------
 # Undocumented feature which sets the size to "unlimited".
