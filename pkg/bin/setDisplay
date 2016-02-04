@@ -10,6 +10,7 @@ gui=i3
 int='eDP1'
 ext='HDMI1'
 hdmi='HDMI1'
+dp2='DP2'
 
 # If "${ext}" is connected, set option to 2,
 # otherwise use option 1
@@ -58,7 +59,7 @@ modeInt=1920x1080
 #modeExt=1280x1024
 modeExt=1920x1080
 modeHdmi=1920x1080
-modeB52=1024x768
+modeB52=1280x1024
 modeIntOcl="1920x1080_75.00"
 modeOcl=1080x1920
 
@@ -110,12 +111,12 @@ case "${option}" in
         ;;
     B52) printf "%b" "Using two displays set up for B52\n"
         xrandr \
-            --addmode "${ext}" "${modeB52}" || exit 1
+            --addmode "${dp2}" "${modeB52}" || exit 1
         xrandr \
             --output "${int}" \
             --mode "$modeInt" \
             --primary \
-            --output "${ext}" \
+            --output "${dp2}" \
             --mode "${modeB52}" \
             --right-of "${int}" || exit 2
         if [ "$gui" = "xfce" ]; then
@@ -220,6 +221,8 @@ case "${option}" in
             --output "${ext}" \
             --off \
             --output "${hdmi}" \
+            --off \
+            --output "${dp2}" \
             --off || exit 2
         if [ "$gui" = "xfce" ]; then
             xfconf-query \
