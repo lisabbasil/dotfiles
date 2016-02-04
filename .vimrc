@@ -418,8 +418,8 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 " Arduino
-autocmd! BufNewFile,BufRead *.pde setlocal ft=arduino
-autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
+"autocmd! BufNewFile,BufRead *.pde setlocal ft=arduino
+"autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 
 " Syntastic
 "set statusline+=%#warningmsg#
