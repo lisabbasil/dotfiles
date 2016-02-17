@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Make plot dump of figures
+# ${1} is the tex file, it will append slides with figures to it
+# all other positional parameters are the figures, i.e. call with something like
+# ./plotdump slides.tex figures/*
+
+texfile="${1}"
+shift
+
+# Remove /end{document} from tex file
+sed -i '/end{document}/d' "${texfile}"
+
+for figure; do
+    echo >> "${texfile}"
+    echo \\begin{frame} \\frametitle{"${figure//_/\\_}"} >> "${texfile}"
+    echo \\includegraphics[width=1.\\textwidth]{"${figure}"} >> "${texfile}"
+    echo \\end{frame} >> "${texfile}"
+done
+
+# Append /end{document} to text file
+echo >> "${texfile}"
+echo \\end{document} >> "${texfile}"
