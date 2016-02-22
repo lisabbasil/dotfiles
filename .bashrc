@@ -73,6 +73,10 @@ export HISTFILE=~/.history
 # http://superuser.com/questions/20900/bash-history-loss
 #PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
+# Coreutils 8.25 introduced quotation marks for filenames with spaces when using
+# ls in the terminal; the following option disables it
+export QUOTING_STYLE=literal
+
 # Start mpdscribble, but only when it is not yet running
 pidof mpdscribble &>/dev/null
 if [ $? -ne 0 ]; then
