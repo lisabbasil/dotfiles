@@ -433,11 +433,15 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
+" C++
 let g:syntastic_cpp_check_header = 1
 "let g:syntastic_cpp_no_include_search = 1
 "let g:syntastic_cpp_no_default_include_dirs = 1
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
+
+" HTML
+let g:syntastic_html_checkers = ['validator', 'w3']
 
 nmap <leader>sy :SyntasticToggleMode<CR>
 
