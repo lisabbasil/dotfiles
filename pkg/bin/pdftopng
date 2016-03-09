@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Convert PDF files to PNG, with decent resolution
+
+for pdf; do
+    convert -trim -density 200 "${pdf}" "${pdf/pdf/png}"
+done
