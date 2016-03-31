@@ -3,6 +3,7 @@
 # Sometimes, ls or ll are predefined as alias
 unalias ls 2>/dev/null
 unalias ll 2>/dev/null
+unalias la 2>/dev/null
 ls(){
     /bin/ls --color=auto "${@}"
 }
@@ -65,7 +66,7 @@ mykeepass(){
 mydate(){
     date +"%F_%H-%M-%S"
 }
-export -f mydate
+export mydate
 
 # Always show Monday as first day of the week in cal
 cal(){
@@ -94,7 +95,7 @@ contains(){
 eosSetup(){
     . /afs/cern.ch/project/eos/installation/cms/etc/setup.sh
 }
-export -f eosSetup
+export eosSetup
 
 # Voms alias with long validity
 voms(){
