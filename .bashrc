@@ -36,7 +36,6 @@ export HISTSIZE=500000
 export HISTTIMEFORMAT="[%F_%H-%M-%S] "
 export HISTFILE=~/.bash_history
 
-xset b off &> /dev/null
 #setxkbmap -layout us -variant altgr-intl &> /dev/null
 
 # Change the file location because certain bash sessions truncate .bash_history

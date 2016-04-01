@@ -21,6 +21,9 @@ export EDITOR=vim
 
 test -s ~/.alias && . ~/.alias
 
+# Turn off bell
+xset b off &> /dev/null
+
 # Source command-not-found hook
 cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 [ -f "$cnfhook" ] && . "$cnfhook" && unset cnfhook
