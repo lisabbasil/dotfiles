@@ -48,7 +48,7 @@ setopt pushdignoredups
 setopt pushdminus
 
 # Fish-like syntax highlighting
-. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. ~/pkg/install/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Set PS1 according to server you are working on
 if [ $UID -eq 0 ]; then
