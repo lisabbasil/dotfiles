@@ -106,13 +106,6 @@ mocp(){
     mocp-scrobbler.py -d; /usr/bin/mocp "${@}"
 }
 
-# not working on lxplus, probably due to old version of tput
-nowrap(){
-    (tput rmam;
-     "${@}";
-     tput smam)
-}
-
 # Setup latest LaTeX distribution on lxplus
 lxplusLatex(){
     export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH

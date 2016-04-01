@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Don't wrap long lines, discard everything after the end of the terminal is
+# reached. Not wrapping lines could be done as easily as invoking
+# $ tput rmam
+# However, this is not working in tmux
+
+cols=$(tput cols)
+
+$@ | while IFS='' read -r line; do
+    echo "${line}" | cut -c-"${cols}"
+done

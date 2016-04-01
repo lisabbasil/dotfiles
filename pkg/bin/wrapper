@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# When wrapping long lines, prepend "${wrap}" in front of it to mark them as
+# wrapped lines
+
+cols=$(tput cols)
+colsi=$((${cols} + 1))
+wrap='        '
+
+$@ | while IFS='' read -r line; do
+    while [ ${#line} -gt ${#wrap} ]; do
+        echo "${line}" | cut -c-"${cols}"
+        line="${wrap}"$(echo "${line}" | cut -c"${colsi}"-)
+    done
+done
