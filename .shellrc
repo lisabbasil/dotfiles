@@ -13,6 +13,10 @@ export PYTHONPATH=~/analysis/toolbox/:"${PYTHONPATH}"
 
 export EDITOR=vim
 
+export HISTFILE=~/.history
+export HISTSIZE=500000
+export SAVEHIST=$HISTSIZE
+
 # Set keyboard for proper use of backspace
 #stty erase ^?
 

@@ -32,9 +32,6 @@ set -o vi
 # Undocumented feature which sets the size to "unlimited".
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
 export HISTFILESIZE=500000
-export HISTSIZE=500000
-export HISTTIMEFORMAT="[%F_%H-%M-%S] "
-export HISTFILE=~/.bash_history
 
 #setxkbmap -layout us -variant altgr-intl &> /dev/null
 

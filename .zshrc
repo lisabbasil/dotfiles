@@ -1,5 +1,4 @@
 setopt appendhistory nomatch notify
-setopt HIST_IGNORE_DUPS
 unsetopt autocd beep extendedglob
 
 autoload -U colors && colors
@@ -16,12 +15,6 @@ compinit
 CASE_SENSITIVE="true"
 
 DISABLE_AUTO_UPDATE="true"
-
-# History options
-HIST_STAMPS="yyyy-mm-dd"
-HISTFILE=~/.zsh_history
-HISTSIZE=500000
-SAVEHIST=500000
 
 . ~/.shellrc
 
