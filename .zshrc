@@ -70,7 +70,7 @@ esac
 # Personal theme
 # Colors are black, red, green, yellow, blue, magenta, cyan, white
 #PS1="%F{$colorUser}%n%{$reset_color%}@%F{$colorServer}%m %{$reset_color%}: %F{$colorPath}%~%{$reset_color%} $ "
-PROMPT="%{$colorUser%}%n%{$reset_color%}@%{$colorServer%}%m %{$reset_color%}: %{$colorPath%}%(5~|%-1~/.../%3~|%4~)%{$reset_color%} $ "
+PROMPT="%{$colorUser%}%n%{$reset_color%}@%{$colorServer%}%m%{$reset_color%}: %{$colorPath%}%(5~|%-1~/.../%3~|%4~)%{$reset_color%} $ "
 RPROMPT="%(?..%{$fg[red]%}%? %{$reset_color%})"
 
 # Get colored man pages
