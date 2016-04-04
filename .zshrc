@@ -6,6 +6,12 @@ autoload -U colors && colors
 # Vim key bindings
 bindkey -v
 
+# Vim (instead of vi) like bindings
+bindkey "^?" backward-delete-char
+bindkey "^W" backward-kill-word
+bindkey "^H" backward-delete-char
+bindkey "^U" backward-kill-line
+
 # Allow e.g. ../ for tab completion
 zstyle ':completion:*' special-dirs true
 
