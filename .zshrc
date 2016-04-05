@@ -18,6 +18,11 @@ zstyle ':completion:*' special-dirs true
 autoload -Uz compinit
 compinit
 
+# Open vim by pressing v, just like in bash
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 CASE_SENSITIVE="true"
 
 DISABLE_AUTO_UPDATE="true"
