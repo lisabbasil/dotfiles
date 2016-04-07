@@ -23,6 +23,9 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
+# Enable comments in interactive mode
+setopt interactivecomments
+
 CASE_SENSITIVE="true"
 
 DISABLE_AUTO_UPDATE="true"
