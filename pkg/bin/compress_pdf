@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Compress PDF file
+# Usage: compress_pdf input.pdf
+# Will create input_compressed.pdf
+
+input="${1}"
+output="${input%.pdf}"_compressed.pdf
+
+# Honestly, I don't know what all these gs options mean, I just copy/pasted that
+# from the net
+
+gs \
+    -sDEVICE=pdfwrite \
+    -dCompatibilityLevel=1.4 \
+    -dPDFSETTINGS=/screen \
+    -dNOPAUSE \
+    -dQUIET \
+    -dBATCH \
+    -sOutputFile="${output}" \
+    "${input}"
