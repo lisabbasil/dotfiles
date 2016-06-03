@@ -3,14 +3,20 @@
 # Cuts video with reencoding it
 
 # ./usage:
-# videoCut filename from to
+# videoCut filename from to (dest)
 
+filename="${1%.*}_${2}_${3}.${1##*.}"
 ffmpeg \
     -i "${1}" \
     -b:v 2572k \
     -strict -2 \
     -ss "${2}".000 \
     -to "${3}".000 \
-    "${1%.*}_${2}_${3}.${1##*.}"
+    "${filename}"
+
+if [ -n "${4}" ]; then
+    mkdir -p "${4}"
+    mv "${filename}" "${4}"
+fi
 
 #http://superuser.com/questions/358155/how-can-i-avoid-a-few-seconds-of-blank-video-when-using-vcodec-copy
