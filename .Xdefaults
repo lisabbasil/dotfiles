@@ -1,0 +1,74 @@
+### Stolen from: http://www.linuxized.com/2010/08/urxvt-the-unbeatable-terminal/URxvt*
+
+loginShell:true
+URxvt*transparent:true
+URxvt*shading:5
+URxvt*background:Black
+URxvt*foreground:White
+URxvt*cursorColor:Light Green
+URxvt*scrollBar:true
+URxvt*scrollBar_right:true
+URxvt*scrollBar_floating:false
+URxvt*scrollstyle:plain
+URxvt*scrollTtyOutput:false
+URxvt*scrollWithBuffer:true
+URxvt*scrollTtyKeypress:true
+URxvt*secondaryScroll:true
+
+URxvt*termName: rxvt-256color
+
+### how many lines you want it to save per session
+URxvt*saveLines:32767
+URxvt*troughColor:#000000
+URxvt*scrollColor:#666666
+URxvt*font: xft:Dejavu Sans Mono:pixelsize=16:antialias=true
+### Turn off bold fonts by setting it to the same font as before (256 colors should be enough)
+URxvt*boldFont: xft:DejaVu Sans Mono:pixelsize=16:antialias=true
+URxvt*letterSpace: -1
+
+### with this set to true, when an app sends a bell to the terminal, awesome hilights the appropriate tag(s) 
+URxvt*urgentOnBell: true
+
+### these three lines enable clicking on links to open them 
+### if you want to enable tab support, append ,tabbed to the next line
+### then use shift+down arrow to create tabs and shift+{left,right} arrows to switch between them
+URxvt*perl-ext-common: default,matcher,-option-popup,-selection-popup,-realine
+URxvt*matcher.button: 1
+### do not forget to change this to your favorite browser
+URxvt*urlLauncher: google-chrome
+
+#URxvt.perl-ext-common: default,matcher,clipboard
+#URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+#URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+ 
+!! black dark/light
+*color0: #222222
+*color8: #444444
+
+!! red dark/light
+*color1: #B10000
+*color9: #CC0000
+
+!! green dark/light
+*color2: #6CB100
+*color10: #7CCC00
+
+!! yellow dark/light
+*color3: #B15C00
+*color11: #CC6A00
+
+!! blue dark/light
+*color4: #005577
+*color12: #0075A3
+
+!! magenta dark/light
+*color5: #5600B1
+*color13: #6300CC
+
+!! cyan dark/light
+*color6: #007177
+*color14: #009199
+
+!! white dark/light
+*color7: #BBBBBB
+*color15: #EEEEEE 
