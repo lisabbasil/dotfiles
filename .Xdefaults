@@ -29,13 +29,9 @@ URxvt*letterSpace: -1
 # with this set to true, when an app sends a bell to the terminal, awesome hilights the appropriate tag(s)
 URxvt*urgentOnBell: true
 
-# these three lines enable clicking on links to open them
-# if you want to enable tab support, append ,tabbed to the next line
-# then use shift+down arrow to create tabs and shift+{left,right} arrows to switch between them
-URxvt*perl-ext-common: default,matcher,-option-popup,-selection-popup,-realine
-URxvt*matcher.button: 1
-# do not forget to change this to your favorite browser
-URxvt*urlLauncher: google-chrome-stable
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
 
 #URxvt.perl-ext-common: default,matcher,clipboard
 #URxvt.keysym.Shift-Control-C: perl:clipboard:copy
