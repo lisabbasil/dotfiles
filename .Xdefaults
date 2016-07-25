@@ -38,31 +38,31 @@ URxvt.matcher.button: 1
 #URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
 # black dark/light
-*color0: #222222
-*color8: #444444
+*color0: #444444
+*color8: #999999
 
 # red dark/light
-*color1: #B10000
-*color9: #CC0000
+*color1: #A90000
+*color9: #EE0000
 
 # green dark/light
 *color2: #6CB100
 *color10: #7CCC00
 
 # yellow dark/light
-*color3: #B15C00
-*color11: #CC6A00
+*color3: #EA720A
+*color11: #FFFF00
 
 # blue dark/light
 *color4: #005577
-*color12: #0075A3
+*color12: #00ACF0
 
 # magenta dark/light
-*color5: #5600B1
-*color13: #6300CC
+*color5: #AF00B1
+*color13: #A166E0
 
 # cyan dark/light
-*color6: #007177
+*color6: #99E3E7
 *color14: #009199
 
 # white dark/light
