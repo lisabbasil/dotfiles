@@ -55,3 +55,8 @@ pidof mpdscribble &>/dev/null
 if [ $? -ne 0 ]; then
     mpdscribble 2>/dev/null
 fi
+
+# Enable latest gcc compiler
+if [[ "$HOSTNAME" == openstack01 ]]; then
+    . /opt/rh/devtoolset-2/enable
+fi
