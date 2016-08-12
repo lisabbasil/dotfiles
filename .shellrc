@@ -57,6 +57,12 @@ if [ $? -ne 0 ]; then
 fi
 
 # Enable latest gcc compiler
-if [[ "$HOSTNAME" == openstack01 ]]; then
+if [[ "$HOSTNAME" == openstack02 ]]; then
     . /opt/rh/devtoolset-2/enable
+fi
+
+# Set environment variables on openstack VM
+if [[ "$HOSTNAME" == openstack02 ]]; then
+    export LD_LIBRARY_PATH=/opt/cactus/lib:$LD_LIBRARY_PATH
+    export PATH=/opt/cactus/bin:$PATH
 fi
