@@ -35,7 +35,7 @@ cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 [ -f "$cnfhook" ] && . "$cnfhook" && unset cnfhook
 
 # Set workspace variable on lxplus
-if [[ "$HOSTNAME" == lxplus* ]]; then
+if [[ "$HOSTNAME" == lxplus* ]] || [[ "$HOSTNAME" == openstack0* ]]; then
     export workspace=/afs/cern.ch/work/b/bschneid/
 fi
 # Set workspace variable on fnal
