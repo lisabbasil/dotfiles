@@ -7,8 +7,8 @@ plex=false
 plexfolder=/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server
 
 # Backup home folder
-#scp "$server":"${dir}"basil/bkp.txt ~/ 2>> "$errorFile" &&
-#    echo "Last backup invoked at $(date)." >> ~/bkp.txt
+scp "$server":"${dir}"basil/bkp.txt ~/ 2>> "$errorFile" &&
+    echo "Last backup invoked at $(date)." >> ~/bkp.txt
 rsync \
     -pavz \
     --delete \
@@ -18,7 +18,7 @@ rsync \
     --exclude 'Music/' \
     --exclude 'Documents/vmware' \
     /home/basil "$server":"${dir}" 2>> "$errorFile"
-#rm ~/bkp.txt 2>> "$errorFile"
+rm ~/bkp.txt 2>> "$errorFile"
 
 if [[ "$plex" == true ]]; then
     ### Backup plex folder
@@ -27,8 +27,8 @@ if [[ "$plex" == true ]]; then
 fi
 
 # Check size of backup
-#echo -n "Back up size on server: "
-#ssh "${server}" du -sh "${dir}"basil | awk '{ print $1 }'
+echo -n "Back up size on server: "
+ssh "${server}" du -sh "${dir}"basil | awk '{ print $1 }'
 
 # Check if there were errors
 if [[ -s "$errorFile" ]]; then
