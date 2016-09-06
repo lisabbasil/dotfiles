@@ -7,8 +7,12 @@ plex=false
 plexfolder=/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server
 
 # Backup home folder
-scp "$server":"${dir}"basil/bkp.txt ~/ 2>> "$errorFile" &&
-    echo "Last backup invoked at $(date)." >> ~/bkp.txt
+scp \
+    -q \
+    "$server":"${dir}"basil/bkp.txt ~/ \
+    2>> "$errorFile" \
+    && echo "Last backup invoked at $(date)." \
+    >> ~/bkp.txt
 rsync \
     -pavz \
     --delete \
@@ -31,7 +35,9 @@ fi
 
 # Check size of backup
 echo -n "Back up size on server: "
-ssh "${server}" du -sh "${dir}"basil | awk '{ print $1 }'
+ssh \
+    -q \
+    "${server}" du -sh "${dir}"basil | awk '{ print $1 }'
 
 # Check if there were errors
 if [[ -s "$errorFile" ]]; then
