@@ -17,6 +17,9 @@ rsync \
     --exclude 'Videos/' \
     --exclude 'Music/' \
     --exclude 'Documents/vmware' \
+    --exclude '.dropbox/command_socket' \
+    --exclude '.dropbox/iface_socket' \
+    --exclude '.moc/socket2' \
     /home/basil "$server":"${dir}" 2>> "$errorFile"
 rm ~/bkp.txt 2>> "$errorFile"
 
