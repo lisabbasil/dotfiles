@@ -33,6 +33,6 @@
     fr = !git svn fetch && git svn rebase
     # For git undo command, see http://megakemp.com/2016/08/25/git-undo/
 	undo = "!f() { \\\n    git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; \\\n}; f"
-    plog = log --format=\"%C(yellow)%h%C(reset) %C(cyan)%s%C(reset) %C(dim white)(%ar)%C(reset)%w(72,4,4)%b\"
+    plog = log --format=\"%C(yellow)%h %C(reset)%C(green)%<(15,trunc)%an%C(reset)%C(yellow)%d%C(reset) %C(cyan)%s%C(reset) %C(dim white)(%ar)%C(reset)%w(72,4,44)%b\"
 [init]
 	templatedir = ~/.git_template
