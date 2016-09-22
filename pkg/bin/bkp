@@ -7,12 +7,6 @@ plex=false
 plexfolder=/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server
 
 # Backup home folder
-scp \
-    -q \
-    "$server":"${dir}"basil/bkp.txt ~/ \
-    2>> "$errorFile" \
-    && echo "Last backup invoked at $(date)." \
-    >> ~/bkp.txt
 rsync \
     -pavz \
     --delete \
@@ -25,7 +19,7 @@ rsync \
     --exclude '.dropbox/iface_socket' \
     --exclude '.moc/socket2' \
     /home/basil "$server":"${dir}" 2>> "$errorFile"
-rm ~/bkp.txt 2>> "$errorFile"
+ssh lxplus "echo Last backup invoked at $(date) >> ${dir}/bkp.txt"
 
 if [[ "$plex" == true ]]; then
     ### Backup plex folder
