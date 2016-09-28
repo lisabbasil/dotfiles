@@ -29,24 +29,24 @@ diff(){
     /usr/bin/diff -u "${@}"
 }
 
-rgrep(){
-    local pattern="${1:-pattern}"
-    shift 1
-    grep \
-        -Ir \
-        --exclude-dir=.svn \
-        --exclude-dir=.git \
-        --exclude-dir=InstallArea \
-        --exclude-dir=WorkArea \
-        --exclude=\*.make \
-        --exclude=\*.d \
-        --exclude=\*.asetup\* \
-        --exclude=.Session.vim \
-        --exclude=build.out \
-        --exclude=tags \
-        --exclude=cscope.out \
-        "${pattern}" "$@"
-}
+#rgrep(){
+#    local pattern="${1:-pattern}"
+#    shift 1
+#    grep \
+#        -Ir \
+#        --exclude-dir=.svn \
+#        --exclude-dir=.git \
+#        --exclude-dir=InstallArea \
+#        --exclude-dir=WorkArea \
+#        --exclude=\*.make \
+#        --exclude=\*.d \
+#        --exclude=\*.asetup\* \
+#        --exclude=.Session.vim \
+#        --exclude=build.out \
+#        --exclude=tags \
+#        --exclude=cscope.out \
+#        "${pattern}" "$@"
+#}
 
 mkcd(){
     mkdir "${1}" && cd "${1}"
