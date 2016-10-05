@@ -69,3 +69,6 @@ fi
 
 # Add makeflag variable to automatically build on many cpus (like -j $(nproc))
 export MAKEFLAGS="-j $(nproc)"
+
+# Temporary hack to suppress output garbage from cmg/cmssw
+export TERMINFO=/usr/share/terminfo
