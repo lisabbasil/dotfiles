@@ -54,9 +54,6 @@ setopt pushdignoredups
 # This reverts the +/- operators.
 setopt pushdminus
 
-# Fish-like syntax highlighting
-. ~/pkg/install/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # Set PS1 according to server you are working on
 if [ $UID -eq 0 ]; then
     # root
@@ -113,3 +110,6 @@ man() {
 		PATH="$HOME/bin:$PATH" \
 			man "$@"
 }
+
+# Fish-like syntax highlighting (keep at the end)
+. ~/pkg/install/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
