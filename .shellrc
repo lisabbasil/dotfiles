@@ -72,3 +72,6 @@ export MAKEFLAGS="-j $(nproc)"
 
 # Temporary hack to suppress output garbage from cmg/cmssw
 export TERMINFO=/usr/share/terminfo
+
+# Set reference where copy of complete CMSSW is stored
+export CMSSW_GIT_REFERENCE=/cvmfs/cms.cern.ch/cmssw.git
