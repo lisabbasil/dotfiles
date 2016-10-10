@@ -34,13 +34,13 @@ xset b off &> /dev/null
 cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 [ -f "$cnfhook" ] && . "$cnfhook" && unset cnfhook
 
-# Set workspace variable on lxplus
+# Set workspace variable depending on server
 if [[ "$HOSTNAME" == lxplus* ]] || [[ "$HOSTNAME" == openstack0* ]]; then
     export workspace=/afs/cern.ch/work/b/bschneid/
-fi
-# Set workspace variable on fnal
-if [[ "$HOSTNAME" == cmslpc* ]]; then
+elif [[ "$HOSTNAME" == cmslpc* ]]; then
     export workspace=/uscms_data/d3/bschneid/
+elif [[ "$HOSTNAME" == nafhh* ]]; then
+    export workspace=/nfs/dust/cms/user/bschneid
 fi
 
 # If in tmux, unset DISPLAY
