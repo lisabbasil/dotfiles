@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Check for a specific line (counted from the bottom) to be a specific word.
+# If this is the case, the job is assumed to have run successfully.
+
+# What line number (counted from the bottom) to search for the specific word(s)
+line=3
+
+# If this word is found, the job is assumed to be successful
+word="Job succeeded"
+
+# Array with failed log files
+failed=()
+
+# Total log files
+total=0
+
+for file; do
+    tail=$(tail -n "${line}" "${file}" | head -n 1)
+    if [ -z "${tail}" ] || [ "${tail}" != "${word}" ]; then
+        failed+=("${file}")
+    fi
+    (( total++ ))
+done
+
+echo "Failed or unfinished: ${#failed[@]} / ${total}"
+for file in "${failed[@]}"; do
+    echo "${file}"
+done
