@@ -1,5 +1,6 @@
 setopt appendhistory nomatch notify
 unsetopt autocd beep extendedglob
+unsetopt AUTO_REMOVE_SLASH
 
 autoload -U colors && colors
 
