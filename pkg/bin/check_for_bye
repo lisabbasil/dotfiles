@@ -9,21 +9,75 @@ line=3
 # If this word is found, the job is assumed to be successful
 word="Job succeeded"
 
-# Array with failed log files
-failed=()
+usage(){
+    echo "Check for a specific line (counted from the bottom) in a log file "
+    echo "to be a specific word. If this is the case, the job is assumed "
+    echo "to have run successfully."
+    echo
+    echo "Usage: $(basename $0) [option] [logfiles]"
+    echo "where [option] can be"
+    echo "  -h               Show this help"
+    echo "  -l               Line to search from the bottom in given log files"
+    echo "                   (default: ${line})"
+    echo "  -w               Word to be searched for"
+    echo "                   (default: ${word})"
+    echo "and [logfiles] is a path to any number of log files."
+}
 
-# Total log files
-total=0
+run(){
+    # Array with failed log files
+    failed=()
 
-for file; do
-    tail=$(tail -n "${line}" "${file}" | head -n 1)
-    if [ -z "${tail}" ] || [ "${tail}" != "${word}" ]; then
-        failed+=("${file}")
+    # Total log files
+    total=0
+
+    for file; do
+        tail=$(tail -n "${line}" "${file}" | head -n 1)
+        if [ -z "${tail}" ] || [ "${tail}" != "${word}" ]; then
+            failed+=("${file}")
+        fi
+        (( total++ ))
+    done
+
+    echo "Failed or unfinished: ${#failed[@]} / ${total}"
+    for file in "${failed[@]}"; do
+        echo "${file}"
+    done
+}
+
+parseOptions(){
+
+    OPT=$(getopt \
+        --options hl:w: \
+        --name "$0" \
+        -- "$@"
+    )
+
+    if [ $? -ne 0 ]; then
+        err=true
     fi
-    (( total++ ))
-done
 
-echo "Failed or unfinished: ${#failed[@]} / ${total}"
-for file in "${failed[@]}"; do
-    echo "${file}"
-done
+    eval set -- "${OPT}"
+
+    while true; do
+        case "${1}" in
+            -h) usage; exit 0;;
+            -l) line="${2}"; shift 2;;
+            -w) word="${2}"; shift 2;;
+            --) shift; break;;
+        esac
+    done
+
+    run "$@"
+}
+
+main(){
+    parseOptions "$@"
+
+    if [ "${err}" = true ]; then
+        usage
+        exit 1
+    fi
+}
+
+main "$@"
