@@ -29,7 +29,6 @@
     rb = rebase
     gr = grep
     toplevel = rev-parse --show-toplevel
-    stashpop = stash pop stash@{0}
     fr = !git svn fetch && git svn rebase
     # For git undo command, see http://megakemp.com/2016/08/25/git-undo/
 	undo = "!f() { \\\n    git reset --soft $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; \\\n}; f"
