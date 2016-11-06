@@ -10,10 +10,12 @@ url="$2"
 localFiles=(
     /usr/bin/rg
     /usr/share/man/man1/rg.1.gz
+    /usr/share/vim/vimfiles/autoload/pathogen.vim
 )
 remoteFiles=(
     /home/basil/pkg/bin/rg
     /home/basil/pkg/man/man1/rg.1
+    /home/basil/.vim/autoload/pahogen.vim
 )
 
 echo "Execute git pre-push hook"
