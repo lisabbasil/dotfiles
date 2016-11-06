@@ -1,11 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Copy local files that are outside the repository (because they are controlled
 # by the package manager) into the repository and commit them
 # Although this is a pre-push hook, the files are not included in this push
+# See also: http://unix.stackexchange.com/q/321328/58056
 
-remote="$1"
-url="$2"
+#remote="$1"
+#url="$2"
 
 localFiles=(
     /usr/bin/rg
