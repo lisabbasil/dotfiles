@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# Copy local files that are outside the repository (because they are controlled
+# by the package manager) into the repository and commit them
+# Although this is a pre-push hook, the files are not included in this push
+
+remote="$1"
+url="$2"
+
+localFiles=(
+    /usr/bin/rg
+    /usr/share/man/man1/rg.1.gz
+)
+remoteFiles=(
+    /home/basil/pkg/bin/rg
+    /home/basil/pkg/man/man1/rg.1
+)
+
+echo "Execute git pre-push hook"
+
+for idx in "${!localFiles[@]}"; do 
+    localFile="${localFiles[$idx]}"
+    remoteFile="${remoteFiles[$idx]}"
+    echo -n "Copy ${localFile} to ${remoteFile}... "
+    cp "${localFile}" "${remoteFile}"
+    echo "Done."
+    echo -n "Add ${remoteFile} to repository... "
+    git add "${remoteFile}"
+    echo "Done."
+done
+
+echo "Commit if there is anything to commit... "
+git commit -m "Automatically add files by git pre-push hook"
+
+# Don't interfere with the push, so always exit with success
+exit 0
