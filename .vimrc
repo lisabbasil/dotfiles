@@ -61,7 +61,9 @@ set history=100
 set t_ut=
 
 " Use Pathogen to install vim plugins
-execute pathogen#infect()
+call pathogen#infect()
+call pathogen#helptags()
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
