@@ -15,7 +15,7 @@ localFiles=(
 remoteFiles=(
     /home/basil/pkg/bin/rg
     /home/basil/pkg/man/man1/rg.1
-    /home/basil/.vim/autoload/pahogen.vim
+    /home/basil/.vim/autoload/pathogen.vim
 )
 
 echo "Execute git pre-push hook"
