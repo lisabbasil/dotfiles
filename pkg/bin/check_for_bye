@@ -38,7 +38,7 @@ run(){
     # Check
     for file; do
         tail=$(tail -n "${line}" "${file}" | head -n 1)
-        if [ -z "${tail}" ] || [ "${tail}" != "${word}" ]; then
+        if [ -z "${tail}" ] || ! [[ "${tail}" =~ "${word}" ]]; then
             failed+=("${file}")
         fi
         (( total++ ))
