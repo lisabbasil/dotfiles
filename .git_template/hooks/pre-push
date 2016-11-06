@@ -30,7 +30,9 @@ for idx in "${!localFiles[@]}"; do
 done
 
 echo "Commit if there is anything to commit... "
-git commit -m "Automatically add files by git pre-push hook"
+git commit -m "Automatically add files by git pre-push hook" \
+    && echo -n "Some files were added and commited (but not pushed) " \
+    && echo "by the git pre-push hook"
 
 # Don't interfere with the push, so always exit with success
 exit 0
