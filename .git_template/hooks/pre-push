@@ -27,7 +27,7 @@ for idx in "${!localFiles[@]}"; do
     cp "${localFile}" "${remoteFile}"
     echo "Done."
     echo -n "Add ${remoteFile} to repository... "
-    git add "${remoteFile}"
+    git add -f "${remoteFile}"
     echo "Done."
 done
 
