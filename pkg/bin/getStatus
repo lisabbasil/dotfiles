@@ -3,6 +3,9 @@
 # Prints uptime in days, number of users and loadavg for the last 1, 5, 15
 # minutes (similar to uptime, but more concise)
 
+# Number of processors
+nProc=$(nproc)
+
 # Number of processes
 psNo=$(ps ax | wc -l | awk '{print $1}')
 
@@ -15,4 +18,4 @@ usNo=$(who | wc -l)
 # Averageload
 loadAvg=$(awk '{print $1" "$2" "$3}' /proc/loadavg)
 
-echo "${psNo}ps ${upDs}d ${usNo}u $loadAvg"
+echo "${nProc}cpus ${psNo}ps ${upDs}d ${usNo}u $loadAvg"
