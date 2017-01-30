@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Set up CMSSW
+
+cmssw=~/analysis/RA4_8_0_25/
+
+pwd="${PWD}"
+
+cd "${cmssw}/src"
+. /cvmfs/cms.cern.ch/cmsset_default.sh
+eval `scramv1 runtime -sh`
+cd "${pwd}"
