@@ -212,3 +212,6 @@ exec --no-startup-id skype
 exec --no-startup-id setDisplay
 # And restart I3 to properly display resolutions and systray
 exec i3-msg restart
+
+# Make Octave figures floating by default
+for_window [title="Figure*"] floating enable
