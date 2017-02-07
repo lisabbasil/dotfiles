@@ -12,7 +12,7 @@ word="Job succeeded"
 # When verbose is
 # 0: report number of failed/unfinished jobs
 # 1: report number of failed/unfinished jobs and name of failed/unfinished jobs
-# 2: report number of failed/unfinished jobs and name of succesful jobs
+# 2: report number of failed/unfinished jobs and name of successful jobs
 verbose=0
 
 usage(){
@@ -30,14 +30,14 @@ usage(){
     echo "  -v n             Change verbosity level (default: ${verbose})"
     echo "                   0: silent"
     echo "                   1: report failed jobs"
-    echo "                   2: report succesful jobs"
+    echo "                   2: report successful jobs"
     echo "and [logfiles] is a path to any number of log files."
 }
 
 run(){
-    # Array with failed/succesful log files
+    # Array with failed/successful log files
     failed=()
-    succesful=()
+    successful=()
 
     # Total log files
     total=0
@@ -48,7 +48,7 @@ run(){
         if [ -z "${tail}" ] || ! [[ "${tail}" =~ "${word}" ]]; then
             failed+=("${file}")
         else
-            succesful+=("${file}")
+            successful+=("${file}")
         fi
         (( total++ ))
     done
@@ -59,11 +59,11 @@ run(){
             echo Failed: "${file}"
         done
     elif [ "${verbose}" -eq 2 ]; then
-        for file in "${succesful[@]}"; do
+        for file in "${successful[@]}"; do
             echo Finished: "${file}"
         done
     fi
-    echo "Failed or unfinished: ${#failed[@]} / ${total}"
+    echo "Finished successfully: ${#successful[@]} / ${total}"
 }
 
 parseOptions(){
