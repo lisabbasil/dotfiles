@@ -9,8 +9,11 @@ line=3
 # If this word is found, the job is assumed to be successful
 word="Job succeeded"
 
-# When verbose is true, report what jobs have failed
-verbose=false
+# When verbose is
+# 0: report number of failed/unfinished jobs
+# 1: report number of failed/unfinished jobs and name of failed/unfinished jobs
+# 2: report number of failed/unfinished jobs and name of succesful jobs
+verbose=0
 
 usage(){
     echo "Check for a specific line (counted from the bottom) in a log file "
@@ -24,13 +27,17 @@ usage(){
     echo "                   (default: ${line})"
     echo "  -w               Word to be searched for"
     echo "                   (default: ${word})"
-    echo "  -v               Be verbose"
+    echo "  -v n             Change verbosity level (default: ${verbose})"
+    echo "                   0: silent"
+    echo "                   1: report failed jobs"
+    echo "                   2: report succesful jobs"
     echo "and [logfiles] is a path to any number of log files."
 }
 
 run(){
-    # Array with failed log files
+    # Array with failed/succesful log files
     failed=()
+    succesful=()
 
     # Total log files
     total=0
@@ -40,14 +47,20 @@ run(){
         tail=$(tail -n "${line}" "${file}" | head -n 1)
         if [ -z "${tail}" ] || ! [[ "${tail}" =~ "${word}" ]]; then
             failed+=("${file}")
+        else
+            succesful+=("${file}")
         fi
         (( total++ ))
     done
 
     # Report
-    if [ "${verbose}" == "true" ]; then
+    if [ "${verbose}" -eq 1 ]; then
         for file in "${failed[@]}"; do
-            echo "${file}"
+            echo Failed: "${file}"
+        done
+    elif [ "${verbose}" -eq 2 ]; then
+        for file in "${succesful[@]}"; do
+            echo Finished: "${file}"
         done
     fi
     echo "Failed or unfinished: ${#failed[@]} / ${total}"
@@ -56,7 +69,7 @@ run(){
 parseOptions(){
 
     OPT=$(getopt \
-        --options hl:w:v \
+        --options hl:w:v: \
         --name "$0" \
         -- "$@"
     )
@@ -72,21 +85,17 @@ parseOptions(){
             -h) usage; exit 0;;
             -l) line="${2}"; shift 2;;
             -w) word="${2}"; shift 2;;
-            -v) verbose=true; shift;;
+            -v) verbose="${2}"; shift 2;;
             --) shift; break;;
         esac
     done
-
-    run "$@"
-}
-
-main(){
-    parseOptions "$@"
 
     if [ "${err}" = true ]; then
         usage
         exit 1
     fi
+
+    run "$@"
 }
 
-main "$@"
+parseOptions "$@"
