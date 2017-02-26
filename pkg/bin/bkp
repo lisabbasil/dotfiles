@@ -22,16 +22,16 @@ rsync \
 ssh lxplus "echo Last backup invoked at $(date) >> ${dir}/bkp.txt"
 
 if [[ "$plex" == true ]]; then
-    ### Backup plex folder
+    # Backup plex folder
     sudo chmod -R a+r "$plexfolder" 2>> "$errorFile"
     rsync -pavz --delete "$plexfolder" "$server":~/bkp/ 2>> "$errorFile"
 fi
 
 # Check size of backup
-echo -n "Back up size on server: "
+echo "Back up size on server: "
 ssh \
     -q \
-    "${server}" du -sh "${dir}"basil | awk '{ print $1 }'
+    "${server}" du -sch "${dir}"basil/* | awk '{ print $1 }'
 
 # Check if there were errors
 if [[ -s "$errorFile" ]]; then
@@ -41,4 +41,3 @@ else
 fi
 
 echo "Bye."
-exit 0
