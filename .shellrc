@@ -40,7 +40,8 @@ if [[ "$HOSTNAME" == lxplus* ]] || [[ "$HOSTNAME" == openstack0* ]]; then
 elif [[ "$HOSTNAME" == cmslpc* ]]; then
     export workspace=/uscms_data/d3/bschneid/
 elif [[ "$HOSTNAME" == nafhh* ]]; then
-    export workspace=/nfs/dust/cms/user/bschneid
+    #export workspace=/nfs/dust/cms/user/bschneid/
+    export workspace=/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/basil/
 fi
 
 # If in tmux, unset DISPLAY
