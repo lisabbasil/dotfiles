@@ -260,7 +260,7 @@ set tw=80
 
 set ai "Auto indent
 "set si "Smart indent
-set cindent
+"set cindent
 " Don't treat # as special (otherwise it ignores indenting)
 set cinkeys-=0#
 
