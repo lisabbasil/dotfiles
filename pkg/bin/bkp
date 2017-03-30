@@ -31,7 +31,7 @@ fi
 echo "Back up size on server: "
 ssh \
     -q \
-    "${server}" du -sch "${dir}"basil | awk '{ print $1 }'
+    "${server}" du -sh "${dir}"basil | awk '{ print $1 }'
 
 # Check if there were errors
 if [[ -s "$errorFile" ]]; then
