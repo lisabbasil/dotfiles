@@ -11,8 +11,9 @@ word="Job succeeded"
 
 # When verbose is
 # 0: report number of failed/unfinished jobs
-# 1: report number of failed/unfinished jobs and name of failed/unfinished jobs
-# 2: report number of failed/unfinished jobs and name of successful jobs
+# 1: report number of failed/unfinished jobs and name of successful jobs
+# 2: report number of failed/unfinished jobs and name of failed/unfinished jobs
+# 3: report number of failed/unfinished jobs and name of empty log files
 verbose=0
 
 usage(){
@@ -29,13 +30,15 @@ usage(){
     echo "                   (default: ${word})"
     echo "  -v n             Change verbosity level (default: ${verbose})"
     echo "                   0: silent"
-    echo "                   1: report failed jobs"
-    echo "                   2: report successful jobs"
+    echo "                   1: report successful jobs"
+    echo "                   2: report failed jobs"
+    echo "                   3: report empty log files"
     echo "and [logfiles] is a path to any number of log files."
 }
 
 run(){
-    # Array with failed/successful log files
+    # Array with empty/failed/successful log files
+    empty=()
     failed=()
     successful=()
 
@@ -45,7 +48,9 @@ run(){
     # Check
     for file; do
         tail=$(tail -n "${line}" "${file}" | head -n 1)
-        if [ -z "${tail}" ] || ! [[ "${tail}" =~ "${word}" ]]; then
+        if [ -z "${tail}" ]; then
+            empty+=("${file}")
+        elif ! [[ "${tail}" =~ "${word}" ]]; then
             failed+=("${file}")
         else
             successful+=("${file}")
@@ -55,15 +60,21 @@ run(){
 
     # Report
     if [ "${verbose}" -eq 1 ]; then
-        for file in "${failed[@]}"; do
-            echo Failed: "${file}"
-        done
-    elif [ "${verbose}" -eq 2 ]; then
         for file in "${successful[@]}"; do
             echo Finished: "${file}"
         done
+    elif [ "${verbose}" -eq 2 ]; then
+        for file in "${failed[@]}"; do
+            echo Failed: "${file}"
+        done
+    elif [ "${verbose}" -eq 3 ]; then
+        for file in "${empty[@]}"; do
+            echo Empty: "${file}"
+        done
     fi
-    echo "Finished successfully: ${#successful[@]} / ${total}"
+    printf "%-21s : %*s / %*s\n" "Finished successfully" "${#total}" "${#successful[@]}" "${#total}" "${total}"
+    printf "%-21s : %*s / %*s\n" "Failed" "${#total}" "${#failed[@]}" "${#total}" "${total}"
+    printf "%-21s : %*s / %*s\n" "Empty log files" "${#total}" "${#empty[@]}" "${#total}" "${total}"
 }
 
 parseOptions(){
