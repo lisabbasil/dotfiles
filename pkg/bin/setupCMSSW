@@ -2,7 +2,13 @@
 
 # Set up CMSSW
 
-cmssw=~/analysis/RA4_8_0_25/
+if [[ "$HOSTNAME" == lxplus* ]] || [[ "$HOSTNAME" == openstack0* ]]; then
+    cmssw=~/analysis/CMSSW_8_0_25/
+elif [[ "$HOSTNAME" == cmslpc* ]]; then
+    cmssw=~/analysis/RA4_8_0_25/
+elif [[ "$HOSTNAME" == nafhh* ]]; then
+    cmssw=~/analysis/CMSSW_8_0_25/
+fi
 
 pwd="${PWD}"
 
