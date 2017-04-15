@@ -14,6 +14,7 @@ word="Job succeeded"
 # 1: report number of failed/unfinished jobs and name of successful jobs
 # 2: report number of failed/unfinished jobs and name of failed/unfinished jobs
 # 3: report number of failed/unfinished jobs and name of empty log files
+# 4: report number of failed/unfinished jobs and name of all files
 verbose=0
 
 usage(){
@@ -33,6 +34,7 @@ usage(){
     echo "                   1: report successful jobs"
     echo "                   2: report failed jobs"
     echo "                   3: report empty log files"
+    echo "                   4: report all jobs and their categories"
     echo "and [logfiles] is a path to any number of log files."
 }
 
@@ -68,6 +70,16 @@ run(){
             echo Failed: "${file}"
         done
     elif [ "${verbose}" -eq 3 ]; then
+        for file in "${empty[@]}"; do
+            echo Empty: "${file}"
+        done
+    elif [ "${verbose}" -eq 4 ]; then
+        for file in "${successful[@]}"; do
+            echo Finished: "${file}"
+        done
+        for file in "${failed[@]}"; do
+            echo Failed: "${file}"
+        done
         for file in "${empty[@]}"; do
             echo Empty: "${file}"
         done
