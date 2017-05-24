@@ -99,7 +99,7 @@ export eosSetup
 
 # Voms alias with long validity
 voms(){
-    voms-proxy-init -voms cms --valid 96:00
+    voms-proxy-init -voms cms --valid 168:00
 }
 
 mocp(){
