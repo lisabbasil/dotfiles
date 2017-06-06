@@ -21,6 +21,7 @@
 	vimdiff = difftool
     st = status
     df = diff
+    dw = diff --word-diff
     ds = diff --staged
     co = checkout
     ci = commit
