@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# Send command to all panes in an existing tmux session
+
+session=session
+cmd="echo foo"
+
+usage(){
+    echo "Send command to all panes in an existing tmux session"
+    echo
+    echo "Usage: $(basename $0) [option]"
+    echo "where [option] can be"
+    echo "  -h               Show this help"
+    echo "  -s name          name of existing session (default ${session})"
+    echo "  -c command       command to be sent (default ${cmd})"
+}
+
+sendCommand(){
+    tmux list-windows -t "${session}" \
+        | cut -d: -f1 \
+        | xargs -I% tmux send-keys -t "${session}":% "${cmd}" C-m
+}
+
+parseOptions(){
+
+    OPT=$(getopt \
+        --options hs:c: \
+        --name "$0" \
+        -- "$@"
+    )
+
+    if [ $? -ne 0 ]; then
+        err=true
+    fi
+
+    eval set -- "${OPT}"
+
+    while true; do
+        case "${1}" in
+            -h) usage; exit 0;;
+            -s) session="${2}"; shift 2;;
+            -c) cmd="${2}"; shift 2;;
+            --) shift; break;;
+        esac
+    done
+
+    if [ "${err}" = true ]; then
+        usage
+        exit 1
+    fi
+
+    sendCommand
+}
+
+parseOptions "$@"
