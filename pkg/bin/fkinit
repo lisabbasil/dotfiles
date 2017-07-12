@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Do a passwordless kinit by using the right keytab
+
+case "${1}" in
+    cern) kinit -k -t cern.keytab bschneid@CERN.CH;;
+    fnal) kinit -k -t fnal.keytab bschneid@FNAL.GOV;;
+    desy) kinit -k -t desy.keytab bschneid@DESY.DE;;
+    *) echo No keytab found. Exit.
+        exit 1;;
+esac
