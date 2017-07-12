@@ -101,7 +101,7 @@ bindsym $win+v fullscreen
 
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $win+s layout stacking
-bindsym $win+s layout tabbed
+#bindsym $win+s layout tabbed
 #bindsym $win+e layout toggle split
 
 # toggle tiling / floating
