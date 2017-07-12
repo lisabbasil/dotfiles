@@ -2,10 +2,15 @@
 
 # Do a passwordless kinit by using the right keytab
 
+case "${HOSTNAME}" in
+    basil) keytabs=/home/basil/Documents/keepass/;;
+    lxplus*) keytabs=/afs/cern.ch/work/b/bschneid/private/;;
+esac
+
 case "${1}" in
-    cern) kinit -k -t cern.keytab bschneid@CERN.CH;;
-    fnal) kinit -k -t fnal.keytab bschneid@FNAL.GOV;;
-    desy) kinit -k -t desy.keytab bschneid@DESY.DE;;
+    cern) kinit -k -t "${keytabs}"/cern.keytab bschneid@CERN.CH;;
+    fnal) kinit -k -t "${keytabs}"/fnal.keytab bschneid@FNAL.GOV;;
+    desy) kinit -k -t "${keytabs}"/desy.keytab bschneid@DESY.DE;;
     *) echo No keytab found. Exit.
         exit 1;;
 esac
