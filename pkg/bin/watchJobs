@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Watch jobs on different servers
+
+watchLxplus(){
+    watch -n 20 'echo -n "Total: $(bjobs | grep -v "^JOBID" | wc -l) - "; echo -n "Running: $(bjobs | grep "RUN" | wc -l) - "; echo "Pending: $(bjobs | grep "PEND" | wc -l)"; bjobs'
+}
+
+watchCmslpc(){
+    watch condor_q -submitter bschneid \| grep jobs \&\& condor_q -submitter bschneid
+}
+
+watchNone(){
+    echo I don\'t know how to watch jobs here.
+    exit 1
+}
+
+case "${HOSTNAME}" in
+    lxplus*) watchLxplus;;
+    cmsco*) watchLxplus;;
+    cmslpc*) watchCmslpc;;
+    *) watchNone;;
+esac
