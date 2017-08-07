@@ -10,6 +10,10 @@ watchCmslpc(){
     watch condor_q -submitter bschneid \| grep jobs \&\& condor_q -submitter bschneid
 }
 
+watchDesy(){
+    watch qstat
+}
+
 watchNone(){
     echo I don\'t know how to watch jobs here.
     exit 1
@@ -19,5 +23,6 @@ case "${HOSTNAME}" in
     lxplus*) watchLxplus;;
     cmsco*) watchLxplus;;
     cmslpc*) watchCmslpc;;
+    nafhh*) watchDesy;;
     *) watchNone;;
 esac
