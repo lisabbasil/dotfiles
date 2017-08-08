@@ -39,8 +39,10 @@ if [[ "$HOSTNAME" == lxplus* ]] \
     || [[ "$HOSTNAME" == openstack0* ]] \
     || [[ "$HOSTNAME" == cmsco* ]]; then
     export workspace=/afs/cern.ch/work/b/bschneid/
+    export eosspace=/eos/cms/store/user/bschneid/
 elif [[ "$HOSTNAME" == cmslpc* ]]; then
     export workspace=/uscms_data/d3/bschneid/
+    export eosspace=/eos/uscms/store/user/bschneid/
 elif [[ "$HOSTNAME" == nafhh* ]]; then
     #export workspace=/nfs/dust/cms/user/bschneid/
     export workspace=/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/basil/
