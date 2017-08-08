@@ -2,12 +2,17 @@
 
 # Set up CMSSW
 
-if [[ "$HOSTNAME" == lxplus* ]] || [[ "$HOSTNAME" == openstack0* ]]; then
+if [[ "$HOSTNAME" == lxplus* ]] ||
+    [[ "$HOSTNAME" == openstack0* ]] ||
+    [[ "$HOSTNAME" == cmsco* ]]; then
     cmssw=~/analysis/CMSSW_8_0_25/
 elif [[ "$HOSTNAME" == cmslpc* ]]; then
     cmssw=~/analysis/RA4_8_0_25/
 elif [[ "$HOSTNAME" == nafhh* ]]; then
     cmssw=~/analysis/CMSSW_8_0_25/
+else
+    echo I don\'t know where to find a CMSSW release.
+    return
 fi
 
 pwd="${PWD}"
