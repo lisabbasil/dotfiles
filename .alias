@@ -25,13 +25,13 @@ ls(){
     fi
 }
 ll(){
-    ls -l "${@}"
+    ls -gl "${@}"
 }
 la(){
     ls -a "${@}"
 }
 lla(){
-    ls -la "${@}"
+    ls -gla "${@}"
 }
 grep(){
     /bin/grep --color=auto "${@}"
