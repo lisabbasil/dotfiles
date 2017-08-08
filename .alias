@@ -4,8 +4,25 @@
 unalias ls 2>/dev/null
 unalias ll 2>/dev/null
 unalias la 2>/dev/null
-ls(){
+oldls(){
     /bin/ls --color=auto "${@}"
+}
+oldll(){
+    oldls -l "${@}"
+}
+oldla(){
+    oldls -a "${@}"
+}
+oldlla(){
+    oldls -la "${@}"
+}
+ls(){
+    # Use exa if installed, otherwise fall back to ls
+    if command -v exa &>/dev/null; then
+        exa "${@}"
+    else
+        oldls "${@}"
+    fi
 }
 ll(){
     ls -l "${@}"
