@@ -19,19 +19,19 @@ oldlla(){
 ls(){
     # Use exa if installed, otherwise fall back to ls
     if command -v exa &>/dev/null; then
-        exa "${@}"
+        exa -g "${@}"
     else
         oldls "${@}"
     fi
 }
 ll(){
-    ls -gl "${@}"
+    ls -l "${@}"
 }
 la(){
     ls -a "${@}"
 }
 lla(){
-    ls -gla "${@}"
+    ls -la "${@}"
 }
 grep(){
     /bin/grep --color=auto "${@}"
