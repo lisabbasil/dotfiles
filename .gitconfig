@@ -37,5 +37,6 @@
 	glog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
     # http://blog.andrewray.me/a-better-git-blame/
     bblame = git log -p -M --follow --stat
+    color-merge = "!f() { git merge $@ | egrep --color 'CONFLICT .*|$' ; }; f"
 [init]
 	templatedir = ~/.git_template
