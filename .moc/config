@@ -2,5 +2,5 @@ MusicDir = /home/basil/Music/
 #Theme = transparent-background
 Theme = myown
 Keymap = keymap
-AutoLoadLyrics = yes
-LyricsUrl = "http://lyrics.wikia.com/wiki/%1$s:%2$s?action=raw"
+#AutoLoadLyrics = yes
+#LyricsUrl = "http://lyrics.wikia.com/wiki/%1$s:%2$s?action=raw"
