@@ -19,7 +19,7 @@ oldlla(){
 ls(){
     # Use exa if installed, otherwise fall back to ls
     if command -v exa &>/dev/null; then
-        exa -g "${@}"
+        exa "${@}"
     else
         oldls "${@}"
     fi
