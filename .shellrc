@@ -51,6 +51,21 @@ fi
 # If in tmux, unset DISPLAY
 [[ -n $TMUX ]] && DISPLAY2="$DISPLAY" && unset DISPLAY
 
+# On lxplus, send job to background that renwes kerberos ticket before it
+# expires
+if [[ "$HOSTNAME" == lxplus* ]] \
+    || [[ "$HOSTNAME" == openstack0* ]] \
+    || [[ "$HOSTNAME" == cmsco* ]]; then
+    (
+        echo Process to automatically renew kerberos ticket before it expires
+        echo sent to background
+        while true; do
+            sleep 7
+            kinit -R
+        done
+    ) &
+fi
+
 # Coreutils 8.25 introduced quotation marks for filenames with spaces when using
 # ls in the terminal; the following option disables it
 export QUOTING_STYLE=literal
