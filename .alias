@@ -132,3 +132,16 @@ cmssw(){
 crab3(){
     . /cvmfs/cms.cern.ch/crab3/crab.sh
 }
+
+# On lxplus, send job to background that renews kerberos ticket before it
+# expires
+renewKerberos(){
+    (
+        echo Process to automatically renew kerberos ticket before it expires
+        echo sent to background
+        while true; do
+            sleep 7
+            kinit -R
+        done
+    ) &
+}
