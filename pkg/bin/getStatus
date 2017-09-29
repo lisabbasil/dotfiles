@@ -7,10 +7,10 @@
 nProc=$(nproc)
 
 # Number of processes
-psNo=$(ps ax | wc -l | awk '{print $1}')
+psNo=$(awk '{print $4}' /proc/loadavg)
 
 # Uptime in days
-upDs=$(awk '{printf "%.2f\n", $1/(60*60*24)}' < /proc/uptime)
+upDs=$(awk '{printf "%.2f\n", $1/(60*60*24)}' /proc/uptime)
 
 # Number of users
 usNo=$(who | wc -l)
