@@ -9,6 +9,8 @@ if [[ "$HOSTNAME" == lxplus* ]] || [[ "$HOSTNAME" == openstack0* ]]; then
     bin=/afs/cern.ch/user/b/bschneid/scratch/trash
 elif [[ "$HOSTNAME" == cmslpc* ]]; then
     bin=/uscms_data/d1/bschneid/scratch/trash
+elif [[ "$HOSTNAME" == rulinux* ]]; then
+    bin=/home/bschneid/scratch/trash
 elif [[ "$HOSTNAME" == nafhh* ]]; then
     bin=/afs/desy.de/user/b/bschneid/scratch/trash
 else
