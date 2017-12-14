@@ -118,7 +118,7 @@ parseOptions(){
         exit 1
     fi
 
-    run "$@"
+    run
 }
 
 parseOptions "$@"
