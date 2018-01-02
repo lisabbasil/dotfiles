@@ -258,6 +258,10 @@ autocmd BufRead /home/basil/notes/* setlocal shiftwidth=2 tabstop=2
 set lbr
 set tw=80
 
+" No linebreak for HTML files
+autocmd FileType html set tw=0
+autocmd FileType css set tw=0
+
 set ai "Auto indent
 set si "Smart indent
 "set cindent
