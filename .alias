@@ -142,6 +142,7 @@ renewKerberos(){
         while true; do
             sleep 77777
             kinit -R
+            aklog -c CERN.CH
         done
     ) &
 }
