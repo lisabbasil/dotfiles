@@ -59,7 +59,8 @@ modeInt=1920x1080
 #modeExt=1280x1024
 modeExt=1920x1080
 modeHdmi=1920x1080
-modeB52=1280x1024
+modeB52=1024x768
+#modeB52=1280x1024
 modeIntOcl="1920x1080_75.00"
 modeOcl=1080x1920
 
