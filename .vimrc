@@ -344,14 +344,28 @@ nmap <leader>tr :call DeleteTrailingWS()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+" Toggle spell checking
+map <leader>ss :setlocal spell! spelllang=en_us<cr>
 
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
+" Colors for words that failed spell check
+" Word not recognized
+hi clear SpellBad
+hi SpellBad cterm=underline ctermfg=blue
+" Word not capitalized
+hi clear SpellCap
+hi SpellCap cterm=underline ctermfg=red
+" Word is rare
+hi clear SpellRare
+hi SpellRare cterm=underline ctermfg=green
+" Wrong spelling for selected region
+hi clear SpellLocal
+hi SpellLocal cterm=underline ctermfg=yellow
+
+"" Shortcuts using <leader>
+"map <leader>sn ]s
+"map <leader>sp [s
+"map <leader>sa zg
+"map <leader>s? z=
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
