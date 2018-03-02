@@ -5,7 +5,7 @@
 if [[ "$HOSTNAME" == lxplus* ]] ||
     [[ "$HOSTNAME" == openstack0* ]] ||
     [[ "$HOSTNAME" == cmsco* ]]; then
-    cmssw=~/analysis/CMSSW_8_0_25/
+    cmssw=~/analysis/sos/CMSSW_8_0_25/
 elif [[ "$HOSTNAME" == cmslpc* ]]; then
     cmssw=~/analysis/RA4_8_0_25/
 elif [[ "$HOSTNAME" == nafhh* ]]; then
