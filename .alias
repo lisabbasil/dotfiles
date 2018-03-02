@@ -34,16 +34,16 @@ lla(){
     ls -la "${@}"
 }
 grep(){
-    /bin/grep --color=auto "${@}"
+    command grep --color=auto "${@}"
 }
 egrep(){
-    /bin/egrep --color=auto "${@}"
+    command egrep --color=auto "${@}"
 }
 less(){
-    /usr/bin/less -N "${@}"
+    command less -N "${@}"
 }
 diff(){
-    /usr/bin/diff -u "${@}"
+    command diff -u "${@}"
 }
 
 #rgrep(){
@@ -82,7 +82,7 @@ export mydate
 
 # Always show Monday as first day of the week in cal
 cal(){
-    /usr/bin/cal -m "${@}"
+    command cal -m "${@}"
 }
 
 # Function that checkes if an element is in an array
