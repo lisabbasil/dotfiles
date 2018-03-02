@@ -104,11 +104,6 @@ contains(){
     return 1
 }
 
-eosSetup(){
-    . /afs/cern.ch/project/eos/installation/cms/etc/setup.sh
-}
-export eosSetup
-
 # Voms alias with long validity
 voms(){
     voms-proxy-init -voms cms --valid 168:00
