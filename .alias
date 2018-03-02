@@ -109,6 +109,7 @@ voms(){
     voms-proxy-init -voms cms --valid 168:00
 }
 
+# Start scrobbler when starting mocp
 mocp(){
     mocp-scrobbler.py -d; /usr/bin/mocp "${@}"
 }
