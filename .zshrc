@@ -115,3 +115,14 @@ man() {
 
 # Fish-like syntax highlighting (keep at the end)
 . ~/pkg/install/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Make sure to never invoke fc -W
+fc(){
+    for x; do
+        if [[ "${x}" == -W ]]; then
+            echo "I'm sorry Dave. I'm afraid I can't do that." >&2
+            return 1
+        fi
+    done
+    builtin fc "${@}"
+}
