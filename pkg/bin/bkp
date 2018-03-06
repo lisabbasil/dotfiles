@@ -6,6 +6,14 @@ dir=/afs/cern.ch/work/b/bschneid/private/.bkp/
 plex=false
 plexfolder=/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server
 
+# Get history files from other servers
+fkinit fnal
+rsync -pavz fnal:.history history_fnal
+fkinit desy
+rsync -pavz desy03:.history history_desy
+fkinit cern
+rsync -pavz lxplus:.history history_cern
+
 # Backup home folder
 rsync \
     -pavz \
@@ -39,5 +47,7 @@ if [[ -s "$errorFile" ]]; then
 else
     rm "$errorFile"
 fi
+
+rm history_fnal history_desy history_cern
 
 echo "Bye."
