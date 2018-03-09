@@ -241,8 +241,9 @@ set expandtab
 " Be smart when using tabs ;)
 set smarttab
 
-" Wrap lines
-set wrap
+" Wrap lines - not anymore
+"set wrap
+set nowrap
 
 " 1 tab == 4 spaces
 set shiftwidth=4
