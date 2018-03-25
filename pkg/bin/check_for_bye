@@ -9,6 +9,9 @@ line=3
 # If this word is found, the job is assumed to be successful
 word="Job succeeded"
 
+# Total number of expected log files
+totalExp=-1
+
 # When verbose is
 # 0: report number of failed/unfinished jobs
 # 1: report number of failed/unfinished jobs and name of successful jobs
@@ -29,6 +32,7 @@ usage(){
     echo "                   (default: ${line})"
     echo "  -w               Word to be searched for"
     echo "                   (default: ${word})"
+    echo "  -t n             Expect n log files (default: ${totalExp})"
     echo "  -v n             Change verbosity level (default: ${verbose})"
     echo "                   0: silent"
     echo "                   1: report successful jobs"
@@ -60,6 +64,14 @@ run(){
         (( total++ ))
     done
 
+    # If total number of expected log files is not set, set it to total
+    if [ "${totalExp}" -lt 0 ]; then
+        totalExp="${total}"
+    fi
+
+    # Get number of missing log files
+    missing=$(( ${totalExp} - ${total} ))
+
     # Report
     if [ "${verbose}" -eq 1 ]; then
         for file in "${successful[@]}"; do
@@ -84,15 +96,16 @@ run(){
             echo Empty: "${file}"
         done
     fi
-    printf "%-21s : %*s / %*s\n" "Finished successfully" "${#total}" "${#successful[@]}" "${#total}" "${total}"
-    printf "%-21s : %*s / %*s\n" "Failed" "${#total}" "${#failed[@]}" "${#total}" "${total}"
-    printf "%-21s : %*s / %*s\n" "Empty log files" "${#total}" "${#empty[@]}" "${#total}" "${total}"
+    printf "%-21s : %*s / %*s\n" "Finished successfully" "${#totalExp}" "${#successful[@]}" "${#totalExp}" "${totalExp}"
+    printf "%-21s : %*s / %*s\n" "Failed" "${#totalExp}" "${#failed[@]}" "${#totalExp}" "${totalExp}"
+    printf "%-21s : %*s / %*s\n" "Empty log files" "${#totalExp}" "${#empty[@]}" "${#totalExp}" "${totalExp}"
+    printf "%-21s : %*s / %*s\n" "Missing log files" "${#totalExp}" "${missing}" "${#totalExp}" "${totalExp}"
 }
 
 parseOptions(){
 
     OPT=$(getopt \
-        --options hl:w:v: \
+        --options hl:w:t:v: \
         --name "$0" \
         -- "$@"
     )
@@ -108,6 +121,7 @@ parseOptions(){
             -h) usage; exit 0;;
             -l) line="${2}"; shift 2;;
             -w) word="${2}"; shift 2;;
+            -t) totalExp="${2}"; shift 2;;
             -v) verbose="${2}"; shift 2;;
             --) shift; break;;
         esac
