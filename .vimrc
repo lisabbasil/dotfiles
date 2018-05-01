@@ -68,7 +68,7 @@ call pathogen#helptags()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set 12 lines to the cursor - when moving vertically using j/k
+" Set number of lines to the cursor - when moving vertically using j/k
 set so=8
 
 " Turn on the WiLd menu
@@ -133,6 +133,7 @@ set foldcolumn=1
 
 " Show partial command in commandline
 set showcmd
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => LaTeX suite
@@ -214,6 +215,12 @@ hi TabLineSel ctermbg=58
 
 " Make warnings more visible
 hi WarningMsg ctermfg=white ctermbg=red
+
+" Set style of cursor line/column
+" See here for color codes:
+" http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
+hi CursorLine cterm=NONE ctermbg=26 ctermfg=154
+hi CursorColumn cterm=NONE ctermbg=124 ctermfg=16
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
