@@ -5,7 +5,9 @@
 # Bin folder is at a different location for different servers
 # Simply setting it to ~/scratch/trash will have the effect,
 # that sudo trash will put it into /root/scratch/trash
-if [[ "$HOSTNAME" == lxplus* ]] || [[ "$HOSTNAME" == openstack0* ]]; then
+if [[ "$HOSTNAME" == lxplus* ]] \
+    || [[ "$HOSTNAME" == openstack0* ]] \
+    || [[ "$HOSTNAME" == cmsco01* ]]; then
     bin=/afs/cern.ch/user/b/bschneid/scratch/trash
 elif [[ "$HOSTNAME" == cmslpc* ]]; then
     bin=/uscms_data/d1/bschneid/scratch/trash
