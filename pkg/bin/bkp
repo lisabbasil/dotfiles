@@ -10,7 +10,7 @@ plexfolder=/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Se
 fkinit fnal
 rsync -pavz fnal:.history history_fnal
 fkinit desy
-rsync -pavz desy03:.history history_desy
+rsync -pavz desy01:.history history_desy
 fkinit cern
 rsync -pavz lxplus:.history history_cern
 
