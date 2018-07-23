@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# Take cutflow from CMG Tools as input and output a LaTeX table
+
+# Header of table
+header(){
+cat << EOF
+\documentclass[convert={density=300,outext=.png}]{standalone}
+\usepackage{booktabs}
+\begin{document}
+\begin{tabular}{ $(printf 'c%.0s' $(seq 1 1 "${cols}") ) }
+\toprule
+EOF
+}
+
+footer(){
+cat << EOF
+\bottomrule
+\end{tabular}
+\end{document}
+EOF
+}
+
+# Loop over all positional arguments
+for input; do
+
+    # Make a temporary copy
+    cp "${input}" .
+    # Point input variable to the local copy
+    input="${input##*/}"
+
+    # Get number of columns of table
+    readonly cols=$(awk '/CUT/ { print(NF) }' "${input}")
+
+    # Modify document inline
+    # Clean up trailing whitespaces
+    sed -i 's/ \+$//' "${input}"
+    # Replace underscore with dash
+    sed -i 's/_/-/g' "${input}"
+    # Add LaTeX new line characters to end of line
+    sed -i 's/$/\\\\/g' "${input}"
+    # Format table
+    sed -i 's/entry point/entry-point/' "${input}"
+    sed -i 's/ALL SIG/ALL-SIG/' "${input}"
+    sed -i 's/ALL BKG/ALL-BKG/' "${input}"
+    sed -i 's/^ *CUT/CUT/' "${input}"
+    sed -i 's/-\{2,\}\\\\/\\midrule/' "${input}"
+
+    # Replace whitspaces with ampersand
+    sed -i 's/ \+/ \& /g' "${input}"
+
+    # Print predefined header
+    header
+
+    # Print table
+    cat "${input}"
+
+    # Print predefined footer
+    footer
+
+    #rm "${input}"
+done
