@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# Send commands to all panes of a certain session
+
+set -eu -o pipefail
+
+session=all
+err=false
+
+usage(){
+    echo "Send commands to all panes of a certain session."
+    echo
+    echo "Usage: $(basename $0) [option] [cmds]"
+    echo "where [option] can be"
+    echo "  -h               Show this help"
+    echo "  -s               Send commands to this session only (default: ${session})"
+    echo "and [cmds] is any number of commands."
+}
+
+run(){
+    # If session is not "all", then check if it exists; this will exit (due to
+    # set -e), in case the session does not exist
+    if [ "${session}" != all ]; then
+        tmux has-session -t "${session}"
+    else
+        # If session is all, then set session to wildcard, so the awk expression
+        # below will match all sessions
+        session='.*'
+    fi
+
+    # Send commands to session
+    for cmd; do
+        for pane in $(tmux list-panes -a | awk "/^${session}:/ { print(\$7) }"); do
+            tmux send-keys -t "${pane}" "${cmd}" Enter
+        done
+    done
+}
+
+parseOptions(){
+
+    OPT=$(getopt \
+        --options hs: \
+        --name "$0" \
+        -- "$@"
+    )
+
+    if [ $? -ne 0 ]; then
+        err=true
+    fi
+
+    eval set -- "${OPT}"
+
+    while true; do
+        case "${1}" in
+            -h) usage; exit 0;;
+            -s) session="${2}"; shift 2;;
+            --) shift; break;;
+        esac
+    done
+
+    if [ "${err}" = true ]; then
+        usage
+        exit 1
+    fi
+
+    run "$@"
+}
+
+parseOptions "$@"
