@@ -70,6 +70,7 @@ call pathogen#helptags()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set number of lines to the cursor - when moving vertically using j/k
 set so=8
+set sidescrolloff=8
 
 " Turn on the WiLd menu
 set wildmenu
