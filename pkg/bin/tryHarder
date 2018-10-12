@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Try command several times, until it reports success (exit code 0)
+# or I give up (tried n times)
+
+tryMax=10
+try=1
+
+# Do until loop in bash
+while
+    eval "${@}"
+    exitcode="${?}"
+    [[ "${exitcode}" -ne 0 && "${try}" -lt "${tryMax}" ]]
+do (( try++ ))
+done
+
+if [[ "${exitcode}" -ne 0 ]]; then
+    echo -n "I tried hard, but did not manage to make this work. The exit code "
+    echo "of the last iteration of this command was: ${exitcode}."
+    exit "${exitcode}"
+fi
