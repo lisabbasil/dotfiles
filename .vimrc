@@ -392,7 +392,7 @@ map <leader>pr :!evince 201*.pdf<cr>
 " e<BS>> : ê
 " e<BS>! : è
 " e<BS>' : é
-set digraph
+"set digraph
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Turn persistent undo on 
