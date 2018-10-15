@@ -386,6 +386,13 @@ noremap <leader>ch :!evince ~/Pictures/vi-vim-cheat-sheet.gif &<cr><cr>
 map <leader>to :tabnew ~/todo<cr>
 map <leader>pr :!evince 201*.pdf<cr>
 
+" Turn on digraph, to e.g. use the following shortcuts
+" See http://vim.wikia.com/wiki/Entering_special_characters
+" a<BS>: : ä
+" e<BS>> : ê
+" e<BS>! : è
+" e<BS>' : é
+set digraph
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Turn persistent undo on 
