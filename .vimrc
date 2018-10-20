@@ -271,9 +271,14 @@ set tw=80
 autocmd FileType html set tw=0
 autocmd FileType css set tw=0
 
-set ai "Auto indent
-set si "Smart indent
+set ai "Autoindent
+set si "Smartindent
 "set cindent
+
+" Smartindent removes indent when lines starting with '#', turn it off
+" (https://stackoverflow.com/a/2360284/1945981)
+inoremap # X#
+
 " Don't treat # as special (otherwise it ignores indenting)
 set cinkeys-=0#
 
