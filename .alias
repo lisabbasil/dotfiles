@@ -78,7 +78,11 @@ sx(){
 mydate(){
     date +"%F_%H-%M-%S"
 }
+myprettydate(){
+    date +%d-%m-%Y" "%H:%M:%S
+}
 export mydate
+export myprettydate
 
 # Always show Monday as first day of the week in cal
 cal(){
