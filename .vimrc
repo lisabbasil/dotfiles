@@ -135,6 +135,10 @@ set foldcolumn=1
 " Show partial command in commandline
 set showcmd
 
+" When splitting jump to new splitted window (below or right)
+set splitbelow
+set splitright
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => LaTeX suite
@@ -237,7 +241,6 @@ nnoremap <leader>u :GundoToggle<CR>
 
 " Set width of gundo window
 let g:gundo_width = 80
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -398,6 +401,7 @@ map <leader>pr :!evince 201*.pdf<cr>
 " e<BS>! : è
 " e<BS>' : é
 "set digraph
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Turn persistent undo on 
