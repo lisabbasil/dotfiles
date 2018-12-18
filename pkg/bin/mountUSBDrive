@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Toggle mounting of external usb harddrive. If it is not mounted, mount it, if
-# it is mounted, unmount it You may need ntfs-3g to be installed, for this to
+# Toggle mounting of external usb harddrive: If it is not mounted, mount it; if
+# it is mounted, unmount it. You may need ntfs-3g to be installed, for this to
 # work
 
 driveName=${1-Gurkebroetli}
