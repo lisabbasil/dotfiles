@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Make backup of backup
+# Why? If you delete file ~/foo and make a backup, it will also be deleted on
+# the backup. While recovering it is not impossible, it is at least tedious. If
+# you make a backup of the backup (bkpbkp), ~/foo is still available, assuming
+# a) ~/foo existed when you created the last bkpbkp
+# b) you meanwhile did not run bkpbkp again
+# From a) it follows, that you should run bkpbkp as often as possible.
+# From b) it follows, that you should run bkpbkp as little as possible.
+# Running bkpbkp maybe every other month should be reasonable
+
+server=lxplus
+bkp=/afs/cern.ch/work/b/bschneid/private/.bkp/
+bkpbkp=/afs/cern.ch/work/b/bschneid/private/.bkpbkp/
+
+# Authentication
+fkinit cern
+
+ssh lxplus "echo Last backup of backup invoked at $(date) >> ${bkp}/bkpbkp.txt"
+ssh "${server}" "rsync \
+    -pavz \
+    --delete \
+    ${bkp} ${bkpbkp}"

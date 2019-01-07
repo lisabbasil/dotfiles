@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
+# Make backup from local home directory to remote server
+# Run as often as possible, to backup your data
+# This script assumes that authentication with fkinit works
+# See also ~/pkg/bin/bkpbkp, which makes a backup of this backup
+
 errorFile=~/bkp_error.txt
 server=lxplus
-dir=/afs/cern.ch/work/b/bschneid/private/.bkp/
+bkp=/afs/cern.ch/work/b/bschneid/private/.bkp/
 plex=false
 plexfolder=/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server
 
@@ -26,8 +31,8 @@ rsync \
     --exclude '.dropbox/command_socket' \
     --exclude '.dropbox/iface_socket' \
     --exclude '.moc/socket2' \
-    /home/basil "$server":"${dir}" 2>> "$errorFile"
-ssh lxplus "echo Last backup invoked at $(date) >> ${dir}/bkp.txt"
+    /home/basil "$server":"${bkp}" 2>> "$errorFile"
+ssh lxplus "echo Last backup invoked at $(date) >> ${bkp}/bkp.txt"
 
 if [[ "$plex" == true ]]; then
     # Backup plex folder
@@ -39,7 +44,7 @@ fi
 echo "Back up size on server: "
 ssh \
     -q \
-    "${server}" du -sh "${dir}"basil | awk '{ print $1 }'
+    "${server}" du -sh "${bkp}"basil | awk '{ print $1 }'
 
 # Check if there were errors
 if [[ -s "$errorFile" ]]; then
