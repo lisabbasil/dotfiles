@@ -1,6 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
@@ -68,6 +69,7 @@ call pathogen#helptags()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Set number of lines to the cursor - when moving vertically using j/k
 set so=8
 set sidescrolloff=8
@@ -190,6 +192,7 @@ map <Leader>xl :<C-U>call CompileXeTex()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Enable syntax highlighting
 syntax enable 
 
@@ -231,6 +234,7 @@ hi CursorColumn cterm=NONE ctermbg=124 ctermfg=16
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Turn backup off, since most stuff is in SVN, git etc anyway...
 set nobackup
 set nowb
@@ -242,10 +246,19 @@ nnoremap <leader>u :GundoToggle<CR>
 " Set width of gundo window
 let g:gundo_width = 80
 
+" Turn persistent undo on 
+" means that you can undo even when you close a buffer/VIM
+"try
+    set undodir=~/.vim/temp/undo
+    set undofile
+"catch
+"endtry
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Use spaces instead of tabs
 set expandtab
 
@@ -302,6 +315,7 @@ map <leader>0 10gt
 """"""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
+
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :call VisualSelection('f', '')<CR>
@@ -311,6 +325,7 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
@@ -341,6 +356,7 @@ set viminfo^=%
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
+
 " Always show the status line
 set laststatus=2
 
@@ -348,6 +364,7 @@ set laststatus=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
   exe "normal mz"
@@ -361,6 +378,7 @@ nmap <leader>tr :call DeleteTrailingWS()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Toggle spell checking
 map <leader>ss :setlocal spell! spelllang=en_us<cr>
 
@@ -388,6 +406,7 @@ hi SpellLocal cterm=underline ctermfg=yellow
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Quickly open a buffer for scribble
 map <leader>bu :e ~/Downloads/vim-buffer<cr>
 noremap <leader>ch :!evince ~/Pictures/vi-vim-cheat-sheet.gif &<cr><cr>
@@ -404,19 +423,9 @@ map <leader>pr :!evince 201*.pdf<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Turn persistent undo on 
-"    means that you can undo even when you close a buffer/VIM
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"try
-    set undodir=~/.vim/temp/undo
-    set undofile
-"catch
-"endtry
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Programming
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "noremap <leader>tl :TlistToggle<cr>:wincmd j<cr>:wincmd l<cr> 
 noremap <leader>al :A<cr>
 
