@@ -8,8 +8,8 @@ while read line; do
         continue
     fi
     if [ ${#line} -ge 73 ]; then
-        echo "Commit messages are limited to 72 characters."
-        echo "The following commit message has ${#line} characters."
+        echo -e "\e[1;31mCommit messages are limited to 72 characters.\e[0m"
+        echo -e "\e[1;31mThe following commit message has ${#line} characters.\e[0m"
         echo "${line}"
         exit 1
     fi
