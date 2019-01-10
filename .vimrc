@@ -65,6 +65,11 @@ set t_ut=
 call pathogen#infect()
 call pathogen#helptags()
 
+" Toggle paste mode and get visual feedback (http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste)
+nnoremap <F1> :set invpaste paste?<CR>
+set pastetoggle=<F1>
+set showmode
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
