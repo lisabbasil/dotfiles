@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
-# Send commands to all panes of a certain session
+# Send commands to all panes of a certain tmux session
+
+# TODO: You should check if you have vim open in the sessions. If you send a
+#       command to all tmux panes, then it will be interpreted as bash command,
+#       which is what you probably intended to do, but in vim it will be
+#       intrepreted as command in vim, and do some random stuff. You can always
+#       go back to the window and undo things in vim, so it does not necessarily
+#       wreak havoc, but it can lead to undesired behavior, a) by messing up
+#       the document you have opened in vim, and b) by *not* invoking the
+#       command in bash.
 
 set -eu -o pipefail
 
