@@ -50,7 +50,8 @@ nmap <C-n> <Plug>yankstack_substitute_newer_paste
 xmap <C-n> <Plug>yankstack_substitute_newer_paste
 imap <C-n> <Plug>yankstack_substitute_newer_paste
 
-set nocompatible	" Use Vim defaults instead of 100% vi compatibility
+" Use Vim defaults instead of 100% vi compatibility
+set nocompatible
 " modelines have historically been a source of security/resource
 " vulnerabilities -- disable by default, even when 'nocompatible' is set
 set nomodeline
@@ -76,6 +77,7 @@ set showmode
 " See, for info about the 
 " https://vi.stackexchange.com/q/18737/
 :command! -nargs=1 SL g/<args>/z#.1
+" Since nargs is equal to 1, whitespaces are allowed in the search pattern
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -180,7 +182,7 @@ let g:Imap_UsePlaceHolders=0
 function! CompileLaTeXSuite()
     " Set TCLevel here, otherwise it won't work (it's a bug, I guess)
     TCLevel 0
-	call Tex_RunLaTeX()
+    call Tex_RunLaTeX()
     cd `=g:vimHomeDir`
 endfunction
 
