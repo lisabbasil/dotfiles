@@ -70,6 +70,13 @@ nnoremap <F1> :set invpaste paste?<CR>
 set pastetoggle=<F1>
 set showmode
 
+" Search pattern and list it (sl stands for search/list, for lack of a better name)
+" See, for info about the global (search) command:
+" http://vim.wikia.com/wiki/Power_of_g
+" See, for info about the 
+" https://vi.stackexchange.com/q/18737/
+:command! -nargs=1 SL g/<args>/z#.1
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
