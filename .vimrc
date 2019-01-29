@@ -77,6 +77,7 @@ set showmode
 
 " Set number of lines to the cursor - when moving vertically using j/k
 set so=8
+" and horizontally using h/l
 set sidescrolloff=8
 
 " Turn on the WiLd menu
