@@ -423,10 +423,10 @@ hi SpellLocal cterm=underline ctermfg=yellow
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Quickly open a buffer for scribble
-map <leader>bu :e ~/Downloads/vim-buffer<cr>
-noremap <leader>ch :!evince ~/Pictures/vi-vim-cheat-sheet.gif &<cr><cr>
+map <leader>bu :tabnew ~/Downloads/vim-buffer<cr>
+noremap <leader>ch :!eog ~/Pictures/vi-vim-cheat-sheet.gif &<cr><cr>
 map <leader>to :tabnew ~/todo<cr>
-map <leader>pr :!evince 201*.pdf<cr>
+"map <leader>pr :!evince 201*.pdf<cr>
 
 " Turn on digraph, to e.g. use the following shortcuts
 " See http://vim.wikia.com/wiki/Entering_special_characters
