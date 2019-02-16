@@ -79,6 +79,10 @@ set showmode
 :command! -nargs=1 SL g/<args>/z#.1
 " Since nargs is equal to 1, whitespaces are allowed in the search pattern
 
+" Add empty line before or after cursor, jump to last location (i.e. pretend that cursor doesn't move at all)
+nnoremap <leader>o o<ESC>k``
+nnoremap <leader>O O<ESC>j``
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
