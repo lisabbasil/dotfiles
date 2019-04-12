@@ -3,7 +3,7 @@
 # THIS IS UGLY AND SHOULD BE FIXED!
 # Setting term by hand, otherwise it's not properly set before starting X server
 TERM=xterm-256color
-[[ -n $TMUX ]] && TERM=screen-256color-s
+[[ -n $TMUX ]] && TERM=screen-256color
 
 # This file is sourced by .bashrc and .zshrc and contains settings for both the
 # bash and the zsh shell
