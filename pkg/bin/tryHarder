@@ -8,7 +8,7 @@ try=1
 
 # Do until loop in bash
 while
-    eval "${@}"
+    "${@}"
     exitcode="${?}"
     [[ "${exitcode}" -ne 0 && "${try}" -lt "${tryMax}" ]]
 do (( try++ ))
