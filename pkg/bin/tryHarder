@@ -5,13 +5,19 @@
 
 tryMax=10
 try=1
+wait=2
 
 # Do until loop in bash
 while
+    # Try the user's command, and note down the exit code
     "${@}"
     exitcode="${?}"
     [[ "${exitcode}" -ne 0 && "${try}" -lt "${tryMax}" ]]
-do (( try++ ))
+do
+    # Increment try variable, and sleep a little bit before trying again
+    (( try++ ))
+    echo "Will try again in ${wait} seconds."
+    sleep "${wait}"
 done
 
 if [[ "${exitcode}" -ne 0 ]]; then
