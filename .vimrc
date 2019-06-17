@@ -160,6 +160,24 @@ set showcmd
 set splitbelow
 set splitright
 
+" Toggle horizontal/vertical split; especially useful in vimdiff
+function! ToggleWindowHorizontalVerticalSplit()
+	if !exists('t:splitType')
+		let t:splitType = 'vertical'
+	endif
+
+	if t:splitType == 'vertical' " vertical: switch to horizontal
+		windo wincmd K
+		let t:splitType = 'horizontal'
+
+	else " horizontal: switch to vertical
+		windo wincmd H
+		let t:splitType = 'vertical'
+	endif
+endfunction
+
+nnoremap <leader>hv :call ToggleWindowHorizontalVerticalSplit()<cr>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => LaTeX suite
