@@ -33,16 +33,16 @@ la(){
 lla(){
     ls -la "${@}"
 }
-grep(){
+function grep(){
     command grep --color=auto "${@}"
 }
-egrep(){
+function egrep(){
     command egrep --color=auto "${@}"
 }
-less(){
+function less(){
     command less -N "${@}"
 }
-diff(){
+function diff(){
     command diff -u "${@}"
 }
 
