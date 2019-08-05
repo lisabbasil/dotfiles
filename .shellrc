@@ -37,7 +37,8 @@ cnfhook=/usr/share/doc/pkgfile/command-not-found.bash
 # Set workspace variable depending on server
 if [[ "$HOSTNAME" == lxplus* ]] \
     || [[ "$HOSTNAME" == openstack0* ]] \
-    || [[ "$HOSTNAME" == cmsco* ]]; then
+    || [[ "$HOSTNAME" == cmsco* ]] \
+    || [[ "$HOSTNAME" == ithdp-client* ]]; then
     export workspace=/afs/cern.ch/work/b/bschneid/
     export eosspace=/eos/cms/store/user/bschneid/
 elif [[ "$HOSTNAME" == cmslpc* ]]; then

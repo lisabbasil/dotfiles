@@ -68,7 +68,9 @@ case "$HOST" in
     basil) colorServer="$fg_bold[red]";;
     *triumf*) colorServer="$fg[yellow]";;
     lxplus*) colorServer="$fg_bold[yellow]";;
+    openstack0*) colorServer="$fg_bold[yellow]";;
     cmsco*) colorServer="$fg_bold[yellow]";;
+    ithdp-client*) colorServer="$fg_bold[yellow]";;
     cmslpc*) colorServer="$fg[yellow]";;
     *) colorServer="$fg[magenta]";;
 esac

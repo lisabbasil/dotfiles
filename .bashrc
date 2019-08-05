@@ -18,7 +18,9 @@ case "$HOSTNAME" in
     basil) colorServer='1;31';;
     *triumf*) colorServer='0;33';;
     lxplus*) colorServer='1;33';;
+    openstack0*) colorServer='1;33';;
     cmsco*) colorServer='1;33';;
+    ithdp-client*) colorServer='1;33';;
     cmslpc*) colorServer='0;33';;
     *) colorServer='1;35';;
 esac
