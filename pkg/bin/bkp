@@ -14,8 +14,8 @@ plexfolder=/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Se
 # Get history files from other servers
 fkinit fnal
 rsync -pavz fnal:.history history_fnal
-fkinit desy
-rsync -pavz desy12:.history history_desy
+#fkinit desy
+#rsync -pavz desy12:.history history_desy
 fkinit cern
 rsync -pavz lxplus:.history history_cern
 
@@ -53,6 +53,6 @@ else
     rm "$errorFile"
 fi
 
-rm history_fnal history_desy history_cern
+rm history_fnal history_cern
 
 echo "Bye."
