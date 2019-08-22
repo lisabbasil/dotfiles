@@ -2,6 +2,23 @@
 
 # Moves file to a folder (recycle bin), instead of deleting them
 
+# TODO:
+# Offer the option of making a diff, when you interactively overwrite a file.
+# That means that a simple mv -i won't work anymore.
+
+set -euf -o pipefail
+
+askYN(){
+    y="Yes, continue!"
+    n="No, cancel!"
+    select yn in "${y}" "${n}"; do
+        case "${yn}" in
+            "${y}") return;;
+            "${n}") exit;;
+        esac
+    done
+}
+
 # Bin folder is at a different location for different servers
 # Simply setting it to ~/scratch/trash will have the effect,
 # that sudo trash will put it into /root/scratch/trash
@@ -17,6 +34,17 @@ elif [[ "$HOSTNAME" == nafhh* ]]; then
     bin=/afs/desy.de/user/b/bschneid/scratch/trash
 else
     bin=/home/basil/scratch/trash
+fi
+
+# If there are no positional arguments given, simply list content of trash
+# folder
+if [ "${#}" -eq 0 ]; then
+    echo "Nothing to trash in"
+    echo "${bin}"
+    echo "Do you want to see the content?"
+    askYN
+    find "${bin}"
+    exit
 fi
 
 for file; do
