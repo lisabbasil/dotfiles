@@ -6,4 +6,4 @@
 # videoJoin vid1 vid2 ...
 
 out="${1%.*}"_joined."${1##*.}"
-ffmpeg -safe 0 -f concat -i <(for v; do echo file "${PWD}/${v}"; done) -c copy -strict -2 "${out}"
+ffmpeg -safe 0 -f concat -i <(for v; do echo file "${PWD// /\\ }/${v// /\\ }"; done) -c copy -strict -2 "${out}"
