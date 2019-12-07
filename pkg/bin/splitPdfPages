@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Split PDFs into separate pages
+
+# TODO: I use eval below, would this work without it?
+
+set -euf -o pipefail
+
+# Loop over all documents
+for doc; do
+    echo "Split document ${doc}."
+
+    # Get number of pages in specific document
+    echo -n "Get number of pages... "
+    noPages="$(identify "${doc}" | wc -l)"
+    echo "${noPages}"
+
+    # Loop over all pages and extract them one by one
+    echo -n "Split pages... "
+    for n in $(eval echo {1..${noPages}}); do
+        gs \
+            -sDEVICE=pdfwrite \
+            -dNOPAUSE \
+            -dBATCH \
+            -dSAFER \
+            -dFirstPage="${n}" \
+            -dLastPage="${n}" \
+            -sOutputFile="${doc%.pdf}_${n}.pdf" \
+            "${doc}" &>/dev/null
+    done
+    echo "Done."
+done
