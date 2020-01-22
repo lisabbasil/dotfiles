@@ -1,18 +1,28 @@
 #!/usr/bin/env bash
 
-# Cuts video with reencoding it
+# Cuts video
 
 # ./usage:
 # videoCut filename from to (dest)
 
 filename="${1%.*}_${2}_${3}.${1##*.}"
-ffmpeg \
-    -i "${1}" \
-    -b:v 2572k \
-    -strict -2 \
-    -ss "${2}".000 \
-    -to "${3}".000 \
-    "${filename}"
+if [ "${5}" == true ]; then
+    ffmpeg \
+        -i "${1}" \
+        -b:v 2572k \
+        -strict -2 \
+        -ss "${2}".000 \
+        -to "${3}".000 \
+        "${filename}"
+else
+    ffmpeg \
+        -i "${1}" \
+        -c copy \
+        -strict -2 \
+        -ss "${2}".000 \
+        -to "${3}".000 \
+        "${filename}"
+fi
 
 if [ -n "${4}" ]; then
     mkdir -p "${4}"
