@@ -6,22 +6,20 @@
 # See also ~/pkg/bin/bkpbkp, which makes a backup of this backup
 
 errorFile=~/bkp_error.txt
-server=lxplus
-bkp=/afs/cern.ch/work/b/bschneid/private/.bkp/
-plex=false
-plexfolder=/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server
+server=archserver
+bkp=/home/basil/bkp
 
-# Get history files from other servers
-fkinit fnal
-rsync -pavz fnal:.history history_fnal
-#fkinit desy
-#rsync -pavz desy12:.history history_desy
-fkinit cern
-rsync -pavz lxplus:.history history_cern
+## Get history files from other servers
+#fkinit fnal
+#rsync -pavz fnal:.history history_fnal
+##fkinit desy
+##rsync -pavz desy12:.history history_desy
+#fkinit cern
+#rsync -pavz lxplus:.history history_cern
 
 # Backup home folder
 rsync \
-    -pavz \
+    -pavzz \
     --delete \
     --exclude 'mnt/' \
     --exclude '.cache/' \
@@ -31,20 +29,15 @@ rsync \
     --exclude '.dropbox/command_socket' \
     --exclude '.dropbox/iface_socket' \
     --exclude '.moc/socket2' \
-    /home/basil "$server":"${bkp}" 2>> "$errorFile"
-ssh lxplus "echo Last backup invoked at $(date) >> ${bkp}/bkp.txt"
-
-if [[ "$plex" == true ]]; then
-    # Backup plex folder
-    sudo chmod -R a+r "$plexfolder" 2>> "$errorFile"
-    rsync -pavz --delete "$plexfolder" "$server":~/bkp/ 2>> "$errorFile"
-fi
+    /home/basil "${server}":"${bkp}" 2>> "$errorFile"
+ssh "${server}" "echo Last backup invoked at $(date) >> ${bkp}/bkp.txt"
 
 # Check size of backup
-echo "Back up size on server: "
+echo -n "Back up size on server: "
 ssh \
     -q \
-    "${server}" du -sh "${bkp}"basil | awk '{ print $1 }'
+    "${server}" \
+    du -sh "${bkp}" | awk '{ print $1 }'
 
 # Check if there were errors
 if [[ -s "$errorFile" ]]; then
@@ -53,6 +46,6 @@ else
     rm "$errorFile"
 fi
 
-rm history_fnal history_cern
+#rm history_fnal history_cern
 
 echo "Bye."
