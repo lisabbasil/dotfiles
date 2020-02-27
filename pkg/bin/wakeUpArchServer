@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Wake-on LAN ArchServer
+# Needs UDP port forwarding of 9909 to 9
+
+wol -p 9909 -i basilschneider.duckdns.org 08:f1:ea:f0:b9:d6
