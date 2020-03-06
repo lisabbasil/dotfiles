@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# 1) Replace newline characters with spaces, but do not replace double newline
+#    characters (paragraphs)
+# 2) Replace multiple spaces with a single one
+
+set -euf -o pipefail
+
+i=0
+
+for file; do
+
+    # If this is not the first file, print two newline characters to make a new
+    # paragraph; increment i
+    if [ "$(( i++ ))" -ne 0 ]; then
+        printf "\n\n"
+    fi
+
+    # Replace newline characters
+    awk ' /^$/ { print "\n"; } /./ { printf("%s ", $0); } ' "${file}" | \
+        sed 's/ \+/ /g'
+done
