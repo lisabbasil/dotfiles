@@ -6,17 +6,30 @@
 
 set -euf -o pipefail
 
-i=0
-
-for file; do
-
-    # If this is not the first file, print two newline characters to make a new
-    # paragraph; increment i
-    if [ "$(( i++ ))" -ne 0 ]; then
-        printf "\n\n"
-    fi
-
+forgetNewlinesPerFile(){
     # Replace newline characters
-    awk ' /^$/ { print "\n"; } /./ { printf("%s ", $0); } ' "${file}" | \
+    awk ' /^$/ { print "\n"; } /./ { printf("%s ", $0); } ' "${1}" | \
         sed 's/ \+/ /g'
-done
+}
+
+# Check if we get input from stdin ...
+if [ -p /dev/stdin ]; then
+
+    forgetNewlinesPerFile /dev/stdin
+
+# ... or as positional arguments
+else
+
+    i=0
+    for file in "${@}"; do
+
+        # If this is not the first file, print two newline characters to make a new
+        # paragraph; increment i
+        if [ "$(( i++ ))" -ne 0 ]; then
+            printf "\n\n"
+        fi
+
+        forgetNewlinesPerFile "${file}"
+    done
+
+fi
