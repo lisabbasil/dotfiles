@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-aplay /home/basil/bin/beep.wav &>/dev/null
+aplay ~/pkg/bin/beep.wav &>/dev/null
