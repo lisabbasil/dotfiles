@@ -5,8 +5,18 @@
 # This script assumes that authentication with fkinit works
 # See also ~/pkg/bin/bkpbkp, which makes a backup of this backup
 
+# Figure out if you are in local network or not. This is needed since router
+# does not support NAT Hairpinning
+echo -n "Figure out if you are local or external with respect to backup server... "
+if ping -c 1 basilschneider.duckdns.org &>/dev/null; then
+    echo "External."
+    server=archserver_external
+else
+    echo "Local."
+    server=archserver_local
+fi
+
 errorFile=~/bkp_error.txt
-server=archserver
 bkp=/home/basil/bkp
 
 ## Get history files from other servers

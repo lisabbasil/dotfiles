@@ -10,7 +10,17 @@
 # From b) it follows, that you should run bkpbkp as little as possible.
 # Running bkpbkp maybe every other month should be reasonable
 
-server=archserver
+# Figure out if you are in local network or not. This is needed since router
+# does not support NAT Hairpinning
+echo -n "Figure out if you are local or external with respect to backup server... "
+if ping -c 1 basilschneider.duckdns.org &>/dev/null; then
+    echo "External."
+    server=archserver_external
+else
+    echo "Local."
+    server=archserver_local
+fi
+
 bkp=/home/basil/bkp
 bkpbkp=/home/basil/bkpbkp
 
