@@ -8,12 +8,12 @@
 # Figure out if you are in local network or not. This is needed since router
 # does not support NAT Hairpinning
 echo -n "Figure out if you are local or external with respect to backup server... "
-if ping -c 1 basilschneider.duckdns.org &>/dev/null; then
-    echo "External."
-    server=archserver_external
-else
+if ssh archserver_local bash -c true &>/dev/null; then
     echo "Local."
     server=archserver_local
+else
+    echo "External."
+    server=archserver_external
 fi
 
 errorFile=~/bkp_error.txt
