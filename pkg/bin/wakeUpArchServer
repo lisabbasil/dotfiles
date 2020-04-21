@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# NOT WORKING WITH SUNRISE BOX
+
 # Wake-on LAN ArchServer
 # Needs UDP port forwarding of 9909 to 9
 
