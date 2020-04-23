@@ -66,7 +66,7 @@ function diff(){
 #}
 
 mkcd(){
-    mkdir "${1}" && cd "${1}"
+    mkdir "${@}" && cd "${1}"
 }
 
 # Always exec startx, so if the GUI crashes, the terminal exits
