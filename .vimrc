@@ -324,8 +324,8 @@ set tw=80
 autocmd FileType html set tw=0
 autocmd FileType css set tw=0
 
-set ai "Autoindent
-set si "Smartindent
+set ai "autoindent
+"set si "smartindent
 "set cindent
 
 " Smartindent removes indent when lines starting with '#', turn it off
