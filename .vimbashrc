@@ -1,0 +1,2 @@
+test -s ~/.alias && . ~/.alias
+PS1='vim - \u@\h:\w\$ '
