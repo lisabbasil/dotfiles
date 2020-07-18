@@ -39,6 +39,7 @@ rsync \
     --exclude '.dropbox/command_socket' \
     --exclude '.dropbox/iface_socket' \
     --exclude '.moc/socket2' \
+    --exclude '.config/Microsoft/Microsoft Teams' \
     /home/basil "${server}":"${bkp}" 2>> "$errorFile"
 ssh "${server}" "echo Last backup invoked at $(date) >> ${bkp}/bkp.txt"
 
