@@ -5,5 +5,20 @@
 # ./usage:
 # videoJoin vid1 vid2 ...
 
+# If you got problem with timestamps in the joined video, you might want to try
+# to reencode the video. Figure out what codecs the source file use with
+# ffprobe "${file}" 2>&1 | grep Stream
+# and then use this information as an option to ffmpeg, e.g.
+# -c:v hevc -c:a aac
+# instead of
+# -c copy
+
 out="${1%.*}"_joined."${1##*.}"
-ffmpeg -safe 0 -f concat -i <(for v; do echo file "${PWD// /\\ }/${v// /\\ }"; done) -c copy -strict -2 "${out}"
+ffmpeg \
+    -f concat \
+    -safe 0 \
+    -i <(for v; do echo file "${PWD// /\\ }/${v// /\\ }"; done) \
+    -c copy \
+    -fflags +genpts \
+    -max_muxing_queue_size 4096 \
+    "${out}"
