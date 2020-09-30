@@ -29,14 +29,16 @@ fi
 
 filename="${1%.*}_${from}_${to}.${1##*.}"
 if [ "${5}" == true ]; then
+    # Reencode
     ffmpeg \
         -i "${1}" \
-        -b:v 2572k \
-        -strict -2 \
+        -c:v libx264 \
+        -c:a aac \
         -ss "${from}".000 \
         -to "${to}".000 \
         "${filename}"
 else
+    # Don't reencode
     ffmpeg \
         -i "${1}" \
         -c copy \
