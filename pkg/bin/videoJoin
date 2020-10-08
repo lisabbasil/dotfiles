@@ -13,7 +13,9 @@
 # instead of
 # -c copy
 
-out="${1%.*}"_joined."${1##*.}"
+out="${1%_*}"
+out="${out%_*}"_joined."${1##*.}"
+
 ffmpeg \
     -f concat \
     -safe 0 \
