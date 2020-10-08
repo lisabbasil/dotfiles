@@ -66,11 +66,6 @@ set t_ut=
 call pathogen#infect()
 call pathogen#helptags()
 
-" Toggle paste mode and get visual feedback (http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste)
-nnoremap <F1> :set invpaste paste?<CR>
-set pastetoggle=<F1>
-set showmode
-
 " Search pattern and list it (sl stands for search/list, for lack of a better name)
 " See, for info about the global (search) command:
 " http://vim.wikia.com/wiki/Power_of_g
@@ -82,6 +77,14 @@ set showmode
 " Add empty line before or after cursor, jump to last location (i.e. pretend that cursor doesn't move at all)
 nnoremap <leader>o o<ESC>k``
 nnoremap <leader>O O<ESC>j``
+
+" F keys
+" F1: Toggle paste mode and get visual feedback (http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste)
+nnoremap <F1> :set invpaste paste?<CR>
+set pastetoggle=<F1>
+set showmode
+" F2: Toggle wrap
+nnoremap <F2> :set wrap!<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
