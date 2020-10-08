@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Use clipboard for copying (the CTRL+c/CTRL+v one)
+
+xclip -selection clipboard "$@"
