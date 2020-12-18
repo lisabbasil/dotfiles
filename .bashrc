@@ -11,17 +11,16 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# Set PS1 according to server you are working on
-colorUser='0;32'
+# Colors! Set PS1 according to machine you are working on
+if [ $UID -eq 0 ]; then
+    colorUser='1;31'
+else
+    colorUser='0;32'
+fi
 colorPath='0;36'
 case "$HOSTNAME" in
-    basil) colorServer='1;31';;
-    *triumf*) colorServer='0;33';;
-    lxplus*) colorServer='1;33';;
-    openstack0*) colorServer='1;33';;
-    cmsco*) colorServer='1;33';;
-    ithdp-client*) colorServer='1;33';;
-    cmslpc*) colorServer='0;33';;
+    basilkiste) colorServer='1;31';;
+    archserver*) colorServer='0;33';;
     *) colorServer='1;35';;
 esac
 export PROMPT_DIRTRIM=3
@@ -30,9 +29,7 @@ export PS1="\[\033[${colorUser}m\]\u\[\033[00m\]@\[\033[${colorServer}m\]\h\[\03
 # Set vi mode! Woohoo!
 set -o vi
 
-# Eternal bash history.
-# ---------------------
-# Undocumented feature which sets the size to "unlimited".
+# Eternal bash history; see also
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
 export HISTFILESIZE=500000
 

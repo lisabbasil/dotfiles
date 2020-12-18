@@ -55,7 +55,7 @@ setopt pushdignoredups
 # This reverts the +/- operators.
 setopt pushdminus
 
-# Set PS1 according to server you are working on
+# Colors! Set PS1 according to machine you are working on
 if [ $UID -eq 0 ]; then
     # root
     colorUser="$fg[red]"
@@ -65,14 +65,9 @@ else
 fi
 colorPath="$fg[cyan]"
 case "$HOST" in
-    basil) colorServer="$fg_bold[red]";;
-    *triumf*) colorServer="$fg[yellow]";;
-    lxplus*) colorServer="$fg_bold[yellow]";;
-    openstack0*) colorServer="$fg_bold[yellow]";;
-    cmsco*) colorServer="$fg_bold[yellow]";;
-    ithdp-client*) colorServer="$fg_bold[yellow]";;
-    cmslpc*) colorServer="$fg[yellow]";;
-    *) colorServer="$fg[magenta]";;
+    basilkiste) colorServer="$fg_bold[red]";;
+    archserver*) colorServer="$fg[magenta]";;
+    *) colorServer="$fg[yellow]";;
 esac
 
 # Personal theme
