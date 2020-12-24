@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Color highlight positional arguments, e.g.
+# foo --help | highlight bar
+
+IFS="|"
+egrep --color=auto "$*|$"
