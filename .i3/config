@@ -44,7 +44,7 @@ bindsym $win+F9 exec --no-startup-id xbacklight -dec 5
 bindsym $win+F10 exec --no-startup-id xbacklight -inc 5
 
 #bindsym XF86Switch_VT_2 exec terminology
-bindsym XF86Switch_VT_2 exec urxvt
+#bindsym XF86Switch_VT_2 exec urxvt
 
 # Lock screen
 #bindsym $win+g exec --no-startup-id i3lock -c 222222
