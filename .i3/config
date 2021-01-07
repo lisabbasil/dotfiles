@@ -49,7 +49,7 @@ bindsym $win+F12 exec --no-startup-id xbacklight -inc 5
 bindsym $win+g exec --no-startup-id screenlock
 
 # Suspend
-bindsym $win+$alt+g exec --no-startup-id i3lock -c 222222; exec --no-startup-id systemctl suspend
+bindsym $win+$alt+g exec --no-startup-id screenlock; exec --no-startup-id systemctl suspend
 
 # Screen turns dark after 30 minutes
 exec --no-startup-id xset dpms 1800
