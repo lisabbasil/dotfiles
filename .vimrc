@@ -19,7 +19,9 @@ nmap <leader>w :w!<cr>
 " Allow saving of files as sudo when
 cmap w!! w !sudo tee > /dev/null %
 
+" Remap esc to jj (it's quick) and Shift-Tab (like in the terminal)
 inoremap jj <ESC>
+inoremap <S-Tab> <ESC>
 noremap <leader>q :qa<cr>
 
 " Bash shortcut
