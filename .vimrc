@@ -512,12 +512,28 @@ autocmd QuickFixCmdPost    l* nested lwindow
 "autocmd! BufNewFile,BufRead *.pde setlocal ft=arduino
 "autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 
-" Syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+" Show tabs and trailing spaces
+set list listchars=tab:>-,trail:·
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Syntastic
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Toggle Mode
+nmap <leader>sy :SyntasticToggleMode<CR>
+
+" Statusline
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" Default mode
 let g:syntastic_mode_map = { 'mode': 'passive'}
+"let g:syntastic_mode_map = {
+"    \ "mode": "passive",
+"    \ "active_filetypes": ["python"],
+"    \ "passive_filetypes": [] }
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -533,11 +549,6 @@ let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 " HTML
 let g:syntastic_html_checkers = ['validator', 'w3']
-
-nmap <leader>sy :SyntasticToggleMode<CR>
-
-" Show tabs and trailing spaces
-set list listchars=tab:>-,trail:·
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
