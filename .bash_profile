@@ -21,9 +21,4 @@ export RUCIO_ACCOUNT=bschneid
 #TERM=rxvt-256color
 #[ -n "$TMUX" ] && export TERM=screen-256color-s # already defined in .tmux.conf, but does not work on lheppc1 (but on lheppc7)
 
-# For the HP Elitebook laptop, set the brightness at start to max
-if [ "$HOSTNAME" = "basil" ]; then
-    sudo bash -c "cat /sys/class/backlight/intel_backlight/max_brightness > /sys/class/backlight/intel_backlight/brightness"
-fi
-
 export PATH="$HOME/.cargo/bin:$PATH"

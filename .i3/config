@@ -37,11 +37,9 @@ bindsym $win+F1 exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym $win+F2 exec pactl set-sink-volume @DEFAULT_SINK@ -1%
 bindsym $win+F3 exec pactl set-sink-volume @DEFAULT_SINK@ +1%
 
-# Backlight
-#bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
-#bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
-bindsym $win+F9 exec --no-startup-id xbacklight -dec 5
-bindsym $win+F10 exec --no-startup-id xbacklight -inc 5
+# Backlight (using acpilight rather than xorg-xbacklight)
+bindsym $win+F11 exec --no-startup-id xbacklight -dec 5
+bindsym $win+F12 exec --no-startup-id xbacklight -inc 5
 
 #bindsym XF86Switch_VT_2 exec terminology
 #bindsym XF86Switch_VT_2 exec urxvt
