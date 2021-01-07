@@ -280,11 +280,8 @@ set nobackup
 set nowb
 set noswapfile
 
-" Shortcut for gundo
-nnoremap <leader>u :GundoToggle<CR>
-
-" Set width of gundo window
-let g:gundo_width = 80
+" Shortcut for undotree
+nnoremap <leader>u :UndotreeToggle<CR>
 
 " Turn persistent undo on 
 " means that you can undo even when you close a buffer/VIM
