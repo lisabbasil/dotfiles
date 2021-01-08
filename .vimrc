@@ -77,8 +77,13 @@ call pathogen#helptags()
 " Since nargs is equal to 1, whitespaces are allowed in the search pattern
 
 " Add empty line before or after cursor, jump to last location (i.e. pretend that cursor doesn't move at all)
-nnoremap <leader>o o<ESC>k``
-nnoremap <leader>O O<ESC>j``
+" Not working properly right now, see also:
+" https://stackoverflow.com/a/5052103/1945981
+" For now cursor goes back to start of line, instead of the location
+"nnoremap <leader>o o<ESC>k``
+"nnoremap <leader>O O<ESC>j``
+nnoremap <leader>o o<ESC>k
+nnoremap <leader>O O<ESC>j
 
 " F keys
 " F1: Toggle paste mode and get visual feedback (http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste)
