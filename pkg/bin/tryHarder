@@ -1,27 +1,77 @@
 #!/usr/bin/env bash
 
-# Try command several times, until it reports success (exit code 0)
+# Try a command several times, until it reports success (exit code 0)
 # or I give up (tried n times)
 
 tryMax=10
-try=1
 wait=2
+try=1
 
-# Do until loop in bash
-while
-    # Try the user's command, and note down the exit code
-    "${@}"
-    exitcode="${?}"
-    [[ "${exitcode}" -ne 0 && "${try}" -lt "${tryMax}" ]]
-do
-    # Increment try variable, and sleep a little bit before trying again
-    (( try++ ))
-    echo "Will try again in ${wait} seconds."
-    sleep "${wait}"
-done
 
-if [[ "${exitcode}" -ne 0 ]]; then
-    echo -n "I tried hard, but did not manage to make this work. The exit code "
-    echo "of the last iteration of this command was: ${exitcode}."
-    exit "${exitcode}"
-fi
+usage(){
+    echo "Usage of $(basename $0):"
+    echo "Try a command several times, until it reports success (exit code 0),"
+    echo "or give up after n tries."
+    echo
+    echo "Usage: $(basename $0) [option] [command]"
+    echo "where [option] can be"
+    echo "  -h               Show this help"
+    echo "  -m               Maximum number of tries (default: ${tryMax})"
+    echo "  -w               Number of seconds to wait between two tries"
+    echo "                   (default: ${wait})"
+    echo "and [command] is the command you want to try multiple times."
+}
+
+run(){
+    # Do until loop in bash
+    while
+        # Try the user's command, and note down the exit code
+        "${@}"
+        exitcode="${?}"
+        [[ "${exitcode}" -ne 0 && "${try}" -lt "${tryMax}" ]]
+    do
+        # Increment try variable, and sleep a little bit before trying again
+        (( try++ ))
+        echo "Will try again in ${wait} seconds."
+        sleep "${wait}"
+    done
+
+    if [[ "${exitcode}" -ne 0 ]]; then
+        echo -n "I tried hard, but did not manage to make this work. The exit code "
+        echo "of the last iteration of this command was: ${exitcode}."
+        exit "${exitcode}"
+    fi
+}
+
+parseOptions(){
+
+    OPT=$(getopt \
+        --options hm:w: \
+        --name "$0" \
+        -- "$@"
+    )
+
+    if [ $? -ne 0 ]; then
+        err=true
+    fi
+
+    eval set -- "${OPT}"
+
+    while true; do
+        case "${1}" in
+            -h) usage; exit 0;;
+            -m) tryMax="${2}"; shift 2;;
+            -w) wait="${2}"; shift 2;;
+            --) shift; break;;
+        esac
+    done
+
+    if [ "${err}" = true ]; then
+        usage
+        exit 1
+    fi
+
+    run "$@"
+}
+
+parseOptions "$@"
