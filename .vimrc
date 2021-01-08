@@ -526,9 +526,9 @@ set list listchars=tab:>-,trail:·
 nmap <leader>sy :SyntasticToggleMode<CR>
 
 " Statusline
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 " Default mode
 let g:syntastic_mode_map = { 'mode': 'passive'}
