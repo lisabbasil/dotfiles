@@ -86,12 +86,26 @@ nnoremap <leader>o o<ESC>k
 nnoremap <leader>O O<ESC>j
 
 " F keys
-" F1: Toggle paste mode and get visual feedback (http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste)
+
+" F1: Toggle paste mode and get visual feedback
+" (http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste)
 nnoremap <F1> :set invpaste paste?<CR>
 set pastetoggle=<F1>
 set showmode
+
 " F2: Toggle wrap
 nnoremap <F2> :set wrap!<CR>
+
+"" F3: Toggle textwidth from 80 to 0
+function ToggleTextwidth()
+	if &tw == 0
+		setlocal tw=80
+	else
+		setlocal tw=0
+	endif
+	set tw
+endfunction
+nnoremap <F3> :call ToggleTextwidth()<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
