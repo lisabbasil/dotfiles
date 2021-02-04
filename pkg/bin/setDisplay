@@ -9,8 +9,8 @@ gui=i3
 #hdmi=$(xrandr | awk '/^HDMI/ {print $1}')
 int='eDP-1'
 ext='HDMI-1'
-hdmi='HDMI1'
-dp2='DP2'
+hdmi='HDMI-1'
+#dp2='DP2'
 
 # If "${ext}" is connected, set option to 2,
 # otherwise use option 1
@@ -213,6 +213,7 @@ case "${option}" in
                 -t string
             xfce4-panel -r
         fi
+        pactl set-card-profile 0 output:hdmi-stereo
         ;;
     *) printf "%b" "Using one display\n"
         xrandr \
@@ -223,7 +224,6 @@ case "${option}" in
             --off \
             --output "${hdmi}" \
             --off \
-            --output "${dp2}" \
             --off || exit 2
         if [ "$gui" = "xfce" ]; then
             xfconf-query \
