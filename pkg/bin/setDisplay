@@ -215,6 +215,33 @@ case "${option}" in
         fi
         pactl set-card-profile 0 output:hdmi-stereo
         ;;
+    mirrorTV) printf "%b" "Using two displays set up for TV\n"
+        xrandr \
+            --addmode "${hdmi}" "${modeHdmi}" || exit 1
+        xrandr \
+            --output "${int}" \
+            --mode "$modeInt" \
+            --primary \
+            --output "${hdmi}" \
+            --mode "$modeHdmi" \
+            --same-as "${int}" || exit 2
+        if [ "$gui" = "xfce" ]; then
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-0/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfconf-query \
+                -c xfce4-panel \
+                -p /panels/panel-1/output-name \
+                -s "${int}" \
+                -n \
+                -t string
+            xfce4-panel -r
+        fi
+        pactl set-card-profile 0 output:hdmi-stereo
+        ;;
     *) printf "%b" "Using one display\n"
         xrandr \
             --output "${int}" \
