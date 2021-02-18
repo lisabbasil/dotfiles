@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Network information to be shown as i3block
+
+# Output 1 to 4 lines:
+# 1) full_text
+# 2) short_text
+# 3) color
+# 4) background
+
+# See:
+# https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail
+# https://github.com/vivien/i3blocks
+
+green=#00FF00
+yellow=#FFF600
+orange=#FFAE00
+red=#FF0000
+
+# Get volume information
+vol=$(pamixer --get-volume)
+mute=$(pamixer --get-mute) # true or false
+
+# Echo full text
+echo "♪: ${vol}%"
+
+# Echo short text
+echo "♪: ${vol}%"
+
+# Echo color
+if [ "${mute}" == "true" ]; then
+    echo "${yellow}"
+fi

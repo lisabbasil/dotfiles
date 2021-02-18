@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# Network information to be shown as i3block
+
+# Output 1 to 4 lines:
+# 1) full_text
+# 2) short_text
+# 3) color
+# 4) background
+
+# See:
+# https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail
+# https://github.com/vivien/i3blocks
+
+interface="${BLOCK_INSTANCE:-wlp1s0}"
+
+green=#00FF00
+yellow=#FFF600
+orange=#FFAE00
+red=#FF0000
+
+# If no wireless card present, don't show anything
+[[ ! -d /sys/class/net/${interface}/wireless ]] && exit
+
+# If the wifi interface exists but no connection is active
+if [[ "$(cat /sys/class/net/${interface}/operstate)" = 'down' ]]; then
+    echo "down"
+    echo "down"
+    echo "${red}"
+    exit
+fi
+
+# Get connection information
+rxbitrate=$(nmcli -g CAPABILITIES.SPEED d show "${interface}")
+ssid=$(nmcli -g GENERAL.CONNECTION d show "${interface}")
+ap=$(nmcli -f 'AP' d show "${interface}" | sed -n 's/^AP\[\([0-9]*\)\]\.IN-USE: *\*$/\1/p')
+quality=$(nmcli -f 'AP.SIGNAL' d show "${interface}" | awk "/^AP\[${ap}\]\.SIGNAL/ {print(\$2)}")
+ip4=$(nmcli -g IP4.ADDRESS d show "${interface}")
+#ip6=$(nmcli -g IP6.ADDRESS d show "${interface}")
+
+# Echo full text
+echo -n "What about ethernet? - "
+echo "W: ${ip4} (${quality}% @ ${ssid}, ${rxbitrate})"
+
+# Echo short text
+echo "${ssid}"
+
+# Echo color
+if [ ${quality} -ge 60 ]; then
+    echo "${green}"
+elif [ ${quality} -ge 40 ]; then
+    echo "${yellow}"
+elif [ ${quality} -ge 20 ]; then
+    echo "${orange}"
+else
+    echo "${red}"
+fi

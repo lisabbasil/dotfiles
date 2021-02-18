@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Network information to be shown as i3block
+
+# Output 1 to 4 lines:
+# 1) full_text
+# 2) short_text
+# 3) color
+# 4) background
+
+# See:
+# https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail
+# https://github.com/vivien/i3blocks
+
+green=#00FF00
+yellow=#FFF600
+orange=#FFAE00
+red=#FF0000
+
+# Echo full text
+echo "U: $(awk '{printf "%.1f\n", $1/(60*60*24)}' /proc/uptime)d"
+
+# Echo short text
+echo "U: $(awk '{printf "%.1f\n", $1/(60*60*24)}' /proc/uptime)d"
+
+# Echo color

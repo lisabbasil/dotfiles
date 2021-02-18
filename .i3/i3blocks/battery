@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# Network information to be shown as i3block
+
+# Output 1 to 4 lines:
+# 1) full_text
+# 2) short_text
+# 3) color
+# 4) background
+
+# See:
+# https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail
+# https://github.com/vivien/i3blocks
+
+sysbat=/sys/class/power_supply/BAT0/
+
+green=#00FF00
+yellow=#FFF600
+orange=#FFAE00
+red=#FF0000
+
+# Get connection information
+cap=$(cat "${sysbat}/capacity")
+status=$(cat "${sysbat}/status")
+
+if [ "${status}" == "Discharging" ]; then
+    statussymbol=↓
+    time=$(acpi | awk -F'[ :]*' '{printf "%s:%s", $5, $6}')
+elif [ "${status}" == "Charging" ]; then
+    statussymbol=↑
+    if acpi | grep -q 'charging at zero rate'; then
+        time=∞
+    else
+        time=$(acpi | awk -F'[ :]*' '{printf "%s:%s", $5, $6}')
+    fi
+elif [ "${status}" == "Full" ]; then
+    statussymbol=→
+    time=-
+else
+    statussymbol=?
+    time=?
+fi
+
+
+# Echo full text
+echo "B: ${statussymbol} ${cap}% (${time})"
+
+# Echo short text
+echo "B: ${statussymbol} ${cap}% (${time})"
+
+# Echo color
+if [ "${status}" == "Discharging" ]; then
+    if [ ${cap} -ge 40 ]; then
+        echo "${yellow}"
+    elif [ ${cap} -ge 20 ]; then
+        echo "${orange}"
+    else
+        echo "${red}"
+    fi
+else
+    echo "${green}"
+fi

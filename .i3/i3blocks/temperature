@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# Network information to be shown as i3block
+
+# Output 1 to 4 lines:
+# 1) full_text
+# 2) short_text
+# 3) color
+# 4) background
+
+# See:
+# https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail
+# https://github.com/vivien/i3blocks
+
+interface="${BLOCK_INSTANCE:-wlp1s0}"
+
+green=#00FF00
+yellow=#FFF600
+orange=#FFAE00
+red=#FF0000
+
+# Get temperature information
+tCPU=$(sensors | awk -F'[ +.]*' '/Package id 0:/ {print($4)}')
+#tC0=$tCPU
+#tC1=$tCPU
+
+# Echo full text
+#echo "CPU: ${tCPU} Core 0: ${tC0} Core 1: ${tC1}"
+echo "T: ${tCPU}°C"
+
+# Echo short text
+echo "T: ${tCPU}°C"
+
+# Echo color
+if [ ${tCPU} -le 60 ]; then
+    echo "${green}"
+elif [ ${tCPU} -le 75 ]; then
+    echo "${yellow}"
+elif [ ${tCPU} -le 90 ]; then
+    echo "${orange}"
+else
+    echo "${red}"
+fi
