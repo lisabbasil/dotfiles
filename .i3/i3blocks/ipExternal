@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Network information to be shown as i3block
+
+# Output 1 to 4 lines:
+# 1) full_text
+# 2) short_text
+# 3) color
+# 4) background
+
+# See:
+# https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail
+# https://github.com/vivien/i3blocks
+
+interface="${BLOCK_INSTANCE:-wlp1s0}"
+
+green=#00FF00
+yellow=#FFF600
+orange=#FFAE00
+red=#FF0000
+
+# Get connection information
+ip4E=$(curl 'https://api.ipify.org')
+
+# Echo full text
+echo "I: ${ip4E}"
+
+# Echo short text
+echo ""
