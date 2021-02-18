@@ -41,7 +41,6 @@ else
     time=?
 fi
 
-
 # Echo full text
 echo "B: ${statussymbol} ${cap}% (${time})"
 
@@ -50,11 +49,14 @@ echo "B: ${statussymbol} ${cap}% (${time})"
 
 # Echo color
 if [ "${status}" == "Discharging" ]; then
-    if [ ${cap} -ge 40 ]; then
+    if [ "${cap}" -ge 40 ]; then
         echo "${yellow}"
-    elif [ ${cap} -ge 20 ]; then
+    elif [ "${cap}" -ge 20 ]; then
         echo "${orange}"
+    elif [ "${cap}" -ge 10 ]; then
+        echo "${red}"
     else
+        echo "${green}"
         echo "${red}"
     fi
 else
