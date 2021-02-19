@@ -20,8 +20,11 @@ orange=#FFAE00
 red=#FF0000
 
 # Get connection information
-cap=$(cat "${sysbat}/capacity")
-status=$(cat "${sysbat}/status")
+#cap=$(cat "${sysbat}/capacity")
+#status=$(cat "${sysbat}/status")
+IFS=",% " read -r -a arr <<< $(acpi)
+status="${arr[2]}"
+cap="${arr[3]}"
 
 if [ "${status}" == "Discharging" ]; then
     statussymbol=↓
