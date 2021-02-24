@@ -12,18 +12,21 @@
 # https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail
 # https://github.com/vivien/i3blocks
 
-interface="${BLOCK_INSTANCE:-wlp1s0}"
-
 green=#00FF00
 yellow=#FFF600
 orange=#FFAE00
 red=#FF0000
 
 # Get connection information
-ip4E=$(curl 'https://api.ipify.org')
+ip4E=$(curl -s 'https://api.ipify.org')
 
-# Echo full text
-echo "I: ${ip4E}"
+# Check if we really got an IP
+if [[ "${ip4E}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] ; then
+    # Echo full text
+    echo "I: ${ip4E}"
+else
+    echo "I: ?"
+fi
 
 # Echo short text
 echo ""
