@@ -25,11 +25,11 @@ awk '{print("L:", $1, $2, $3)}' < /proc/loadavg
 
 # Echo color
 loadavg1mx100=$(awk '{print(100*$1)}' < /proc/loadavg)
-if [ "${loadavg1mx100}" -le 200 ]; then
+if [ "${loadavg1mx100}" -le 400 ]; then
     echo "${green}"
-elif [ "${loadavg1mx100}" -le 300 ]; then
+elif [ "${loadavg1mx100}" -le 600 ]; then
     echo "${yellow}"
-elif [ "${loadavg1mx100}" -le 400 ]; then
+elif [ "${loadavg1mx100}" -le 800 ]; then
     echo "${orange}"
 else
     echo "${red}"
