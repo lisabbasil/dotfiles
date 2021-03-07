@@ -39,7 +39,6 @@ ip4=$(nmcli -g IP4.ADDRESS d show "${interface}")
 #ip6=$(nmcli -g IP6.ADDRESS d show "${interface}")
 
 # Echo full text
-echo -n "What about ethernet? - "
 echo "W: ${ip4} (${quality}% @ ${ssid}, ${rxbitrate})"
 
 # Echo short text
