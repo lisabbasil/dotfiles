@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Network information to be shown as i3block
+
+# Output 1 to 4 lines:
+# 1) full_text
+# 2) short_text
+# 3) color
+# 4) background
+
+# See:
+# https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail
+# https://github.com/vivien/i3blocks
+
+green=#00FF00
+yellow=#FFF600
+orange=#FFAE00
+red=#FF0000
+
+# Get connection information
+kp=$(pacman -Q linux | awk '{print($2)}' | sed 's/\.arch/-arch/')
+ku=$(uname -r)
+
+# Echo full text
+echo "K: ${ku}"
+
+# Echo short text
+echo "K: ${ku}"
+
+# Echo color
+if [[ "${ku}" == "${kp}" ]]; then
+    echo "${green}"
+else
+    echo "${red}"
+fi
