@@ -10,7 +10,7 @@ TERM=xterm-256color
 
 export LD_LIBRARY_PATH=~/pkg/lib:/uscms_data/d1/bschneid/pkg/lib:"${LD_LIBRARY_PATH}"
 export MANPATH=~/pkg/share/man:uscms_data/d1/bschneid/pkg/share/man:"${MANPATH}"
-export PATH=~/pkg/bin:~/pkg/usr/local/bin:/uscms_data/d1/bschneid/pkg/bin:/uscms_data/d1/bschneid/pkg/usr/local/bin:~/.gem/ruby/2.2.0/bin:"${PATH}"
+export PATH=~/.local/bin:~/pkg/bin:~/pkg/usr/local/bin:/uscms_data/d1/bschneid/pkg/bin:/uscms_data/d1/bschneid/pkg/usr/local/bin:~/.gem/ruby/2.2.0/bin:"${PATH}"
 export PYTHONPATH=~/analysis/toolbox/:"${PYTHONPATH}"
 
 export EDITOR=vim
