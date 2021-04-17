@@ -4,34 +4,17 @@
 unalias ls 2>/dev/null
 unalias ll 2>/dev/null
 unalias la 2>/dev/null
-oldls(){
-    /bin/ls --color=auto "${@}"
-}
-oldll(){
-    oldls -l "${@}"
-}
-oldla(){
-    oldls -a "${@}"
-}
-oldlla(){
-    oldls -la "${@}"
-}
-ls(){
-    # Use exa if installed, otherwise fall back to ls
-    if command -v exa &>/dev/null; then
-        exa "${@}"
-    else
-        oldls "${@}"
-    fi
-}
 ll(){
-    ls -l "${@}"
+    ls -l --color=auto "${@}"
 }
 la(){
-    ls -a "${@}"
+    ls -a --color=auto "${@}"
 }
 lla(){
-    ls -la "${@}"
+    ls -la --color=auto "${@}"
+}
+llsd(){
+    lsd -l "${@}"
 }
 function grep(){
     command grep --color=auto "${@}"
