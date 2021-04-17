@@ -21,6 +21,4 @@ ffmpeg \
     -safe 0 \
     -i <(for v; do echo file "${PWD// /\\ }/${v// /\\ }"; done) \
     -c copy \
-    -fflags +genpts \
-    -max_muxing_queue_size 4096 \
     "${out}"
