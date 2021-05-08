@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+# Count files in dir(s) given as positional arguments
+
+cntf=true
+cntd=true
+cnts=false
+
+usage(){
+    echo "Count files and/or directories in given directories."
+    echo
+    echo "Usage: $(basename $0) [option]"
+    echo "where [option] can be"
+    echo "  -h               Show this help"
+    echo "  -f               Count files only (default: ${cntf})"
+    echo "  -d               Count dirs only (default: ${cntd})"
+    echo "  -s               Count files/dirs also in subdirectories"
+    echo "                   (default: ${cnts})"
+}
+
+run(){
+    # Set string that describes what exactly is counted
+
+    # Count files and/or dirs
+    local cntinfo="files and directories"
+    if [ "${cntf}" == false ]; then
+        cntinfo="directories"
+    elif [ "${cntd}" == false ]; then
+        cntinfo="files"
+    fi
+
+    # Include subdirectories or not
+    if [ "${cnts}" == false ]; then
+        cntinfo+=" (not including subdirectories)"
+    else
+        cntinfo+=" (including subdirectories)"
+    fi
+
+    # maxdepth argument for find
+    local maxdepth=1
+    if [ "${cnts}" == true ]; then
+        maxdepth=999
+    fi
+
+    # Loop over positional arguments and count files/dirs
+    total=0
+    for dir; do
+        # Count
+        if [ "${cntf}" == true ] && [ "${cntd}" == true ]; then
+            # Count files and dirs
+            r=$(find "${dir}" -maxdepth "${maxdepth}" | wc -l)
+            # Correct by one since parent directory is also counted
+            (( r-- ))
+        elif [ "${cntf}" == false ]; then
+            # Count dirs only
+            r=$(find "${dir}" -maxdepth "${maxdepth}" -type d | wc -l)
+            # Correct by one since parent directory is also counted
+            (( r-- ))
+        else
+            # Count files only
+            r=$(find "${dir}" -maxdepth "${maxdepth}" -type f | wc -l)
+        fi
+
+        # Inform user
+        echo "Number of ${cntinfo} in ${dir}: ${r}"
+        total=$(( total+r ))
+    done
+    # Inform user about total number of files, if there was more than one
+    # positional argument
+    if [ $# -gt 1 ]; then
+        echo "Total number of files/directories: ${total}"
+    fi
+
+}
+
+parseOptions(){
+
+    OPT=$(getopt \
+        --options hfds \
+        --name "$0" \
+        -- "$@"
+    )
+
+    if [ $? -ne 0 ]; then
+        usage
+        exit 1
+    fi
+
+    eval set -- "${OPT}"
+
+    while true; do
+        case "${1}" in
+            -h) usage; exit 0;;
+            -f) cntd=false; shift 1;;
+            -d) cntf=false; shift 1;;
+            -s) cnts=true; shift 1;;
+            --) shift; break;;
+        esac
+    done
+
+    # If both -f and -d are set, counting both files and dirs are set to false,
+    # but user likely wants to count both files and dirs
+    if [ "${cntf}" == false ] && [ "${cntd}" == false ]; then
+        cntf=true
+        cntd=true
+    fi
+
+    run "$@"
+}
+
+parseOptions "$@"
