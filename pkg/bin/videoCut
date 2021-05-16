@@ -6,7 +6,7 @@
 # videoCut filename from to (dest)
 
 # Check format of from and to variables
-re='^[0-9]+$'
+re='^[0-9]+(\.[0-9]+)?$'
 # Format: 01:23:45 (default)
 if [[ "${2}" == ??:??:?? ]] && [[ "${3}" == ??:??:?? ]]; then
     from="${2}"
@@ -15,12 +15,18 @@ if [[ "${2}" == ??:??:?? ]] && [[ "${3}" == ??:??:?? ]]; then
 elif [[ "${2}" == ?????? ]] && [[ "${3}" == ?????? ]]; then
     from="${2:0:2}:${2:2:2}:${2:4:2}"
     to="${3:0:2}:${3:2:2}:${3:4:2}"
-# Format: 12345 (0 padding)
+    # Format: 12345 (0 padding) or 12345.6 (with milliseconds)
 elif [[ "${2}" =~ $re ]] && [[ "${3}" =~ $re ]]; then
-    from=$(printf '%06d' "$(echo "${2}" | sed 's/^0*//')")
+    from=$(printf '%06d' "$(echo "${2%.*}" | sed 's/^0*//')")
     from="${from:0:2}:${from:2:2}:${from:4:2}"
-    to=$(printf '%06d' "$(echo "${3}" | sed 's/^0*//')")
+    to=$(printf '%06d' "$(echo "${3%.*}" | sed 's/^0*//')")
     to="${to:0:2}:${to:2:2}:${to:4:2}"
+    if [[ "${2}" == *.* ]]; then
+        fromMS="${2#*.}"
+    fi
+    if [[ "${3}" == *.* ]]; then
+        toMS="${3#*.}"
+    fi
 else
     echo "Format not recognized."
     echo "Exit."
@@ -34,8 +40,8 @@ if [ "${5}" == true ]; then
         -i "${1}" \
         -c:v libx264 \
         -c:a aac \
-        -ss "${from}".000 \
-        -to "${to}".000 \
+        -ss "${from}"."${fromMS:-000}" \
+        -to "${to}"."${toMS:-000}" \
         "${filename}"
 else
     # Don't reencode
@@ -43,8 +49,8 @@ else
         -i "${1}" \
         -c copy \
         -strict -2 \
-        -ss "${from}".000 \
-        -to "${to}".000 \
+        -ss "${from}"."${fromMS:-000}" \
+        -to "${to}"."${toMS:-000}" \
         "${filename}"
 fi
 
