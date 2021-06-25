@@ -11,11 +11,7 @@ re='^[0-9]+(\.[0-9]+)?$'
 if [[ "${2}" == ??:??:?? ]] && [[ "${3}" == ??:??:?? ]]; then
     from="${2}"
     to="${3}"
-# Format: 012345 (without ":")
-elif [[ "${2}" == ?????? ]] && [[ "${3}" == ?????? ]]; then
-    from="${2:0:2}:${2:2:2}:${2:4:2}"
-    to="${3:0:2}:${3:2:2}:${3:4:2}"
-    # Format: 12345 (0 padding) or 12345.6 (with milliseconds)
+# Format: 12345 (0 padding) or 12345.6 (with milliseconds)
 elif [[ "${2}" =~ $re ]] && [[ "${3}" =~ $re ]]; then
     from=$(printf '%06d' "$(echo "${2%.*}" | sed 's/^0*//')")
     from="${from:0:2}:${from:2:2}:${from:4:2}"
