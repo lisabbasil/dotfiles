@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Reencodes video
+
+for vid; do
+    ffmpeg \
+        -i "${vid}" \
+        -c:v libx264 \
+        -c:a aac \
+        "${vid%.*}_reencoded.mp4"
+done
