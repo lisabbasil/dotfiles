@@ -29,7 +29,8 @@ else
     exit
 fi
 
-filename="${1%.*}_${from}_${to}.${1##*.}"
+filename="${1%.*}_${from}_${to}.mp4"
+
 if [ "${5}" == true ]; then
     # Reencode
     ffmpeg \
