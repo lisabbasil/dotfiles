@@ -1,62 +1,197 @@
 #!/usr/bin/env bash
 
-# Make backup from local home directory to remote server
-# Run as often as possible, to backup your data
-# This script assumes that authentication with fkinit works
-# See also ~/pkg/bin/bkpbkp, which makes a backup of this backup
+# Backup local and external hard drives
 
-# Figure out if you are in local network or not. This is needed since router
-# does not support NAT Hairpinning
-echo -n "Figure out if you are local or external with respect to backup server... "
-if ssh archserver_local bash -c true &>/dev/null; then
-    echo "Local."
-    server=archserver_local
-else
-    echo "External."
-    server=archserver_external
-fi
+bkpHome=true
+bkpEtc=true
+bkpGurkebroetli=false
+bkpChabissalat=false
+bkpArchserver=false
+bkpBkp=false
 
-errorFile=~/bkp_error.txt
-bkp=/home/basil/bkp
+mountPoint=/mnt/Spanferkel
+bkpDir="${mountPoint}/bkp"
 
-## Get history files from other servers
-#fkinit fnal
-#rsync -pavz fnal:.history history_fnal
-##fkinit desy
-##rsync -pavz desy12:.history history_desy
-#fkinit cern
-#rsync -pavz lxplus:.history history_cern
+mountPointGurkebroetli=/mnt/Gurkebroetli
+mountPointChabissalat=/mnt/Chabissalat
 
-# Backup home folder
-rsync \
-    -pavzz \
-    --delete \
-    --exclude 'mnt/' \
-    --exclude '.cache/' \
-    --exclude 'Videos/' \
-    --exclude 'Music/' \
-    --exclude 'Documents/vmware' \
-    --exclude '.dropbox/command_socket' \
-    --exclude '.dropbox/iface_socket' \
-    --exclude '.moc/socket2' \
-    --exclude '.config/Microsoft/Microsoft Teams' \
-    /home/basil "${server}":"${bkp}" 2>> "$errorFile"
-ssh "${server}" "echo Last backup invoked at $(date) >> ${bkp}/bkp.txt"
+usage(){
+    echo "Backup!"
+    echo
+    echo "Usage: $(basename $0) [option]"
+    echo "where [option] can be"
+    echo "  -h               Show this help"
+    echo "  -l               Toggle backup /home dir (default: ${bkpHome})"
+    echo "  -e               Toggle backup /etc dir (default: ${bkpEtc})"
+    echo "  -g               Toggle backup Gurkebroetli (default: ${bkpGurkebroetli})"
+    echo "  -c               Toggle backup Chabissalat (default: ${bkpChabissalat})"
+    echo "  -a               Toggle backup Archserver (default: ${bkpArchserver})"
+    echo "  -b               Toggle backup of backup of /home dir (default: ${bkpBkp})"
+}
 
-# Check size of backup
-echo -n "Back up size on server: "
-ssh \
-    -q \
-    "${server}" \
-    du -sh "${bkp}" | awk '{ print $1 }'
+run(){
+    # Report what will be done
+    echo "Backup /home dir              : ${bkpHome}"
+    echo "Backup /etc dir               : ${bkpEtc}"
+    echo "Backup Gurkebroetli           : ${bkpGurkebroetli}"
+    echo "Backup Chabissalat            : ${bkpChabissalat}"
+    echo "Backup Archserver             : ${bkpArchserver}"
+    echo "Backup of backup of /home dir : ${bkpBkp}"
 
-# Check if there were errors
-if [[ -s "$errorFile" ]]; then
-    echo "There were errors." 1>&2
-else
-    rm "$errorFile"
-fi
+    # Check if all requested mounts are available
+    checkMount "${mountPoint}"
+    if [ "${bkpGurkebroetli}" == true ]; then
+        checkMount "${mountPointGurkebroetli}"
+    fi
+    if [ "${bkpChabissalat}" == true ]; then
+        checkMount "${mountPointChabissalat}"
+    fi
 
-#rm history_fnal history_cern
+    mkdir -p "${bkpDir}"
 
-echo "Bye."
+    if [ "${bkpHome}" == true ]; then
+        bkpLocal /home
+    fi
+    if [ "${bkpEtc}" == true ]; then
+        bkpLocal /etc
+    fi
+    if [ "${bkpGurkebroetli}" == true ]; then
+        bkpUsbDrive Gurkebroetli "${mountPointGurkebroetli}"
+    fi
+    if [ "${bkpChabissalat}" == true ]; then
+        bkpUsbDrive Chabissalat "${mountPointChabissalat}"
+    fi
+    if [ "${bkpArchserver}" == true ]; then
+        bkpServer
+    fi
+    if [ "${bkpBkp}" == true ]; then
+        bkpBkp
+    fi
+
+    echo
+    echo "Bye."
+}
+
+checkMount(){
+    local mp="${1}"
+    echo -n "Check if requested mount point is available... "
+    if mount | grep -q "${mp}"; then
+        echo "${mp}"
+    else
+        echo "Mount point ${mp} requested but not available."
+        echo "Exit."
+        exit 7
+    fi
+}
+
+reportSuccess(){
+    local txtFile="${1}"
+    echo "Backup finished successfully at $(date)" >> "${bkpDir}/${txtFile}"
+}
+
+bkpLocal(){
+    local dir="${1}"
+    echo "Start backup of ${dir} dir."
+    echo
+
+    # Backup, and if successful, write a log entry
+    # sudo is needed here for backing up /etc
+    # The -a flag preserves the permissions, however if rsync is killed midway,
+    # this might not work
+    sudo rsync \
+        -paz \
+        --delete \
+        --info progress2,stats2 \
+        --exclude 'mnt/' \
+        --exclude '.cache/' \
+        --exclude 'Videos/' \
+        --exclude 'Music/' \
+        --exclude 'Documents/vmware' \
+        --exclude '.dropbox/command_socket' \
+        --exclude '.dropbox/iface_socket' \
+        --exclude '.moc/socket2' \
+        --exclude '.config/Microsoft/Microsoft Teams' \
+        "${dir}" "${bkpDir}" && \
+        reportSuccess "bkp_${dir#/}.txt"
+}
+
+bkpUsbDrive(){
+    local name="${1}"
+    local mp="${2}"
+    echo "Start backup of ${name}."
+
+    # Backup, and if successful, write a log entry
+    rsync \
+        -paz \
+        --delete \
+        --info progress2,stats2 \
+        "${mp}" "${bkpDir}" && \
+        reportSuccess "bkp_${name}.txt"
+}
+
+bkpServer(){
+    echo "Backup of Archserver is not yet implemented."
+}
+
+bkpBkp(){
+    # Make backup of backup
+    # Why? If you delete file ~/foo and make a backup, it will also be deleted on
+    # the backup. While recovering it is not impossible, it is at least tedious. If
+    # you make a backup of the backup, ~/foo is still available, assuming
+    # a) ~/foo existed when you created the last backup of the backup
+    # b) you meanwhile did not run bkpbkp again
+    # From a) it follows, that you should run bkpbkp as often as possible.
+    # From b) it follows, that you should run bkpbkp as little as possible.
+    # Running bkpbkp maybe every other month should be reasonable
+
+    # Backup, and if successful, write a log entry
+    rsync \
+        -paz \
+        --delete \
+        --info progress2,stats2 \
+        "${bkpDir}/home" "${bkpDir}/bkpbkp" && \
+        reportSuccess bkp_bkp.txt
+}
+
+toggleOption(){
+    local option="${1}"
+    # option should either be true or false
+    if [ "${option}" == true ]; then
+        echo "false"
+    else
+        echo "true"
+    fi
+}
+
+parseOptions(){
+
+    OPT=$(getopt \
+        --options hlegcab \
+        --name "$0" \
+        -- "$@"
+    )
+
+    if [ $? -ne 0 ]; then
+        usage
+        exit 1
+    fi
+
+    eval set -- "${OPT}"
+
+    while true; do
+        case "${1}" in
+            -h) usage; exit 0;;
+            -l) bkpHome=$(toggleOption "${bkpHome}"); shift 1;;
+            -e) bkpEtc=$(toggleOption "${bkpEtc}"); shift 1;;
+            -g) bkpGurkebroetli=$(toggleOption "${bkpGurkebroetli}"); shift 1;;
+            -c) bkpChabissalat=$(toggleOption "${bkpChabissalat}"); shift 1;;
+            -a) bkpArchserver=$(toggleOption "${bkpArchserver}"); shift 1;;
+            -b) bkpBkp=$(toggleOption "${bkpBkp}"); shift 1;;
+            --) shift; break;;
+        esac
+    done
+
+    run "$@"
+}
+
+parseOptions "$@"
