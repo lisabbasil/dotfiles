@@ -96,7 +96,7 @@ set showmode
 " F2: Toggle wrap
 nnoremap <F2> :set wrap!<CR>
 
-"" F3: Toggle textwidth from 80 to 0
+" F3: Toggle textwidth from 80 to 0
 function ToggleTextwidth()
 	if &tw == 0
 		setlocal tw=80
@@ -106,6 +106,12 @@ function ToggleTextwidth()
 	set tw
 endfunction
 nnoremap <F3> :call ToggleTextwidth()<cr>
+
+" F11: Toggle cursorline
+nnoremap <F11> :set cursorline!<CR>
+
+" F12: Toggle cursorcolumn
+nnoremap <F12> :set cursorcolumn!<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
