@@ -507,13 +507,7 @@ let g:alternateNoDefaultAlternate = 1
 " Taglist gets updated when saving
 "autocmd BufWritePost * :TlistUpdate
 
-if getcwd() =~ '/analysis/xAODNtuple$'
-    set makeprg=cat\ build.out
-elseif getcwd() =~ '/tracking/InDetPhysValMonitoring$'
-    set makeprg=cat\ build.out
-else
-    set makeprg=./vim-make
-endif
+set makeprg=./vim-make
 
 " make and jump to warning/error if any
 "map <leader>m :make<cr>
@@ -545,9 +539,9 @@ set list listchars=tab:>-,trail:·
 nmap <leader>sy :SyntasticToggleMode<CR>
 
 " Statusline
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 " Default mode
 let g:syntastic_mode_map = { 'mode': 'passive'}
@@ -567,6 +561,13 @@ let g:syntastic_cpp_check_header = 1
 "let g:syntastic_cpp_no_default_include_dirs = 1
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
+
+" Python
+let g:syntastic_python_checkers = ['pylint']
+
+" Bash
+let g:syntastic_sh_checkers = ['shellcheck', 'bashate']
+"let g:syntastic_sh_shellcheck_args = "-fgcc"
 
 " HTML
 let g:syntastic_html_checkers = ['validator', 'w3']
