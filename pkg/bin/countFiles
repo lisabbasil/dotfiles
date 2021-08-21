@@ -9,16 +9,22 @@ cnts=false
 usage(){
     echo "Count files and/or directories in given directories."
     echo
-    echo "Usage: $(basename $0) [option]"
+    echo "Usage: $(basename "$0") [option]"
     echo "where [option] can be"
     echo "  -h               Show this help"
-    echo "  -f               Count files only (default: ${cntf})"
-    echo "  -d               Count dirs only (default: ${cntd})"
-    echo "  -s               Count files/dirs also in subdirectories"
-    echo "                   (default: ${cnts})"
+    echo "  -f               Toggle counting files (default: ${cntf})"
+    echo "  -d               Toggle counting dirs (default: ${cntd})"
+    echo -n "  -s               "
+    echo "Count files/dirs also in subdirectories (default: ${cnts})"
 }
 
 run(){
+
+    if [ "${cntf}" == false ] && [ "${cntd}" == false ]; then
+        echo "Nothing to count."
+        exit 3
+    fi
+
     # Set string that describes what exactly is counted
 
     # Count files and/or dirs
@@ -50,12 +56,12 @@ run(){
             # Count files and dirs
             r=$(find "${dir}" -maxdepth "${maxdepth}" | wc -l)
             # Correct by one since parent directory is also counted
-            (( r-- ))
+            r=$(( r-- ))
         elif [ "${cntf}" == false ]; then
             # Count dirs only
             r=$(find "${dir}" -maxdepth "${maxdepth}" -type d | wc -l)
             # Correct by one since parent directory is also counted
-            (( r-- ))
+            r=$(( r-- ))
         else
             # Count files only
             r=$(find "${dir}" -maxdepth "${maxdepth}" -type f | wc -l)
@@ -65,6 +71,7 @@ run(){
         echo "Number of ${cntinfo} in ${dir}: ${r}"
         total=$(( total+r ))
     done
+
     # Inform user about total number of files, if there was more than one
     # positional argument
     if [ $# -gt 1 ]; then
@@ -73,15 +80,24 @@ run(){
 
 }
 
+toggleOption(){
+    local option="${1}"
+    # option should either be true or false
+    if [ "${option}" == true ]; then
+        echo "false"
+    else
+        echo "true"
+    fi
+}
+
+
 parseOptions(){
 
-    OPT=$(getopt \
-        --options hfds \
-        --name "$0" \
-        -- "$@"
-    )
-
-    if [ $? -ne 0 ]; then
+    if ! OPT=$(getopt \
+            --options hfds \
+            --name "$0" \
+            -- "$@"
+            ); then
         usage
         exit 1
     fi
@@ -91,19 +107,12 @@ parseOptions(){
     while true; do
         case "${1}" in
             -h) usage; exit 0;;
-            -f) cntd=false; shift 1;;
-            -d) cntf=false; shift 1;;
+            -f) cntf=$(toggleOption "${cntf}"); shift 1;;
+            -d) cntd=$(toggleOption "${cntd}"); shift 1;;
             -s) cnts=true; shift 1;;
             --) shift; break;;
         esac
     done
-
-    # If both -f and -d are set, counting both files and dirs are set to false,
-    # but user likely wants to count both files and dirs
-    if [ "${cntf}" == false ] && [ "${cntd}" == false ]; then
-        cntf=true
-        cntd=true
-    fi
 
     run "$@"
 }
