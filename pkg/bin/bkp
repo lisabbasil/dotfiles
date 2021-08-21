@@ -8,6 +8,7 @@ bkpGurkebroetli=false
 bkpChabissalat=false
 bkpArchserver=false
 bkpBkp=false
+bkpPacman=true
 
 mountPoint=/mnt/Spanferkel
 bkpDir="${mountPoint}/bkp"
@@ -27,6 +28,7 @@ usage(){
     echo "  -c               Toggle backup Chabissalat (default: ${bkpChabissalat})"
     echo "  -a               Toggle backup Archserver (default: ${bkpArchserver})"
     echo "  -b               Toggle backup of backup of /home dir (default: ${bkpBkp})"
+    echo "  -p               Toggle backup of pacman queries (default: ${bkpPacman})"
 }
 
 run(){
@@ -37,6 +39,7 @@ run(){
     echo "Backup Chabissalat            : ${bkpChabissalat}"
     echo "Backup Archserver             : ${bkpArchserver}"
     echo "Backup of backup of /home dir : ${bkpBkp}"
+    echo "Backup of pacman queries      : ${bkpPacman}"
 
     # Check if all requested mounts are available
     checkMount "${mountPoint}"
@@ -66,6 +69,9 @@ run(){
     fi
     if [ "${bkpBkp}" == true ]; then
         bkpBkp
+    fi
+    if [ "${bkpPacman}" == true ]; then
+        bkpPacman
     fi
 
     echo
@@ -153,6 +159,22 @@ bkpBkp(){
         reportSuccess bkp_bkp.txt
 }
 
+bkpPacman(){
+    pacmanQ="${bkpDir}/pacman_queries.log"
+    echo "As of $(date):" > "${pacmanQ}"
+    echo "Explicitely installed packages (pacman -Qe):" >> "${pacmanQ}"
+    pacman -Qe >> "${pacmanQ}"
+    echo >> "${pacmanQ}"
+    echo "Native installed packages (pacman -Qn):" >> "${pacmanQ}"
+    pacman -Qn >> "${pacmanQ}"
+    echo >> "${pacmanQ}"
+    echo "Foreign installed packages (pacman -Qm):" >> "${pacmanQ}"
+    pacman -Qm >> "${pacmanQ}"
+
+    echo "Backup of pacman queries finished."
+}
+
+
 toggleOption(){
     local option="${1}"
     # option should either be true or false
@@ -166,7 +188,7 @@ toggleOption(){
 parseOptions(){
 
     OPT=$(getopt \
-        --options hlegcab \
+        --options hlegcabp \
         --name "$0" \
         -- "$@"
     )
@@ -187,6 +209,7 @@ parseOptions(){
             -c) bkpChabissalat=$(toggleOption "${bkpChabissalat}"); shift 1;;
             -a) bkpArchserver=$(toggleOption "${bkpArchserver}"); shift 1;;
             -b) bkpBkp=$(toggleOption "${bkpBkp}"); shift 1;;
+            -p) bkpPacman=$(toggleOption "${bkpPacman}"); shift 1;;
             --) shift; break;;
         esac
     done
