@@ -2,58 +2,128 @@
 
 # Cuts video
 
-# ./usage:
-# videoCut filename from to (dest)
+reencode=0
+videoencoder=libx264
+audioencoder=aac
 
-# Check format of from and to variables
-re='^[0-9]+(\.[0-9]+)?$'
-# Format: 01:23:45 (default)
-if [[ "${2}" == ??:??:?? ]] && [[ "${3}" == ??:??:?? ]]; then
-    from="${2}"
-    to="${3}"
-# Format: 12345 (0 padding) or 12345.6 (with milliseconds)
-elif [[ "${2}" =~ $re ]] && [[ "${3}" =~ $re ]]; then
-    from=$(printf '%06d' "$(echo "${2%.*}" | sed 's/^0*//')")
-    from="${from:0:2}:${from:2:2}:${from:4:2}"
-    to=$(printf '%06d' "$(echo "${3%.*}" | sed 's/^0*//')")
-    to="${to:0:2}:${to:2:2}:${to:4:2}"
-    if [[ "${2}" == *.* ]]; then
-        fromMS="${2#*.}"
+usage(){
+    echo "Cut videos."
+    echo
+    echo "Usage: $(basename $0) [input] [from] [to] [destination (optional)] [option]"
+    echo "where [option] can be"
+    echo "  -h               Show this help"
+    echo "  -r number        Reencode video (sometimes needed for precise cutting)"
+    echo "                   0: Do not reencode"
+    echo "                   1: Reencode with encoders:"
+    echo "                      Video: ${videoencoder}"
+    echo "                      Audio: ${audioencoder}"
+    echo "                   2: Like 1, but with default settings for video and"
+    echo "                      audio. This can be helpful when later"
+    echo "                      concatenating different videos"
+}
+
+run(){
+
+    #Parse positional arguments first
+    input="${1}"
+    from=$(parseTimes "${2}")
+    to=$(parseTimes "${3}")
+    dest="${4:-./}"
+    fileout="${dest}/$(basename "${input%.*}")_${from%.*}_${to%.*}.mp4"
+
+    mkdir -p "${dest}"
+
+    if [ "${reencode}" == 0 ]; then
+        # Do not reencode
+        ffmpeg \
+            -i "${input}" \
+            -c copy \
+            -strict -2 \
+            -ss "${from}" \
+            -to "${to}" \
+            "${fileout}"
+    elif [ "${reencode}" == 1 ]; then
+        # Reencode
+        ffmpeg \
+            -i "${input}" \
+            -c:v "${videoencoder}" \
+            -c:a "${audioencoder}" \
+            -ss "${from}" \
+            -to "${to}" \
+            "${fileout}"
+    elif [ "${reencode}" == 2 ]; then
+        # Reencode with default settings
+        ffmpeg \
+            -i "${input}" \
+            -c:v "${videoencoder}" \
+            -vf "scale=w=1280:h=720:force_original_aspect_ratio=1,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=sar=1/1,setdar=dar=16/9" \
+            -r 29.97 \
+            -c:a "${audioencoder}" \
+            -ac 2 \
+            -ar 44100 \
+            -max_muxing_queue_size 1024 \
+            -ss "${from}" \
+            -to "${to}" \
+            "${fileout}"
     fi
-    if [[ "${3}" == *.* ]]; then
-        toMS="${3#*.}"
+}
+
+parseTimes(){
+
+    local fromOrTo="${1}"
+
+    # Accepted format
+    re='^[0-9]+(\.[0-9]+)?$'
+
+    # Format: 01:23:45 (default)
+    if [[ "${fromOrTo}" == ??:??:?? ]]; then
+        ret="${fromOrTo}"
+
+    # Format: 12345 (0 padding) or 12345.6 (with milliseconds)
+    elif [[ "${fromOrTo}" =~ $re ]]; then
+        ret=$(printf '%06d' "$(echo "${fromOrTo%.*}" | sed 's/^0*//')")
+        ret="${ret:0:2}:${ret:2:2}:${ret:4:2}"
+        if [[ "${fromOrTo}" == *.* ]]; then
+            ret="${ret}.${fromOrTo#*.}"
+        fi
+    else
+        echo "Format not recognized."
+        echo "Exit."
+        exit 2
     fi
-else
-    echo "Format not recognized."
-    echo "Exit."
-    exit
-fi
 
-filename="${1%.*}_${from}_${to}.mp4"
+    # Return value
+    echo "${ret}"
+}
 
-if [ "${5}" == true ]; then
-    # Reencode
-    ffmpeg \
-        -i "${1}" \
-        -c:v libx264 \
-        -c:a aac \
-        -ss "${from}"."${fromMS:-000}" \
-        -to "${to}"."${toMS:-000}" \
-        "${filename}"
-else
-    # Don't reencode
-    ffmpeg \
-        -i "${1}" \
-        -c copy \
-        -strict -2 \
-        -ss "${from}"."${fromMS:-000}" \
-        -to "${to}"."${toMS:-000}" \
-        "${filename}"
-fi
+parseOptions(){
 
-if [ -n "${4}" ]; then
-    mkdir -p "${4}"
-    mv "${filename}" "${4}"
-fi
+    OPT=$(getopt \
+        --options hr: \
+        --name "$0" \
+        -- "$@"
+    )
 
-#http://superuser.com/questions/358155/how-can-i-avoid-a-few-seconds-of-blank-video-when-using-vcodec-copy
+    if [ $? -ne 0 ]; then
+        usage
+        exit 1
+    fi
+
+    eval set -- "${OPT}"
+
+    while true; do
+        case "${1}" in
+            -h) usage; exit 0;;
+            -r) reencode="${2}"; shift 2;;
+            --) shift; break;;
+        esac
+    done
+
+    if [[ ! "${reencode}" =~ ^[012]+$ ]]; then
+        echo "Reencode value ${reencode} not recognized."
+    fi
+
+    run "$@"
+}
+
+parseOptions "$@"
