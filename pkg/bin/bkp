@@ -19,16 +19,21 @@ mountPointChabissalat=/mnt/Chabissalat
 usage(){
     echo "Backup!"
     echo
-    echo "Usage: $(basename $0) [option]"
+    echo "Usage: $(basename "$0") [option]"
     echo "where [option] can be"
     echo "  -h               Show this help"
     echo "  -l               Toggle backup /home dir (default: ${bkpHome})"
     echo "  -e               Toggle backup /etc dir (default: ${bkpEtc})"
-    echo "  -g               Toggle backup Gurkebroetli (default: ${bkpGurkebroetli})"
-    echo "  -c               Toggle backup Chabissalat (default: ${bkpChabissalat})"
-    echo "  -a               Toggle backup Archserver (default: ${bkpArchserver})"
-    echo "  -b               Toggle backup of backup of /home dir (default: ${bkpBkp})"
-    echo "  -p               Toggle backup of pacman queries (default: ${bkpPacman})"
+    echo -n "  -g               "
+    echo "Toggle backup Gurkebroetli (default: ${bkpGurkebroetli})"
+    echo -n "  -c               "
+    echo "Toggle backup Chabissalat (default: ${bkpChabissalat})"
+    echo -n "  -a               "
+    echo "Toggle backup Archserver (default: ${bkpArchserver})"
+    echo -n "  -b               "
+    echo "Toggle backup of backup of /home dir (default: ${bkpBkp})"
+    echo -n "  -p               "
+    echo "Toggle backup of pacman queries (default: ${bkpPacman})"
 }
 
 run(){
@@ -161,15 +166,18 @@ bkpBkp(){
 
 bkpPacman(){
     pacmanQ="${bkpDir}/pacman_queries.log"
-    echo "As of $(date):" > "${pacmanQ}"
-    echo "Explicitely installed packages (pacman -Qe):" >> "${pacmanQ}"
-    pacman -Qe >> "${pacmanQ}"
-    echo >> "${pacmanQ}"
-    echo "Native installed packages (pacman -Qn):" >> "${pacmanQ}"
-    pacman -Qn >> "${pacmanQ}"
-    echo >> "${pacmanQ}"
-    echo "Foreign installed packages (pacman -Qm):" >> "${pacmanQ}"
-    pacman -Qm >> "${pacmanQ}"
+    # Subshell to be redirected
+    {
+        echo "As of $(date):"
+        echo "Explicitely installed packages (pacman -Qe):"
+        pacman -Qe
+        echo
+        echo "Native installed packages (pacman -Qn):"
+        pacman -Qn
+        echo
+        echo "Foreign installed packages (pacman -Qm):"
+        pacman -Qm
+    } > "${pacmanQ}"
 
     echo "Backup of pacman queries finished."
 }
@@ -187,13 +195,11 @@ toggleOption(){
 
 parseOptions(){
 
-    OPT=$(getopt \
-        --options hlegcabp \
-        --name "$0" \
-        -- "$@"
-    )
-
-    if [ $? -ne 0 ]; then
+    if ! OPT=$(getopt \
+                --options hlegcabp \
+                --name "$0" \
+                -- "$@"
+                ); then
         usage
         exit 1
     fi
