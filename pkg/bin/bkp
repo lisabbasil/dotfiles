@@ -16,6 +16,8 @@ bkpDir="${mountPoint}/bkp"
 mountPointGurkebroetli=/mnt/Gurkebroetli
 mountPointChabissalat=/mnt/Chabissalat
 
+trap 'echo "Failed."' EXIT
+
 usage(){
     echo "Backup!"
     echo
@@ -130,7 +132,8 @@ bkpLocal(){
         --exclude '.moc/socket2' \
         --exclude '.config/Microsoft/Microsoft Teams' \
         "${dir}" "${bkpDir}" && \
-        reportSuccess "${txtFile}"
+        reportSuccess "${txtFile}" || \
+        exit
 
     sudo bash -c "echo >> \"${logFile}\""
 }
@@ -153,7 +156,8 @@ bkpUsbDrive(){
         --delete \
         --info progress2,stats2 \
         "${mp}" "${bkpDir}" && \
-        reportSuccess "${txtFile}"
+        reportSuccess "${txtFile}" || \
+        exit
 
     echo >> "${logFile}"
 }
@@ -187,7 +191,8 @@ bkpBkp(){
         -pa \
         --info progress2,stats2 \
         "${bkpDir}/home/basil" "${bkpDir}/bkpbkp" && \
-        reportSuccess "${txtFile}"
+        reportSuccess "${txtFile}" || \
+        exit
 
     echo >> "${logFile}"
 }
