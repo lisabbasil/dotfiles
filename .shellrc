@@ -8,10 +8,9 @@ TERM=xterm-256color
 # This file is sourced by .bashrc and .zshrc and contains settings for both the
 # bash and the zsh shell
 
-export LD_LIBRARY_PATH=~/pkg/lib:/uscms_data/d1/bschneid/pkg/lib:"${LD_LIBRARY_PATH}"
-export MANPATH=~/pkg/share/man:uscms_data/d1/bschneid/pkg/share/man:"${MANPATH}"
-export PATH=~/.local/bin:~/pkg/bin:~/pkg/usr/local/bin:/uscms_data/d1/bschneid/pkg/bin:/uscms_data/d1/bschneid/pkg/usr/local/bin:~/.gem/ruby/2.2.0/bin:"${PATH}"
-export PYTHONPATH=~/analysis/toolbox/:"${PYTHONPATH}"
+export LD_LIBRARY_PATH=~/pkg/lib:"${LD_LIBRARY_PATH}"
+export MANPATH=~/pkg/share/man:"${MANPATH}"
+export PATH=~/.local/bin:~/pkg/bin:~/pkg/usr/local/bin:~/.gem/ruby/2.2.0/bin:"${PATH}"
 
 export EDITOR=vim
 
