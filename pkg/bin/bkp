@@ -97,11 +97,14 @@ checkMount(){
 
 reportSuccess(){
     local txtFile="${1}"
+    echo "Backup successful."
     echo "Backup finished successfully at $(date)" >> "${bkpDir}/${txtFile}"
 }
 
 bkpLocal(){
     local dir="${1}"
+
+    echo
     echo "Start backup of ${dir} dir."
     echo
 
@@ -129,7 +132,10 @@ bkpLocal(){
 bkpUsbDrive(){
     local name="${1}"
     local mp="${2}"
+
+    echo
     echo "Start backup of ${name}."
+    echo
 
     # Backup, and if successful, write a log entry
     rsync \
@@ -155,12 +161,15 @@ bkpBkp(){
     # From b) it follows, that you should run bkpbkp as little as possible.
     # Running bkpbkp maybe every other month should be reasonable
 
+    echo
+    echo "Start backup of backup."
+    echo
+
     # Backup, and if successful, write a log entry
     rsync \
         -pa \
-        --delete \
         --info progress2,stats2 \
-        "${bkpDir}/home" "${bkpDir}/bkpbkp" && \
+        "${bkpDir}/home/basil" "${bkpDir}/bkpbkp" && \
         reportSuccess bkp_bkp.txt
 }
 
@@ -179,6 +188,7 @@ bkpPacman(){
         pacman -Qm
     } > "${pacmanQ}"
 
+    echo
     echo "Backup of pacman queries finished."
 }
 
