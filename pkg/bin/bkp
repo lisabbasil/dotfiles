@@ -98,14 +98,17 @@ checkMount(){
 reportSuccess(){
     local txtFile="${1}"
     echo "Backup successful."
-    echo "Backup finished successfully at $(date)" >> "${bkpDir}/${txtFile}"
+    echo "Backup finished successfully at $(date)" >> "${txtFile}"
 }
 
 bkpLocal(){
     local dir="${1}"
+    local txtFile="${bkpDir}/bkp_${dir#/}.txt"
+    local logFile="${bkpDir}/rsync_${dir#/}.log"
 
     echo
     echo "Start backup of ${dir} dir."
+    echo "Logfile: ${logFile}"
     echo
 
     # Backup, and if successful, write a log entry
@@ -113,6 +116,7 @@ bkpLocal(){
     # The -a flag preserves the permissions, however if rsync is killed midway,
     # this might not work
     sudo rsync \
+        --log-file="${logFile}" \
         -pa \
         --delete \
         --info progress2,stats2 \
@@ -126,24 +130,32 @@ bkpLocal(){
         --exclude '.moc/socket2' \
         --exclude '.config/Microsoft/Microsoft Teams' \
         "${dir}" "${bkpDir}" && \
-        reportSuccess "bkp_${dir#/}.txt"
+        reportSuccess "${txtFile}"
+
+    sudo bash -c "echo >> \"${logFile}\""
 }
 
 bkpUsbDrive(){
     local name="${1}"
     local mp="${2}"
+    local txtFile="${bkpDir}/bkp_${name}.txt"
+    local logFile="${bkpDir}/rsync_${name}.log"
 
     echo
     echo "Start backup of ${name}."
+    echo "Logfile: ${logFile}"
     echo
 
     # Backup, and if successful, write a log entry
     rsync \
+        --log-file="${logFile}" \
         -pa \
         --delete \
         --info progress2,stats2 \
         "${mp}" "${bkpDir}" && \
-        reportSuccess "bkp_${name}.txt"
+        reportSuccess "${txtFile}"
+
+    echo >> "${logFile}"
 }
 
 bkpServer(){
@@ -161,16 +173,23 @@ bkpBkp(){
     # From b) it follows, that you should run bkpbkp as little as possible.
     # Running bkpbkp maybe every other month should be reasonable
 
+    local txtFile="${bkpDir}/bkp_bkp.txt"
+    local logFile="${bkpDir}/rsync_bkp_bkp.log"
+
     echo
     echo "Start backup of backup."
+    echo "Logfile: ${logFile}"
     echo
 
     # Backup, and if successful, write a log entry
     rsync \
+        --log-file="${logFile}" \
         -pa \
         --info progress2,stats2 \
         "${bkpDir}/home/basil" "${bkpDir}/bkpbkp" && \
-        reportSuccess bkp_bkp.txt
+        reportSuccess "${txtFile}"
+
+    echo >> "${logFile}"
 }
 
 bkpPacman(){
