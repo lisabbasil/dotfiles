@@ -56,12 +56,12 @@ run(){
             # Count files and dirs
             r=$(find "${dir}" -maxdepth "${maxdepth}" | wc -l)
             # Correct by one since parent directory is also counted
-            r=$(( r-- ))
+            r=$(( r-1 ))
         elif [ "${cntf}" == false ]; then
             # Count dirs only
             r=$(find "${dir}" -maxdepth "${maxdepth}" -type d | wc -l)
             # Correct by one since parent directory is also counted
-            r=$(( r-- ))
+            r=$(( r-1 ))
         else
             # Count files only
             r=$(find "${dir}" -maxdepth "${maxdepth}" -type f | wc -l)
