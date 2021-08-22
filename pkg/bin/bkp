@@ -110,7 +110,7 @@ bkpLocal(){
     # The -a flag preserves the permissions, however if rsync is killed midway,
     # this might not work
     sudo rsync \
-        -paz \
+        -pa \
         --delete \
         --info progress2,stats2 \
         --exclude 'mnt/' \
@@ -133,7 +133,7 @@ bkpUsbDrive(){
 
     # Backup, and if successful, write a log entry
     rsync \
-        -paz \
+        -pa \
         --delete \
         --info progress2,stats2 \
         "${mp}" "${bkpDir}" && \
@@ -157,7 +157,7 @@ bkpBkp(){
 
     # Backup, and if successful, write a log entry
     rsync \
-        -paz \
+        -pa \
         --delete \
         --info progress2,stats2 \
         "${bkpDir}/home" "${bkpDir}/bkpbkp" && \
