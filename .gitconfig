@@ -4,6 +4,7 @@
 	github = basilschneider
 [core]
 	editor = vim
+    #pager = less -S
 [merge]
 	tool = vimdiff
 [push]
@@ -33,7 +34,7 @@
     fr = !git svn fetch && git svn rebase
     # http://megakemp.com/2016/08/25/git-undo/
 	undo = "!f() { \\\n    git reset --soft $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; \\\n}; f"
-    plog = log --format=\"%C(yellow)%h %C(reset)%C(green)%<(15,trunc)%an%C(reset)%C(yellow)%d%C(reset) %C(cyan)%s%C(reset) %C(dim white)(%ar)%C(reset)%w(72,4,44)%b\"
+    plog = log --format=\"%C(yellow)%h %C(reset)%C(green)%<(15,trunc)%an%C(reset)%C(yellow)%d%C(reset) %C(cyan)%s%C(reset) %C(dim white)(%ar)%C(reset)\"
 	glog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
     # http://blog.andrewray.me/a-better-git-blame/
     bblame = git log -p -M --follow --stat
