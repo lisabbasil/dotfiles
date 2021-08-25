@@ -10,7 +10,8 @@ TERM=xterm-256color
 
 export LD_LIBRARY_PATH=~/pkg/lib:"${LD_LIBRARY_PATH}"
 export MANPATH=~/pkg/share/man:"${MANPATH}"
-export PATH=~/.local/bin:~/pkg/bin:~/pkg/usr/local/bin:~/.gem/ruby/2.2.0/bin:"${PATH}"
+export PATH=~/.local/bin:~/pkg/bin:~/pkg/usr/local/bin:~/.gem/ruby/2.2.0/bin:~/.cargo/bin:~/miniconda3/bin:"${PATH}"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 export EDITOR=vim
 

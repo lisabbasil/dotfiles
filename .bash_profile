@@ -20,5 +20,3 @@ export RUCIO_ACCOUNT=bschneid
 #TERM=rxvt-unicode-256color
 #TERM=rxvt-256color
 #[ -n "$TMUX" ] && export TERM=screen-256color-s # already defined in .tmux.conf, but does not work on lheppc1 (but on lheppc7)
-
-export PATH="$HOME/.cargo/bin:$PATH"
