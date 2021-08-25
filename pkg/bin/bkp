@@ -9,6 +9,7 @@ bkpChabissalat=false
 bkpArchserver=false
 bkpBkp=false
 bkpPacman=true
+bkpAll=false
 
 mountPoint=/mnt/Spanferkel
 bkpDir="${mountPoint}/bkp"
@@ -16,7 +17,7 @@ bkpDir="${mountPoint}/bkp"
 mountPointGurkebroetli=/mnt/Gurkebroetli
 mountPointChabissalat=/mnt/Chabissalat
 
-trap 'echo "Failed."' EXIT
+trap '[ "$?" -eq 0 ] || (echo "Failed."; echo "Exit.")' EXIT
 
 usage(){
     echo "Backup!"
@@ -36,9 +37,16 @@ usage(){
     echo "Toggle backup of backup of /home dir (default: ${bkpBkp})"
     echo -n "  -p               "
     echo "Toggle backup of pacman queries (default: ${bkpPacman})"
+    echo -n "  -A               "
+    echo -n "Backup all available sources; overwrites other options "
+    echo "(except backup of backup)"
 }
 
 run(){
+
+    # Check if external sources are available
+    checkExt
+
     # Report what will be done
     echo "Backup /home dir              : ${bkpHome}"
     echo "Backup /etc dir               : ${bkpEtc}"
@@ -47,15 +55,6 @@ run(){
     echo "Backup Archserver             : ${bkpArchserver}"
     echo "Backup of backup of /home dir : ${bkpBkp}"
     echo "Backup of pacman queries      : ${bkpPacman}"
-
-    # Check if all requested mounts are available
-    checkMount "${mountPoint}"
-    if [ "${bkpGurkebroetli}" == true ]; then
-        checkMount "${mountPointGurkebroetli}"
-    fi
-    if [ "${bkpChabissalat}" == true ]; then
-        checkMount "${mountPointChabissalat}"
-    fi
 
     mkdir -p "${bkpDir}"
 
@@ -85,15 +84,71 @@ run(){
     echo "Bye."
 }
 
-checkMount(){
-    local mp="${1}"
-    echo -n "Check if requested mount point is available... "
-    if mount | grep -q "${mp}"; then
-        echo "${mp}"
+checkExt(){
+    # Check external sources
+
+    # Check if destination is available, otherwise exit
+    checkMountFail "${mountPoint}"
+
+    # Check if sources are available
+    # If they are not requested, skip
+    # If they are requested but not available, exit
+    # However, if bkpAll is set, check all sources and set variables accordingly
+    if [ "${bkpAll}" == true ]; then
+        # Pass variable name to function, not value!
+        # See: https://stackoverflow.com/a/50281697
+        checkMountUpdate "${mountPointGurkebroetli}" bkpGurkebroetli
+        checkMountUpdate "${mountPointChabissalat}" bkpChabissalat
+        #checkMountUpdate "${mountPointArchserver}" bkpArchserver
     else
+        if [ "${bkpGurkebroetli}" == true ]; then
+            checkMountFail "${mountPointGurkebroetli}"
+        fi
+        if [ "${bkpChabissalat}" == true ]; then
+            checkMountFail "${mountPointChabissalat}"
+        fi
+        #if [ "${bkpArchserver}" == true ]; then
+        #    checkMountFail "${mountPointArchserver}"
+        #if
+    fi
+}
+
+checkMountFail(){
+    # Check availability of mount point, and fail if not available
+    local mp="${1}"
+    echo -n "Check if requested mount point ${mp} is available... "
+    if [ $(checkMount ${mp}) == true ]; then
+        echo "yes"
+    else
+        echo "no"
         echo "Mount point ${mp} requested but not available."
-        echo "Exit."
-        exit 7
+        exit 1
+    fi
+}
+
+checkMountUpdate(){
+    # Check availability of mount point, and update variable
+    local mp="${1}"
+    # Reference to variable!
+    local -n refVar="${2}"
+    echo -n "Check if optional mount point ${mp} is available... "
+    if [ $(checkMount ${mp}) == true ]; then
+        # Overwrite user's choice
+        echo "yes"
+        refVar=true
+    else
+        echo "no"
+        refVar=false
+    fi
+}
+
+checkMount(){
+    # Check availability of mount point, and return true or false
+    local mp="${1}"
+    if mount | grep -q "${mp}"; then
+        echo "true"
+    else
+        echo "false"
     fi
 }
 
@@ -230,7 +285,7 @@ toggleOption(){
 parseOptions(){
 
     if ! OPT=$(getopt \
-                --options hlegcabp \
+                --options hlegcabpA \
                 --name "$0" \
                 -- "$@"
                 ); then
@@ -250,6 +305,7 @@ parseOptions(){
             -a) bkpArchserver=$(toggleOption "${bkpArchserver}"); shift 1;;
             -b) bkpBkp=$(toggleOption "${bkpBkp}"); shift 1;;
             -p) bkpPacman=$(toggleOption "${bkpPacman}"); shift 1;;
+            -A) bkpAll=$(toggleOption "${bkpAll}"); shift 1;;
             --) shift; break;;
         esac
     done
