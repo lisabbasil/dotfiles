@@ -7,9 +7,9 @@ gui=i3
 #int=$(xrandr | awk '/^eDP1/ {print $1}')
 #ext=$(xrandr | awk '/^DP2/ {print $1}')
 #hdmi=$(xrandr | awk '/^HDMI/ {print $1}')
-int='eDP-1'
-ext='HDMI-1'
-hdmi='HDMI-1'
+int='eDP1'
+ext='HDMI1'
+hdmi='HDMI1'
 #dp2='DP2'
 
 # If "${ext}" is connected, set option to 2,
