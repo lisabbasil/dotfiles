@@ -37,6 +37,9 @@ bindsym $win+F1 exec pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -SIGRTMI
 bindsym $win+F2 exec pactl set-sink-volume @DEFAULT_SINK@ -1% && pkill -SIGRTMIN+10 i3blocks
 bindsym $win+F3 exec pactl set-sink-volume @DEFAULT_SINK@ +1% && pkill -SIGRTMIN+10 i3blocks
 
+# Display
+bindsym $win+F4 exec setDisplay
+
 # Backlight (using acpilight rather than xorg-xbacklight)
 bindsym $win+F11 exec --no-startup-id xbacklight -dec 5
 bindsym $win+F12 exec --no-startup-id xbacklight -inc 5
