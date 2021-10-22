@@ -20,6 +20,8 @@ usage(){
     echo "                   2: Like 1, but with default settings for video and"
     echo "                      audio. This can be helpful when later"
     echo "                      concatenating different videos"
+    echo "                   3: Like 2, but without reencoding the whole video"
+    echo "                      (faster but less precise)"
 }
 
 run(){
@@ -65,7 +67,24 @@ run(){
             -ss "${from}" \
             -to "${to}" \
             "${fileout}"
+    elif [ "${reencode}" == 3 ]; then
+        # Reencode with default settings
+        calculateTo
+        ffmpeg \
+            -ss "${from}" \
+            -t "${tDiff}" \
+            -i "${input}" \
+            -c:v "${videoencoder}" \
+            -vf "scale=w=1280:h=720:force_original_aspect_ratio=1,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=sar=1/1,setdar=dar=16/9" \
+            -r 29.97 \
+            -c:a "${audioencoder}" \
+            -ac 2 \
+            -ar 44100 \
+            -max_muxing_queue_size 1024 \
+            "${fileout}"
     fi
+
+    echo "Output file name: ${fileout}"
 }
 
 parseTimes(){
@@ -96,6 +115,49 @@ parseTimes(){
     echo "${ret}"
 }
 
+getHours(){
+    local hDiff="${1:0:2}"
+    echo "${hDiff#0*}"
+}
+
+getMinutes(){
+    local mDiff="${1:3:2}"
+    echo "${mDiff#0*}"
+}
+
+getSeconds(){
+    local sDiff="${1:6:2}"
+    echo "${sDiff#0*}"
+}
+
+getMillis(){
+    local pDiff="${1:9:3}"
+    echo "${pDiff:-0}"
+}
+
+calculateTo(){
+    # Calculate to (duration) when given to (position)
+    # Needed when using from as input parameter
+    hDiff=$(( $(getHours "${to}") - $(getHours "${from}" )))
+    mDiff=$(( $(getMinutes "${to}") - $(getMinutes "${from}" )))
+    sDiff=$(( $(getSeconds "${to}") - $(getSeconds "${from}" )))
+    pDiff=$(( $(getMillis "${to}") - $(getMillis "${from}" )))
+    if [ "${mDiff}" -lt 0 ]; then
+        hDiff=$(( hDiff-1 ))
+        mDiff=$(( mDiff+60 ))
+    fi
+    if [ "${sDiff}" -lt 0 ]; then
+        mDiff=$(( mDiff-1 ))
+        sDiff=$(( sDiff+60 ))
+    fi
+    if [ "${pDiff}" -lt 0 ]; then
+        sDiff=$(( sDiff-1 ))
+        pDiff=$(( pDiff+1000 ))
+    fi
+    tDiff=$(( hDiff*60*60 + mDiff*60 + sDiff ))
+    tDiff="${tDiff}.${pDiff}"
+}
+
 parseOptions(){
 
     OPT=$(getopt \
@@ -119,7 +181,7 @@ parseOptions(){
         esac
     done
 
-    if [[ ! "${reencode}" =~ ^[012]+$ ]]; then
+    if [[ ! "${reencode}" =~ ^[0123]+$ ]]; then
         echo "Reencode value ${reencode} not recognized."
     fi
 
