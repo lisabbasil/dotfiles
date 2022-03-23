@@ -68,19 +68,14 @@ run(){
             -to "${to}" \
             "${fileout}"
     elif [ "${reencode}" == 3 ]; then
-        # Reencode with default settings
+        # Reencode (less precise but faster)
         calculateTo
         ffmpeg \
             -ss "${from}" \
             -t "${tDiff}" \
             -i "${input}" \
             -c:v "${videoencoder}" \
-            -vf "scale=w=1280:h=720:force_original_aspect_ratio=1,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=sar=1/1,setdar=dar=16/9" \
-            -r 29.97 \
             -c:a "${audioencoder}" \
-            -ac 2 \
-            -ar 44100 \
-            -max_muxing_queue_size 1024 \
             "${fileout}"
     fi
 
