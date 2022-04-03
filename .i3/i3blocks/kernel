@@ -31,5 +31,5 @@ echo "K: ${ku}"
 if [[ "${ku}" == "${kp}" ]]; then
     echo "${green}"
 else
-    echo "${red}"
+    echo "${yellow}"
 fi
