@@ -31,6 +31,9 @@ elif [ "${loadavg1mx100}" -le 500 ]; then
     echo "${yellow}"
 elif [ "${loadavg1mx100}" -le 700 ]; then
     echo "${orange}"
+elif [ "${loadavg1mx100}" -le 1000 ]; then
+    echo "${red}"
 else
+    echo "${green}"
     echo "${red}"
 fi
