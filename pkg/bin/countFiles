@@ -5,6 +5,7 @@
 cntf=true
 cntd=true
 cnts=false
+showtot=false
 
 usage(){
     echo "Count files and/or directories in given directories."
@@ -16,6 +17,7 @@ usage(){
     echo "  -d               Toggle counting dirs (default: ${cntd})"
     echo -n "  -s               "
     echo "Count files/dirs also in subdirectories (default: ${cnts})"
+    echo "  -t               Only show total (default: ${showtot})"
 }
 
 run(){
@@ -68,7 +70,9 @@ run(){
         fi
 
         # Inform user
-        echo "Number of ${cntinfo} in ${dir}: ${r}"
+        if [ "${showtot}" == false ]; then
+            echo "Number of ${cntinfo} in ${dir}: ${r}"
+        fi
         total=$(( total+r ))
     done
 
@@ -94,7 +98,7 @@ toggleOption(){
 parseOptions(){
 
     if ! OPT=$(getopt \
-            --options hfds \
+            --options hfdst \
             --name "$0" \
             -- "$@"
             ); then
@@ -109,7 +113,8 @@ parseOptions(){
             -h) usage; exit 0;;
             -f) cntf=$(toggleOption "${cntf}"); shift 1;;
             -d) cntd=$(toggleOption "${cntd}"); shift 1;;
-            -s) cnts=true; shift 1;;
+            -s) cnts=$(toggleOption "${cnts}"); shift 1;;
+            -t) showtot=$(toggleOption "${showtot}"); shift 1;;
             --) shift; break;;
         esac
     done
