@@ -22,21 +22,20 @@ red=#FF0000
 # Get connection information
 #cap=$(cat "${sysbat}/capacity")
 #status=$(cat "${sysbat}/status")
-IFS=",% " read -r -a arr <<< $(acpi)
-status="${arr[2]}"
-cap="${arr[3]}"
+#IFS=",% " read -r -a arr <<< $(acpi)
+IFS="," read -r -a arr <<< $(acpi | sed 's/^Battery [^:]*: //')
+status="${arr[0]}"
+cap="$(sed 's/%//' <<< ${arr[1]})"
+time="$(sed 's/ //' <<< ${arr[2]})"
 
 if [ "${status}" == "Discharging" ]; then
     statussymbol=↓
-    time=$(acpi | awk -F'[ :]*' '{printf "%s:%s", $5, $6}')
 elif [ "${status}" == "Charging" ]; then
     statussymbol=↑
     if acpi | grep -q 'charging at zero rate'; then
         time=∞
-    else
-        time=$(acpi | awk -F'[ :]*' '{printf "%s:%s", $5, $6}')
     fi
-elif [ "${status}" == "Full" ]; then
+elif [ "${status}" == "Full" ] || [ "${status}" == "Not charging" ]; then
     statussymbol=→
     time=-
 else
@@ -52,11 +51,11 @@ echo "B: ${statussymbol} ${cap}% (${time})"
 
 # Echo color
 if [ "${status}" == "Discharging" ]; then
-    if [ "${cap}" -ge 40 ]; then
+    if [ "${cap}" -ge 60 ]; then
         echo "${yellow}"
-    elif [ "${cap}" -ge 20 ]; then
+    elif [ "${cap}" -ge 40 ]; then
         echo "${orange}"
-    elif [ "${cap}" -ge 10 ]; then
+    elif [ "${cap}" -ge 20 ]; then
         echo "${red}"
     else
         echo "${green}"
