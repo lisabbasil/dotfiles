@@ -54,7 +54,7 @@ mkcd(){
 
 # Always exec startx, so if the GUI crashes, the terminal exits
 sx(){
-    exec startx "${@}"
+    exec startx "${@}" &> ~/.Xoutput
 }
 
 # My favourite format for date (used for the logs)
