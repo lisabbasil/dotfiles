@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2034
+# --> shellcheck doesn't like referenced variables
+
 # Backup local and external hard drives
 
 dryrun=false
@@ -139,7 +142,7 @@ checkMountFail(){
     # Check availability of mount point, and fail if not available
     local mp="${1}"
     echo -n "Check if requested mount point ${mp} is available... "
-    if [ $(checkMount ${mp}) == true ]; then
+    if [ "$(checkMount "${mp}")" == true ]; then
         echo "yes"
     else
         echo "no"
@@ -154,7 +157,7 @@ checkMountUpdate(){
     # Reference to variable!
     local -n refVar="${2}"
     echo -n "Check if optional mount point ${mp} is available... "
-    if [ $(checkMount ${mp}) == true ]; then
+    if [ "$(checkMount "${mp}")" == true ]; then
         # Overwrite user's choice
         echo "yes"
         refVar=true
