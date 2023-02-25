@@ -2,10 +2,13 @@
 
 # Backup local and external hard drives
 
+dryrun=false
+
 bkpHome=true
 bkpEtc=true
 bkpGurkebroetli=false
 bkpChabissalat=false
+bkpErbsesuppe=false
 bkpArchserver=false
 bkpBkp=false
 bkpPacman=true
@@ -16,6 +19,7 @@ bkpDir="${mountPoint}/bkp"
 
 mountPointGurkebroetli=/mnt/Gurkebroetli
 mountPointChabissalat=/mnt/Chabissalat
+mountPointErbsesuppe=/mnt/Erbsesuppe
 
 trap '[ "$?" -eq 0 ] || (echo "Failed."; echo "Exit.")' EXIT
 
@@ -25,12 +29,16 @@ usage(){
     echo "Usage: $(basename "$0") [option]"
     echo "where [option] can be"
     echo "  -h               Show this help"
+    echo -n "  -d               "
+    echo "Dryrun; helpful to see what backup options are selected"
     echo "  -l               Toggle backup /home dir (default: ${bkpHome})"
     echo "  -e               Toggle backup /etc dir (default: ${bkpEtc})"
     echo -n "  -g               "
     echo "Toggle backup Gurkebroetli (default: ${bkpGurkebroetli})"
     echo -n "  -c               "
     echo "Toggle backup Chabissalat (default: ${bkpChabissalat})"
+    echo -n "  -r               "
+    echo "Toggle backup Erbsesuppe (default: ${bkpErbsesuppe})"
     echo -n "  -a               "
     echo "Toggle backup Archserver (default: ${bkpArchserver})"
     echo -n "  -b               "
@@ -52,9 +60,16 @@ run(){
     echo "Backup /etc dir               : ${bkpEtc}"
     echo "Backup Gurkebroetli           : ${bkpGurkebroetli}"
     echo "Backup Chabissalat            : ${bkpChabissalat}"
+    echo "Backup Erbsesuppe             : ${bkpErbsesuppe}"
     echo "Backup Archserver             : ${bkpArchserver}"
     echo "Backup of backup of /home dir : ${bkpBkp}"
     echo "Backup of pacman queries      : ${bkpPacman}"
+
+    if [ "${dryrun}" == true ]; then
+        echo
+        echo "This is a dryrun. I will stop here."
+        exit 0
+    fi
 
     mkdir -p "${bkpDir}"
 
@@ -69,6 +84,9 @@ run(){
     fi
     if [ "${bkpChabissalat}" == true ]; then
         bkpUsbDrive Chabissalat "${mountPointChabissalat}"
+    fi
+    if [ "${bkpErbsesuppe}" == true ]; then
+        bkpUsbDrive Erbsesuppe "${mountPointErbsesuppe}"
     fi
     if [ "${bkpArchserver}" == true ]; then
         bkpServer
@@ -99,6 +117,7 @@ checkExt(){
         # See: https://stackoverflow.com/a/50281697
         checkMountUpdate "${mountPointGurkebroetli}" bkpGurkebroetli
         checkMountUpdate "${mountPointChabissalat}" bkpChabissalat
+        checkMountUpdate "${mountPointErbsesuppe}" bkpErbsesuppe
         #checkMountUpdate "${mountPointArchserver}" bkpArchserver
     else
         if [ "${bkpGurkebroetli}" == true ]; then
@@ -106,6 +125,9 @@ checkExt(){
         fi
         if [ "${bkpChabissalat}" == true ]; then
             checkMountFail "${mountPointChabissalat}"
+        fi
+        if [ "${bkpErbsesuppe}" == true ]; then
+            checkMountFail "${mountPointErbsesuppe}"
         fi
         #if [ "${bkpArchserver}" == true ]; then
         #    checkMountFail "${mountPointArchserver}"
@@ -210,6 +232,7 @@ bkpUsbDrive(){
         -pa \
         --delete \
         --info progress2,stats2 \
+        --exclude 'lost+found' \
         "${mp}" "${bkpDir}" && \
         reportSuccess "${txtFile}" || \
         exit
@@ -285,7 +308,7 @@ toggleOption(){
 parseOptions(){
 
     if ! OPT=$(getopt \
-                --options hlegcabpA \
+                --options hdlegcabpAr \
                 --name "$0" \
                 -- "$@"
                 ); then
@@ -298,10 +321,12 @@ parseOptions(){
     while true; do
         case "${1}" in
             -h) usage; exit 0;;
+            -d) dryrun=$(toggleOption "${dryrun}"); shift 1;;
             -l) bkpHome=$(toggleOption "${bkpHome}"); shift 1;;
             -e) bkpEtc=$(toggleOption "${bkpEtc}"); shift 1;;
             -g) bkpGurkebroetli=$(toggleOption "${bkpGurkebroetli}"); shift 1;;
             -c) bkpChabissalat=$(toggleOption "${bkpChabissalat}"); shift 1;;
+            -r) bkpErbsesuppe=$(toggleOption "${bkpErbsesuppe}"); shift 1;;
             -a) bkpArchserver=$(toggleOption "${bkpArchserver}"); shift 1;;
             -b) bkpBkp=$(toggleOption "${bkpBkp}"); shift 1;;
             -p) bkpPacman=$(toggleOption "${bkpPacman}"); shift 1;;
