@@ -17,6 +17,8 @@ URxvt*secondaryScroll:true
 
 URxvt*termName: rxvt-256color
 
+URxvt.geometry: 80x-1
+
 # how many lines you want it to save per session
 URxvt*saveLines:32767
 URxvt*troughColor:#000000
