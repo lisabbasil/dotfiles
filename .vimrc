@@ -107,6 +107,9 @@ function ToggleTextwidth()
 endfunction
 nnoremap <F3> :call ToggleTextwidth()<cr>
 
+" F4: Toggle relative line numbers
+nnoremap <F4> :set invrelativenumber<CR>
+
 " F11: Toggle cursorline
 nnoremap <F11> :set cursorline!<CR>
 
