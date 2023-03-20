@@ -110,6 +110,9 @@ man() {
 			man "$@"
 }
 
+# Fish-like auto suggesions
+. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Fish-like syntax highlighting (keep at the end)
 . ~/pkg/install/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
