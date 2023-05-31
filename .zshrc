@@ -13,6 +13,8 @@ bindkey "^W" backward-kill-word
 bindkey "^H" backward-delete-char
 bindkey "^U" backward-kill-line
 
+bindkey -M viins 'jj' vi-cmd-mode
+
 # Allow e.g. ../ for tab completion
 zstyle ':completion:*' special-dirs true
 
