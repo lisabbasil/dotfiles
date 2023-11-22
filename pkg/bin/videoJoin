@@ -19,6 +19,6 @@ out="${out%_*}"_joined."${1##*.}"
 ffmpeg \
     -f concat \
     -safe 0 \
-    -i <(for v; do echo file "${PWD// /\\ }/${v// /\\ }"; done) \
+    -i <(for f; do echo "file '$PWD/${f//\'/\'\\\'\'}'"; done) \
     -c copy \
     "${out}"

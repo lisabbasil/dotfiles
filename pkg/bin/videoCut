@@ -5,6 +5,8 @@
 reencode=0
 videoencoder=libx264
 audioencoder=aac
+w=1920
+h=1080
 
 usage(){
     echo "Cut videos."
@@ -32,12 +34,15 @@ run(){
     to=$(parseTimes "${3}")
     dest="${4:-./}"
     fileout="${dest}/$(basename "${input%.*}")_${from%.*}_${to%.*}.mp4"
+    #fileout="${dest}/$(basename "${input%.*}")_${from}_${to}.mp4"
 
     mkdir -p "${dest}"
 
     if [ "${reencode}" == 0 ]; then
         # Do not reencode
         ffmpeg \
+            -n \
+            -nostdin \
             -i "${input}" \
             -c copy \
             -strict -2 \
@@ -47,6 +52,8 @@ run(){
     elif [ "${reencode}" == 1 ]; then
         # Reencode
         ffmpeg \
+            -n \
+            -nostdin \
             -i "${input}" \
             -c:v "${videoencoder}" \
             -c:a "${audioencoder}" \
@@ -56,9 +63,10 @@ run(){
     elif [ "${reencode}" == 2 ]; then
         # Reencode with default settings
         ffmpeg \
+            -n \
+            -nostdin \
             -i "${input}" \
             -c:v "${videoencoder}" \
-            -vf "scale=w=1280:h=720:force_original_aspect_ratio=1,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=sar=1/1,setdar=dar=16/9" \
             -r 29.97 \
             -c:a "${audioencoder}" \
             -ac 2 \
@@ -67,16 +75,25 @@ run(){
             -ss "${from}" \
             -to "${to}" \
             "${fileout}"
+            #-vf "scale=${w}:${h}" \
+            #-vf "scale=w=${w}:h=${h}:force_original_aspect_ratio=1,pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=sar=1/1,setdar=dar=16/9" \
     elif [ "${reencode}" == 3 ]; then
         # Reencode (less precise but faster)
         calculateTo
         ffmpeg \
+            -n \
             -ss "${from}" \
             -t "${tDiff}" \
             -i "${input}" \
             -c:v "${videoencoder}" \
+            -r 29.97 \
             -c:a "${audioencoder}" \
+            -ac 2 \
+            -ar 44100 \
+            -max_muxing_queue_size 1024 \
             "${fileout}"
+            #-vf "scale=${w}:${h}" \
+            #-vf "scale=w=${w}:h=${h}:force_original_aspect_ratio=1,pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=sar=1/1,setdar=dar=16/9" \
     fi
 
     echo "Output file name: ${fileout}"
@@ -91,6 +108,9 @@ parseTimes(){
 
     # Format: 01:23:45 (default)
     if [[ "${fromOrTo}" == ??:??:?? ]]; then
+        ret="${fromOrTo}"
+
+    elif [[ "${fromOrTo}" == ??:??:??.[0-9]* ]]; then
         ret="${fromOrTo}"
 
     # Format: 12345 (0 padding) or 12345.6 (with milliseconds)
@@ -127,6 +147,8 @@ getSeconds(){
 
 getMillis(){
     local pDiff="${1:9:3}"
+    pDiff="${pDiff#0}"
+    pDiff="${pDiff#0}"
     echo "${pDiff:-0}"
 }
 

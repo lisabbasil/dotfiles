@@ -4,6 +4,7 @@
 
 for vid; do
     ffmpeg \
+        -nostdin \
         -i "${vid}" \
         -c:v libx264 \
         -c:a aac \
