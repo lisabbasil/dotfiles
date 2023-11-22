@@ -2,6 +2,8 @@
 
 # Count files in dir(s) given as positional arguments
 
+# BUG: If there is only one directory, showing total only will not work
+
 cntf=true
 cntd=true
 cnts=false
