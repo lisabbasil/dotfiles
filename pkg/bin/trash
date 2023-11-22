@@ -50,7 +50,7 @@ fi
 for file; do
     # Get variables
     file=${file%/}
-    full=$(fullPath "$file")
+    full=$(readlink -e "$file")
     folder=${full%/*}
     # Create parent directories in bin folder
     mkdir -p "${bin}${folder}"
