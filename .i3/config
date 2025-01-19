@@ -57,9 +57,9 @@ bindsym $win+$alt+g exec --no-startup-id screenlock; exec --no-startup-id system
 # Screen turns dark after 30 minutes
 exec --no-startup-id xset dpms 1800
 
-# Screen locks after 12 minutes
+# Screen lock
 #exec --no-startup-id xautolock -time 12 -locker 'i3lock -c 222222'
-exec --no-startup-id xautolock -time 12 -locker 'screenlock'
+exec --no-startup-id xautolock -time 30 -locker 'screenlock'
 
 # Use Mouse+$win to drag floating windows to their wanted position
 floating_modifier $win
